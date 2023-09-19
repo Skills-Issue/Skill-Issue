@@ -2,16 +2,18 @@
 
 import { Card } from "flowbite-react";
 
-export default function DefaultCard() {
+export default function DefaultCard({title, description,source=""}) {
   return (
-    <Card className="max-w-sm" href="#">
+    <Card className="max-w-sm h-[400px]">
+      <div className="h-[160px]">
+      <img src={source} className="object-cover w-full h-full" ></img>
+      </div>
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        <div>Noteworthy technology acquisitions 2021</div>
+        <div>{title}</div>
       </h5>
       <div className="font-normal text-gray-700 dark:text-gray-400">
         <div>
-          Here are the biggest enterprise technology acquisitions of 2021 so
-          far, in reverse chronological order.
+          {description}
         </div>
       </div>
     </Card>

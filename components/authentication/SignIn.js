@@ -4,24 +4,49 @@ import Dropdown from "../ui/Dropdown"
 import { useRouter } from "next/navigation";
 import React, { useState } from 'react';
 import { useRoleContext } from "./RoleContext";
+import axios from 'axios';
 
 
 export default function SignIn(){
   const router = useRouter()
   const { setSelectedRole } = useRoleContext();
-  const [selectedRoleValue, setSelectedRoleValue] = useState('');
+  
+  const [email, setEmail] = useState('')
+  const [childData, setChildData] = useState(null);
 
-  function handleLogin() {
-    if (childData == null) {
-      alert("please select account type");
-    } else {
-      // Use setSelectedRole to set the role in the context
-      setSelectedRole(childData);
-      router.push("/search");
-    }
+  async function checkAccount(email){
+    const url=`http://127.0.0.1:5000/staff/${email}`
+
+    axios.get(url, {
+  })
+  .then(response=>{
+      console.log(response.data);
+      if(response.data.code=="200"){
+        localStorage.setItem("Account",response.data.data.Role)
+        if(response.data.data.Role==1){
+          router.push("/access")
+        }else{
+          router.push("/staff/dashboard")
+        }
+      } else {
+        console.log("wrong acc")
+        alert("Invalid Account")
+      }
+      
+  })
+  .catch(error =>{
+      console.log(error.message);
+  })
+  }
+
+  async function handleLogin() {
+      await checkAccount(email)
+  }
+
+  function handleEmailChange(e){
+    setEmail(e.target.value)
   }
   
-  const [childData, setChildData] = useState(null);
 
     return(
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -47,6 +72,7 @@ export default function SignIn(){
                   type="email"
                   autoComplete="email"
                   required
+                  onChange={handleEmailChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -74,7 +100,7 @@ export default function SignIn(){
                 />
               </div>
             </div>
-           <Dropdown onOptionSelect={setChildData}/>
+           
             <div>
               
               <button
