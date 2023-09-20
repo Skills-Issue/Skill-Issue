@@ -5,15 +5,17 @@ import os,sys
 from os import environ
 import requests
 import json
+from decouple import config
 
 
 
 app = Flask(__name__)
-password="P%40ssw0rd"
+password=config('DB_PASSWORD')
+username=config('DB_USERNAME')
 
 if __name__ == '__main__':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://' + \
-                                            'admin_01:' + password + \
+                                            username + password + \
                                             '@spm-db-05.mysql.database.azure.com:3306/sbrp'
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
                                                'pool_recycle': 280}
