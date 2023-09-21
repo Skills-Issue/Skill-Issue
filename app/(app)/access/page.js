@@ -11,6 +11,11 @@ export default function access(){
             </Link>
             </div>
             <div>
+            <Link href={"/hr/create"}>
+                <DefaultCard title={"Human Resources"} description={"Create new role listing"} source="/hr.jpg"/>
+            </Link>
+            </div>
+            <div>
             <Link href={"/staff/dashboard"}>
                 <DefaultCard title={"Staff"} description={"Access the Staff interface"} source="/staff.jpg"/>
             </Link>
