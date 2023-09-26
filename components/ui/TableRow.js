@@ -16,7 +16,7 @@ export default function DefaultTable({listings}) {
         </Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-y">
-        {listings.map((listing) => (
+        {listings?.map((listing) => (
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{listing.Role_Name}</Table.Cell>
             <Table.Cell>{listing.Role_Details}</Table.Cell>
