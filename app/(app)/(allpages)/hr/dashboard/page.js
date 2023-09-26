@@ -12,7 +12,7 @@ export default function hrDashboard(){
             setListings(data.data.rolelistings)
         }
         fetchListingData()
-    })
+    },[])
 
     return (
     <div>
