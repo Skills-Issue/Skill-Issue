@@ -2,7 +2,8 @@
 
 import { Table } from "flowbite-react";
 import Link from "next/link";
-import DefaultModal from "./DetailModal";
+import DetailsModal from "./DetailModal";
+
 
 export default function DefaultTable({jobListings}) {
   return (
@@ -20,7 +21,9 @@ export default function DefaultTable({jobListings}) {
               {job.title}
             </Table.Cell>
             <Table.Cell>
-              <DefaultModal details={job.description}/>
+              <div>
+                <DetailsModal details={job.description}/>
+              </div>
             </Table.Cell>
             <Table.Cell>{job.expiry}</Table.Cell>
             <Table.Cell>

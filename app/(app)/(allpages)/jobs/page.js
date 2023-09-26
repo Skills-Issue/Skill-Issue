@@ -8,7 +8,7 @@ export default function Jobs(){
 
     return(
         <div>
-            <h1>Active Listings</h1>
+            <h1 className="mb-3 font-bold">Active Listings</h1>
             <DefaultTable jobListings={joblist}/>
         </div>
     )
