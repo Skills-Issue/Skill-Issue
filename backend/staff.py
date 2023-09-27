@@ -6,11 +6,15 @@ from os import environ
 import requests
 import json
 from decouple import config
+import logging
 
 
 app = Flask(__name__)
 password = config("DB_PASSWORD")
 username = config("DB_USERNAME")
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG) 
 
 if __name__ == "__main__":
     app.config["SQLALCHEMY_DATABASE_URI"] = (
@@ -91,6 +95,34 @@ def get_rolelisting():
                 }
             }
         )
+
+@app.route("/create", methods=["POST"])
+def create_rolelisting():
+    try:
+        data = request.json
+
+        # Query the latest Role_Listing_ID from the database to += 1
+        latest_role_listing = RoleListing.query.order_by(RoleListing.Role_Listing_ID.desc()).first()
+        if latest_role_listing:
+            latest_id = latest_role_listing.Role_Listing_ID + 1
+        else:
+            latest_id = 1
+
+        new_rolelisting = RoleListing(
+            Role_Listing_ID=latest_id,
+            Role_Name=data["Role_Name"],
+            Role_Details=data["Role_Details"],
+            Creation_Date=data["Creation_Date"],
+            Expiry_Date=data["Expiry_Date"],
+            Role_AuthorID=data["Role_AuthorID"]
+        )
+        logging.debug(f"New RoleListing: {new_rolelisting}")
+
+        db.session.add(new_rolelisting)
+        db.session.commit()
+        return jsonify({"code": 201, "message": "RoleListing created successfully"})
+    except Exception as e:
+        return jsonify({"code": 500, "message": str(e)})
 
 if __name__ == "__main__":
     app.run(debug=True)
