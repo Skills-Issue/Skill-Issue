@@ -1,7 +1,6 @@
 "use client";
-import RoleListingComponent from "@/components/ui/RoleListingComponent";
 import { useEffect, useState } from "react";
-import DefaultTable from "@/components/ui/TableRow";
+import RoleListingTable from "@/components/ui/RoleListingTable";
 
 export default function hrDashboard() {
   const [listings, setListings] = useState([]);
@@ -19,12 +18,10 @@ export default function hrDashboard() {
 
   return (
     <div>
-      <h1>hr dashboard</h1>
-
       {waiting ? (
         <h1>Fetching roles....</h1>
       ) : (
-        <DefaultTable listings={listings} />
+        <RoleListingTable listings={listings} />
       )}
     </div>
   );
