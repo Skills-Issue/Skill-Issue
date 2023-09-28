@@ -30,20 +30,23 @@ export default function Jobs(){
     }, []);
 
     return (
-      <div>
+      <div className="mt-4">
         <Tabs.Group
           ref={props.tabsRef}
           onActiveTabChange={(tab) => props.setActiveTab(tab)}
         >
-          <Tabs.Item active icon={HiUserCircle} title="Best Matches">
-            <div className="mr-4">
+          <Tabs.Item active icon={HiUserCircle} title="Best Matches" >
+            {waiting ? <h1>Fetching...</h1> : null}
+            <div className="mr-4 ">
               {listings?.map((listing) => (
                 <div className="mb-4">
                   <DefaultCard />
                 </div>
               ))}
             </div>
-            <div></div>
+            <div>
+
+            </div>
           </Tabs.Item>
 
           <Tabs.Item icon={HiClipboardList} title="Most Recent">
