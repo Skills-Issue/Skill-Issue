@@ -1,10 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-import os, sys
 from os import environ
-import requests
-import json
 from decouple import config
 
 
@@ -62,6 +59,28 @@ class RoleListing(db.Model):
     def json(self):
         return {"Role_Listing_ID": self.Role_Listing_ID, "Role_Name": self.Role_Name, "Role_Details":self.Role_Details, "Creation_Date": self.Creation_Date, "Expiry_Date": self.Expiry_Date, "Role_AuthorID": self.Role_AuthorID}
 
+class RoleSkill(db.Model):
+    _tablename_ = 'role_skill'
+    Role_Name=db.Column(db.String(20),primary_key=True)
+    Skill_Name=db.Column(db.String(50),primary_key=True)
+
+    def json(self):
+        return {"Role_Name": self.Role_Name, "Skill_Name": self.Skill_Name}
+
+class RoleListingWithSkills():
+    def __init__(self, Role_Listing_ID, Role_Name, Role_Details, Creation_Date, Expiry_Date, Role_AuthorID, Skills):
+        self.Role_Listing_ID = Role_Listing_ID
+        self.Role_Name = Role_Name
+        self.Role_Details = Role_Details
+        self.Creation_Date = Creation_Date
+        self.Expiry_Date = Expiry_Date
+        self.Role_AuthorID = Role_AuthorID
+        self.Skills = Skills
+
+    def json(self):
+        return {"Role_Listing_ID": self.Role_Listing_ID, "Role_Name": self.Role_Name, "Role_Details":self.Role_Details, "Creation_Date": self.Creation_Date, "Expiry_Date": self.Expiry_Date, "Role_AuthorID": self.Role_AuthorID, "Skills": self.Skills}
+
+
 
 @app.route("/staff")
 def get_staff():
@@ -78,9 +97,7 @@ def get_staff_by_email(Email):
         return jsonify({"code": 200, "data": staff.json()})
     return jsonify({"code": 404, "message": "No user found"})
 
-
-# this doesn't work yet becasue we have yet to create the tables
-@app.route("/rolelisting")
+@app.route("/rolelistings")
 def get_rolelisting():
     rolelistings = RoleListing.query.all()
     return jsonify(
@@ -91,6 +108,27 @@ def get_rolelisting():
                 }
             }
         )
+
+@app.route("/rolelistingwithskills")
+def get_rolelistingwithskills():
+    rolelistings = RoleListing.query.all()
+    rolelistingswithskills = []
+    for rolelisting in rolelistings:
+        skills = []
+        #rolename in rolelisting join the rolename in the roleskill table
+        for roleskill in RoleSkill.query.filter_by(Role_Name=rolelisting.Role_Name).all():
+            skills.append(roleskill.Skill_Name)
+        rolelistingswithskills.append(RoleListingWithSkills(rolelisting.Role_Listing_ID, rolelisting.Role_Name, rolelisting.Role_Details, rolelisting.Creation_Date, rolelisting.Expiry_Date, rolelisting.Role_AuthorID, skills).json())
+    return jsonify(
+            {
+                "code": 200,
+                "data": {
+                    "rolelistings": rolelistingswithskills
+                }
+            }
+        )
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
