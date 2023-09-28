@@ -1,10 +1,11 @@
 "use client";
-import DefaultTable from "@/components/ui/TableRow";
+import DefaultTable from "@/components/ui/RoleListingTable";
 import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
-import { useState,useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Tabs } from "flowbite-react";
 import DefaultCard from "@/components/ui/Card";
 import ActiveCard from "@/components/ui/ActiveCard";
+
 
 export default function Jobs(){
     const [activeTab, setActiveTab] = useState(0) ;
@@ -23,13 +24,12 @@ export default function Jobs(){
         if(activeTab==0){
             // newList = newList.filter()
         }else{
-
-        }
-        setListings(newList);
-        setWaiting(false);
-      };
-      fetchListingData();
-    }, []);
+      }
+      setListings(newList);
+      setWaiting(false);
+    };
+    fetchListingData();
+  }, []);
 
     return (
       <div className="mt-4">
