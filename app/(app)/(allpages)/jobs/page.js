@@ -4,6 +4,7 @@ import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { useState,useEffect,useRef } from "react";
 import { Tabs } from "flowbite-react";
 import DefaultCard from "@/components/ui/Card";
+import ActiveCard from "@/components/ui/ActiveCard";
 
 export default function Jobs(){
     const [activeTab, setActiveTab] = useState(0) ;
@@ -11,11 +12,12 @@ export default function Jobs(){
     const props = { setActiveTab, tabsRef };
     const [listings, setListings] = useState([]);
     const [waiting, setWaiting] = useState(false);
+    const [activeListing,setActiveListing] = useState(null);// set id to this var 
     console.log(activeTab);
     useEffect(() => {
       const fetchListingData = async () => {
         setWaiting(true);
-        const res = await fetch("http://127.0.0.1:5000/rolelistings");
+        const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
         const data = await res.json();
         let newList = data.data.rolelistings;
         if(activeTab==0){
@@ -35,25 +37,26 @@ export default function Jobs(){
           ref={props.tabsRef}
           onActiveTabChange={(tab) => props.setActiveTab(tab)}
         >
-          <Tabs.Item active icon={HiUserCircle} title="Best Matches" >
+          <Tabs.Item active icon={HiUserCircle} title="Best Matches">
             {waiting ? <h1>Fetching...</h1> : null}
-            <div className="mr-4 ">
+            <div className="mr-4 h-screen overflow-y-auto">
               {listings?.map((listing) => (
                 <div className="mb-4">
-                  <DefaultCard />
+                  <DefaultCard rolelisting={listing} />
                 </div>
               ))}
             </div>
             <div>
-
+                <ActiveCard />
             </div>
           </Tabs.Item>
 
           <Tabs.Item icon={HiClipboardList} title="Most Recent">
+            {waiting ? <h1>Fetching...</h1> : null}
             <div className="mr-4">
               {listings?.map((listing) => (
                 <div className="mb-4">
-                  <DefaultCard />
+                  <DefaultCard rolelisting={listing} />
                 </div>
               ))}
             </div>
