@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 export default function create(){
     const getLoggedInStaffId = () => {
-        return '10';
+        return 10;
     };
 
     const handleSubmit = async (formData) => {
@@ -17,12 +17,14 @@ export default function create(){
 
           const response = await fetch('http://127.0.0.1:5000/create', {
             method: "POST",
+            mode: 'cors',
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(formData),
           });
     
+          console.log(response)
           console.log(JSON.stringify(formData))
           if (response.ok) {
             // Data was successfully inserted

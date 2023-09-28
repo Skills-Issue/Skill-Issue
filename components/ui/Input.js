@@ -1,14 +1,20 @@
 "use client"
 
 import React, { useState } from "react";
-import { Datepicker } from 'flowbite-react';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from "dayjs";
 
 function CustomInput({onSubmit}) {
     const [formData, setFormData] = useState({
+        Role_Listing_ID: 0,
         Role_Name: "",
         Role_Details: "",
         Expiry_Date: "",
-        Creation_Date: ""
+        Creation_Date: "",
+        Role_AuthorID: 0
       });
     
       const handleInputChange = (e) => {
@@ -19,7 +25,7 @@ function CustomInput({onSubmit}) {
         });
       };
 
-      const [Cdate, setDate] = useState(new Date().toISOString().split("T")[0]); //for expiry date
+      const [Cdate, setDate] = useState(dayjs()); //for expiry date
 
       console.log(Cdate)
     
@@ -37,7 +43,7 @@ function CustomInput({onSubmit}) {
         const updatedFormData = {
           ...formData,
           Creation_Date: getCurrentDate(),
-          Expiry_Date: Cdate
+          Expiry_Date: Cdate.format("YYYY-MM-DD")
         };
     
         // Call the onSubmit callback with the updated form data
@@ -45,7 +51,7 @@ function CustomInput({onSubmit}) {
       };
 
   return (
-    <form onSubmit={handleSubmit} method="POST">
+    <form onSubmit={handleSubmit}>
   <div class="mb-6 pt-14">
     <label htmlFor="Role_Name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role Name</label>
     <input type="text" id="Role_Name" value={formData.Role_Name} onChange={handleInputChange} 
@@ -58,10 +64,11 @@ function CustomInput({onSubmit}) {
   </div>
   <div class="mb-6">
   <label htmlFor="Expiry_Date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expiry Date</label>
-    <Datepicker id="Expiry_date" dateFormat="YYYY-MM-DD" selected={Cdate} onChange={(date) => {
-  const formattedDate = new Date(date).toISOString().split("T")[0];
-  console.log(formattedDate);
-  setDate(formattedDate);}}/>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={['DatePicker']}>
+        <DatePicker label="Pick a date" value={Cdate} onChange={(date) => setDate(date)}/>
+      </DemoContainer>
+    </LocalizationProvider>
   </div>
   <button type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
   <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
