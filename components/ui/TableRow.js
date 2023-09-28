@@ -18,7 +18,7 @@ export default function DefaultTable({listings}) {
       </Table.Head>
       <Table.Body className="divide-y">
         {listings?.map((listing) => (
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+          <Table.Row key={listing.Role_Listing_ID} className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
               <Link href={`/jobs/${listing.Role_Listing_ID}`}>
                 {listing.Role_Name}
@@ -26,7 +26,7 @@ export default function DefaultTable({listings}) {
             </Table.Cell>
             <Table.Cell>{listing.Role_Details}</Table.Cell>
             <Table.Cell>{listing.Expiry_Date}</Table.Cell>
-            <Table.Cell>$99</Table.Cell>
+            <Table.Cell>[Placeholder]</Table.Cell>
             <Table.Cell>
               <a
                 className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"

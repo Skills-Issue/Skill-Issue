@@ -15,7 +15,7 @@ export default function Jobs(){
     useEffect(() => {
       const fetchListingData = async () => {
         setWaiting(true);
-        const res = await fetch("http://127.0.0.1:5000/rolelisting");
+        const res = await fetch("http://127.0.0.1:5000/rolelistings");
         const data = await res.json();
         let newList = data.data.rolelistings;
         if(activeTab==0){
