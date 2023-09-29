@@ -99,17 +99,9 @@ def get_rolelisting():
 @app.route("/create", methods=["POST"])
 def create_rolelisting():
     try:
-        data = request.json
-
-        # Query the latest Role_Listing_ID from the database to += 1
-        latest_role_listing = RoleListing.query.order_by(RoleListing.Role_Listing_ID.desc()).first()
-        if latest_role_listing:
-            latest_id = latest_role_listing.Role_Listing_ID + 1
-        else:
-            latest_id = 1
+        data = request.get_json()
 
         new_rolelisting = RoleListing(
-            Role_Listing_ID=latest_id,
             Role_Name=data["Role_Name"],
             Role_Details=data["Role_Details"],
             Creation_Date=data["Creation_Date"],
@@ -123,6 +115,8 @@ def create_rolelisting():
         return jsonify({"code": 201, "message": "RoleListing created successfully"})
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
+
+cors = CORS(app, resources={'/*':{'origins': 'http://localhost:3000'}})
 
 if __name__ == "__main__":
     app.run(debug=True)

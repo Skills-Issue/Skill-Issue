@@ -5,10 +5,11 @@ import React, { useState } from "react";
 
 export default function create(){
     const getLoggedInStaffId = () => {
-        return 10;
+        return 12;
     };
 
     const handleSubmit = async (formData) => {
+      console.log(formData)
         try {
             // Get the logged-in staff ID
             const loggedInStaffId = getLoggedInStaffId();
@@ -16,8 +17,7 @@ export default function create(){
             formData.Role_AuthorID = loggedInStaffId;
 
           const response = await fetch('http://127.0.0.1:5000/create', {
-            method: "POST",
-            mode: 'cors',
+            method: 'POST',
             headers: {
               "Content-Type": "application/json",
             },
