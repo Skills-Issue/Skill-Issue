@@ -23,13 +23,17 @@ export default function create(){
             },
             body: JSON.stringify(formData),
           });
-    
-          if (response.ok) {
+
+          const responseData = await response.json(); // Parse JSON response
+          console.log("Code:", responseData.code);
+
+          if (responseData.code == 201) {
             // Data was successfully inserted
             console.log("Role listing created successfully");
           } else {
             // Handle error here
             console.error("Error creating role listing");
+            console.log("Message:", responseData.message);
           }
         } catch (error) {
           console.error("Error:", error);
