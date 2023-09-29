@@ -1,15 +1,68 @@
-import DefaultTable from "@/components/ui/TableRow";
+"use client";
+import DefaultTable from "@/components/ui/RoleListingTable";
+import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
+import { useState, useEffect, useRef } from "react";
+import { Tabs } from "flowbite-react";
+import DefaultCard from "@/components/ui/Card";
+import ActiveCard from "@/components/ui/ActiveCard";
+
 
 export default function Jobs(){
+    const [activeTab, setActiveTab] = useState(0) ;
+    const tabsRef = useRef(null);
+    const props = { setActiveTab, tabsRef };
+    const [listings, setListings] = useState([]);
+    const [waiting, setWaiting] = useState(false);
+    const [activeListing,setActiveListing] = useState(null);// set id to this var 
+    console.log(activeTab);
+    useEffect(() => {
+      const fetchListingData = async () => {
+        setWaiting(true);
+        const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
+        const data = await res.json();
+        let newList = data.data.rolelistings;
+        if(activeTab==0){
+            // newList = newList.filter()
+        }else{
+      }
+      setListings(newList);
+      setWaiting(false);
+    };
+    fetchListingData();
+  }, []);
 
-    const joblist = [];
+    return (
+      <div className="mt-4">
+        <Tabs.Group
+          ref={props.tabsRef}
+          onActiveTabChange={(tab) => props.setActiveTab(tab)}
+        >
+          <Tabs.Item active icon={HiUserCircle} title="Best Matches">
+            {waiting ? <h1>Fetching...</h1> : null}
+            <div className="mr-4 h-screen overflow-y-auto">
+              {listings?.map((listing) => (
+                <div className="mb-4">
+                  <DefaultCard rolelisting={listing} />
+                </div>
+              ))}
+            </div>
+            <div>
+                <ActiveCard />
+            </div>
+          </Tabs.Item>
 
-
-
-    return(
-        <div>
-            <h1>Active Listings</h1>
-            <DefaultTable jobListings={joblist}/>
-        </div>
-    )
+          <Tabs.Item icon={HiClipboardList} title="Most Recent">
+            {waiting ? <h1>Fetching...</h1> : null}
+            <div className="mr-4">
+              {listings?.map((listing) => (
+                <div className="mb-4">
+                  <DefaultCard rolelisting={listing} />
+                </div>
+              ))}
+            </div>
+            <div></div>
+          </Tabs.Item>
+        </Tabs.Group>
+      </div>
+    );
 }
