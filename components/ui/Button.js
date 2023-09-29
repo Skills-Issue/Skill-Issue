@@ -8,14 +8,13 @@ import Link from 'next/link';
 import AddIcon from '../../public/addIcon.png';
 
 
-export default function Outline() {
+export default function Outline({goTo, caption}) {
 
     return (
       <>
-      <Link href="/hr/create">
+      <Link href={goTo}>
         <Button gradientDuoTone="tealToLime">
-            {/* <img src = {AddIcon}></img> */}
-          Create New Role
+          {caption}
         </Button>
         </Link>
         </>

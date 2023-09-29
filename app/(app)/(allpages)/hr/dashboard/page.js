@@ -25,7 +25,7 @@ export default function hrDashboard() {
         <h1>Fetching roles....</h1>
       ) : (
         <div>
-        <Outline/>
+        <Outline goTo={"/hr/create"} caption={"Create New Role"}/>
         <RoleListingTable listings={listings} />
         </div>
       )}
