@@ -7,7 +7,7 @@ export default function Navbar(){
             <div><nav className="flex items-center space-x-8 text-sm font-medium">
           <a
             className="transition-colors hover:text-foreground/80 text-foreground/60"
-            href="/search"
+            href="/"
           >
             Home
           </a>

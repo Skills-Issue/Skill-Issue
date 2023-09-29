@@ -14,7 +14,7 @@ function CustomInput({onSubmit}) {
         Role_Details: "",
         Expiry_Date: "",
         Creation_Date: "",
-        Role_AuthorID: 0
+        Role_AuthorID: null,
       });
     
       const handleInputChange = (e) => {

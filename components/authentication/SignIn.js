@@ -1,5 +1,4 @@
 "use client"
-
 import Dropdown from "../ui/Dropdown"
 import { useRouter } from "next/navigation";
 import React, { useState } from 'react';
@@ -16,13 +15,13 @@ export default function SignIn(){
 
   async function checkAccount(email){
     const url=`http://127.0.0.1:5000/staff/${email}`
-
     axios.get(url, {
   })
   .then(response=>{
       console.log(response.data);
       if(response.data.code=="200"){
         localStorage.setItem("Account",response.data.data.Role)
+        localStorage.setItem("user",JSON.stringify(response.data.data))
         if(response.data.data.Role==1){
           router.push("/access")
         }else{

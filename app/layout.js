@@ -1,6 +1,5 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import Navbar from '@/components/navigation/NavBar'
 import { RoleProvider } from '@/components/authentication/RoleContext'
 
 const inter = Inter({ subsets: ['latin'] })
