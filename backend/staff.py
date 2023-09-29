@@ -84,6 +84,23 @@ class RoleListingWithSkills():
     def json(self):
         return {"Role_Listing_ID": self.Role_Listing_ID, "Role_Name": self.Role_Name, "Role_Details":self.Role_Details, "Creation_Date": self.Creation_Date, "Expiry_Date": self.Expiry_Date, "Role_AuthorID": self.Role_AuthorID, "Skills": self.Skills}
 
+class RoleApplication(db.Model):
+    _tablename_ = 'role_application'
+    Application_ID=db.Column(db.Integer, primary_key=True)
+    Role_Listing_ID=db.Column(db.Integer,nullable=False)
+    Applicant_ID=db.Column(db.Integer, autoincrement=True)
+    Application_Details=db.Column(db.String(200),nullable=False)
+    Application_Date=db.Column(db.Date,nullable=False)
+
+    def json(self):
+         return {"Application_ID": self.Application_ID,"Role_Listing_ID": self.Role_Listing_ID, "Application_Details": self.Application_Details, "Applicant_ID":self.Applicant_ID, "Application_Date": self.Application_Date}
+
+@app.route("/jobs/<int:Role_Listing_ID>")
+def get_applicant_by_rolelisting_id(Role_Listing_ID):
+    applicant = RoleApplication.query.filter_by(Role_Listing_ID=Role_Listing_ID).all()
+    if applicant:
+        return jsonify({"code": 200, "data": [applicant.json() for applicant in applicant]})
+    return jsonify({"code": 404, "message": "No user found"})
 
 
 @app.route("/staff")
@@ -153,8 +170,6 @@ def get_rolelistingwithskills():
                 }
             }
         )
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

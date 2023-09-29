@@ -4,6 +4,7 @@ import { Table } from "flowbite-react";
 import Link from "next/link";
 
 export default function RoleListingTable({ listings }) {
+  console.log(listings);
   return (
     <Table>
       <Table.Head>
@@ -30,7 +31,13 @@ export default function RoleListingTable({ listings }) {
             <Table.Cell>{listing.Role_Details}</Table.Cell>
             <Table.Cell>{listing.Expiry_Date}</Table.Cell>
             <Table.Cell><p className="text-center">Active</p></Table.Cell>
-            <Table.Cell><p className="text-center">14</p></Table.Cell>
+            <Table.Cell>
+              <a 
+                className="text-cyan-600 hover:underline dark:text-cyan-500" 
+                href="/jobs/${listing.Role_Listing_ID}"
+              >
+                <p>14</p>
+              </a></Table.Cell>
             <Table.Cell>
               <a
                 className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
