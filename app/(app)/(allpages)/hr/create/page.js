@@ -24,8 +24,6 @@ export default function create(){
             body: JSON.stringify(formData),
           });
     
-          console.log(response)
-          console.log(JSON.stringify(formData))
           if (response.ok) {
             // Data was successfully inserted
             console.log("Role listing created successfully");

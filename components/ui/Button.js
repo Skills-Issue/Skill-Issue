@@ -3,7 +3,7 @@
 import React from "react";
 
 import { Button } from 'flowbite-react';
-import { Link } from 'flowbite-react';
+import Link from 'next/link';
 
 import AddIcon from '../../public/addIcon.png';
 
@@ -14,7 +14,7 @@ export default function Outline() {
       <>
       <Link href="/hr/create">
         <Button gradientDuoTone="tealToLime">
-            <img src = {AddIcon}></img>
+            {/* <img src = {AddIcon}></img> */}
           Create New Role
         </Button>
         </Link>

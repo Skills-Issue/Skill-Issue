@@ -26,8 +26,6 @@ function CustomInput({onSubmit}) {
       };
 
       const [Cdate, setDate] = useState(dayjs()); //for expiry date
-
-      console.log(Cdate)
     
       const getCurrentDate = () => {
         const currentDate = new Date();
@@ -52,26 +50,26 @@ function CustomInput({onSubmit}) {
 
   return (
     <form onSubmit={handleSubmit}>
-  <div class="mb-6 pt-14">
-    <label htmlFor="Role_Name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role Name</label>
+  <div className="mb-6 pt-14">
+    <label htmlFor="Role_Name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role Name</label>
     <input type="text" id="Role_Name" value={formData.Role_Name} onChange={handleInputChange} 
-    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="e.g. Janitor" required/>
+    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="e.g. Janitor" required/>
   </div>
-  <div class="mb-6">
-    <label htmlFor="Role_Details" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role Description</label>
+  <div className="mb-6">
+    <label htmlFor="Role_Details" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role Description</label>
     <textarea id="Role_Details" value={formData.Role_Details} onChange={handleInputChange}
-    rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add description..." required></textarea>
+    rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add description..." required></textarea>
   </div>
-  <div class="mb-6">
-  <label htmlFor="Expiry_Date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expiry Date</label>
+  <div className="mb-6">
+  <label htmlFor="Expiry_Date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expiry Date</label>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DatePicker']}>
         <DatePicker label="Pick a date" value={Cdate} onChange={(date) => setDate(date)}/>
       </DemoContainer>
     </LocalizationProvider>
   </div>
-  <button type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-  <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+  <button type="submit" className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
       Create Role Listing
   </span>
 </button>

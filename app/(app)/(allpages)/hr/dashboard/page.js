@@ -24,7 +24,10 @@ export default function hrDashboard() {
       {waiting ? (
         <h1>Fetching roles....</h1>
       ) : (
+        <div>
+        <Outline/>
         <RoleListingTable listings={listings} />
+        </div>
       )}
     </div>
   );
