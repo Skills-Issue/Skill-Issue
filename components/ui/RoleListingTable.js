@@ -34,7 +34,7 @@ export default function RoleListingTable({ listings }) {
             <Table.Cell>
               <a 
                 className="text-cyan-600 hover:underline dark:text-cyan-500" 
-                href="/jobs/${listing.Role_Listing_ID}"
+                href={`/jobs/${listing.Role_Listing_ID}`}
               >
                 <p>14</p>
               </a></Table.Cell>

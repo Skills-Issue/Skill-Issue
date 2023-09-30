@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import ApplicantListingTable from "@/components/ui/ApplicantListingTable";
 
-const RoleListingID = 1; // Replace with the actual ID
 
-export default function applicantListing() {
+
+export default function applicantListing( params) {
+  const RoleListingID = params.params.id
   const [applicant_listings, setApplicant_listings] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
