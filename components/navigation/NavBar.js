@@ -7,12 +7,12 @@ import Item from './Item';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect,useState } from 'react';
-
+import { useRoleContext } from '../authentication/RoleContext';
 
 export default function NavbarWithDropdown() {
   const router=useRouter()
   const [AccType, setAccType] = useState("");
-  
+  const { selectedRole, setSelectedRole } = useRoleContext();
 
   function SignOut(){
     localStorage.clear();
@@ -30,6 +30,8 @@ export default function NavbarWithDropdown() {
     }
   }
   
+  
+
   useEffect(() => {
     CheckType();
   }, []);
@@ -83,12 +85,18 @@ export default function NavbarWithDropdown() {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
+        {selectedRole=="Human Resources" && (
         <Navbar.Link 
-        href={`/${AccType}/dashboard`}>
+        href={`/hr/dashboard`}>
           Home
         </Navbar.Link>
-        
-
+        )}
+        {selectedRole=="Staff" && (
+        <Navbar.Link 
+        href={`/staff/dashboard`}>
+          Home
+        </Navbar.Link>
+        )}
         {AccType === "hr" && (
         <Navbar.Link>
           <InlineDropdown CurrentState={AccType} />
