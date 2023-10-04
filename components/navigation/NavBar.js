@@ -30,6 +30,28 @@ export default function NavbarWithDropdown() {
     }
   }
   
+  function GetCredentials(){
+    const [full_name, setFullName] = useState("");
+    const [Email, setEmail] = useState("");
+
+
+    useEffect(() => {
+      const user = localStorage.getItem('user');
+      if(user){
+        const Userdata = JSON.parse(user);
+        const FullName = `${Userdata.Staff_FName} ${Userdata.Staff_LName}`;
+        const userEmail = Userdata.Email;
+        if (FullName) {
+          setFullName(FullName);
+        }
+        if (userEmail) {
+          setEmail(userEmail);
+        }
+      }
+    }, []);
+
+    return { full_name, Email };
+  }
   
 
   useEffect(() => {
@@ -65,10 +87,10 @@ export default function NavbarWithDropdown() {
         >
           <Dropdown.Header>
             <span className="block text-sm">
-              Bonnie Green
+            {GetCredentials().full_name}
             </span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+            {GetCredentials().Email}
             </span>
           </Dropdown.Header>
           <Item direct="Profile" href="/profile">
