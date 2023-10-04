@@ -8,7 +8,7 @@ import axios from 'axios';
 
 export default function SignIn(){
   const router = useRouter()
-  const { setSelectedRole } = useRoleContext();
+  const { selectedRole, setSelectedRole } = useRoleContext();
   
   const [email, setEmail] = useState('')
   const [childData, setChildData] = useState(null);
@@ -23,8 +23,10 @@ export default function SignIn(){
         localStorage.setItem("Account",response.data.data.Role)
         localStorage.setItem("user",JSON.stringify(response.data.data))
         if(response.data.data.Role==1){
-          router.push("/access")
+          setSelectedRole("Human Resources")
+          router.push("/hr/dashboard")
         }else{
+          setSelectedRole("Staff")
           router.push("/staff/dashboard")
         }
       } else {

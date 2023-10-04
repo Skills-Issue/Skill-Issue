@@ -1,23 +1,44 @@
 'use client';
 
-import { Dropdown, Navbar } from 'flowbite-react';
+import { Dropdown,Navbar } from 'flowbite-react';
+import InlineDropdown from '../ui/Dropdown';
 import DefaultAvatar from './Avatar';
 import Item from './Item';
 import Link from 'next/link';
-import { CustomFlowbiteTheme } from 'flowbite-react';
+import { useRouter } from 'next/navigation';
+import { useEffect,useState } from 'react';
 
-const customTheme = {
-  button: {
-    color: {
-      primary: 'bg-red-500 hover:bg-red-600',
-    },
-  },
-};
 
 export default function NavbarWithDropdown() {
+  const router=useRouter()
+  const [AccType, setAccType] = useState("");
+  
+
   function SignOut(){
     localStorage.clear();
   }
+  function CheckType() {
+    try {
+      const account = localStorage.getItem("Account");
+      if (account === "1") {
+        setAccType("hr");
+      } else {
+        setAccType("staff");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  useEffect(() => {
+    CheckType();
+  }, []);
+
+  // useEffect(() => {
+  //   if (AccType == "") {
+  //     router.push("/login");
+  //   }
+  // }, [AccType]);
 
   return (
     <Navbar
@@ -48,7 +69,7 @@ export default function NavbarWithDropdown() {
               name@flowbite.com
             </span>
           </Dropdown.Header>
-          <Item direct="Profile">
+          <Item direct="Profile" href="/profile">
             
           </Item>
           <Dropdown.Divider />
@@ -63,15 +84,18 @@ export default function NavbarWithDropdown() {
       </div>
       <Navbar.Collapse>
         <Navbar.Link 
-        href="/hr/dashboard">
+        href={`/${AccType}/dashboard`}>
           Home
         </Navbar.Link>
-        <Navbar.Link href="#">
-          Services
+        
+
+        {AccType === "hr" && (
+        <Navbar.Link>
+          <InlineDropdown CurrentState={AccType} />
         </Navbar.Link>
-        <Navbar.Link href="#">
-          Pricing
-        </Navbar.Link>
+      )}
+        
+        
         <Navbar.Link href="login" onClick={SignOut} className='md:hidden text-red-500'>
           Sign Out
         </Navbar.Link>

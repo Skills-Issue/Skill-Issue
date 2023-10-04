@@ -1,15 +1,21 @@
 "use client"
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState,useEffect } from 'react';
 
-// Create the context
+
 const RoleContext = createContext();
 
-// Create a custom hook for accessing the context
 export const useRoleContext = () => useContext(RoleContext);
 
-// Create a provider component to wrap your app
+
 export const RoleProvider = ({ children }) => {
-  const [selectedRole, setSelectedRole] = useState(null);
+  const initialRole = localStorage.getItem('selectedRole');
+
+  const [selectedRole, setSelectedRole] = useState(initialRole || null);
+
+  // Use useEffect to save the selected role to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('selectedRole', selectedRole);
+  }, [selectedRole]);
 
   return (
     <RoleContext.Provider value={{ selectedRole, setSelectedRole }}>
