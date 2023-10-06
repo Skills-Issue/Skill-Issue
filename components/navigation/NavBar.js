@@ -93,9 +93,10 @@ export default function NavbarWithDropdown() {
             {GetCredentials().Email}
             </span>
           </Dropdown.Header>
-          <Item direct="Profile" href="/profile">
-            
+          <Link href="/profile">
+          <Item direct="Profile">
           </Item>
+          </Link>
           <Dropdown.Divider />
           <Link href="/login" onClick={SignOut}>
             <Item className="text-red-500" direct="Sign Out" >

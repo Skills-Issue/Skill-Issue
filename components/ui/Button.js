@@ -7,16 +7,11 @@ import Link from 'next/link';
 
 import AddIcon from '../../public/addIcon.png';
 
-
-export default function Outline({goTo, caption}) {
+export default function Outline({ caption}) {
 
     return (
-      <>
-      <Link href={goTo}>
         <Button gradientDuoTone="tealToLime">
           {caption}
         </Button>
-        </Link>
-        </>
         )
   }

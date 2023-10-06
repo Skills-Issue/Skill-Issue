@@ -1,10 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Table } from "flowbite-react";
 import Link from "next/link";
+import { useRoleContext } from '../authentication/RoleContext';
+import Outline from "./Button";
 
-export default function RoleListingTable({ listings }) {
-  console.log(listings);
+export default function RoleListingTable({}) {
+  
+  const [listings, setListings] = useState([]);
+  const [waiting, setWaiting] = useState(false);
+  const { selectedRole, setSelectedRole } = useRoleContext();
+
+  useEffect(() => {
+    const fetchListingData = async () => {
+      setWaiting(true);
+      const res = await fetch("http://127.0.0.1:5000/rolelistings");
+      const data = await res.json();
+      setListings(data.data.rolelistings);
+      setWaiting(false);
+    };
+    fetchListingData();
+  }, []);
+
   return (
     <Table>
       <Table.Head>
@@ -39,12 +57,22 @@ export default function RoleListingTable({ listings }) {
                 <p>14</p>
               </a></Table.Cell>
             <Table.Cell>
-              <a
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+              {selectedRole=="Human Resources" &&(
+              <Link
+                className="font-medium text-cyan-600 dark:text-cyan-500"
                 href="/jobs/edit"
               >
-                <p>Edit</p>
-              </a>
+                <Outline caption={"Edit"}></Outline>
+              </Link>
+        )}
+        {selectedRole=="Staff" &&(
+              <Link
+                className="font-medium text-cyan-600 dark:text-cyan-500"
+                href="/jobs/"
+              >
+                <Outline caption={"Apply"}></Outline>
+              </Link>
+        )}
             </Table.Cell>
           </Table.Row>
         ))}
