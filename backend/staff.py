@@ -96,15 +96,31 @@ class RoleApplication(db.Model):
          return {"Application_ID": self.Application_ID,"Role_Listing_ID": self.Role_Listing_ID, "Application_Details": self.Application_Details, "Applicant_ID":self.Applicant_ID, "Application_Date": self.Application_Date}
 
 @app.route("/jobs/<int:Role_Listing_ID>")
-def get_applicant_by_rolelisting_id(Role_Listing_ID):
+def GetApplicantByRolelistingId(Role_Listing_ID):
     applicant = RoleApplication.query.filter_by(Role_Listing_ID=Role_Listing_ID).all()
     if applicant:
         return jsonify({"code": 200, "data": [applicant.json() for applicant in applicant]})
     return jsonify({"code": 404, "message": "No user found"})
 
+@app.route("/jobs/apply/<int:Role_Listing_ID>", methods=["POST"])
+def ApplyForRole(Role_Listing_ID):
+    try:
+        data = request.get_json()
+        new_application = RoleApplication(
+            Role_Listing_ID=Role_Listing_ID,
+            Applicant_ID=data["Applicant_ID"],
+            Application_Details=data["Application_Details"],
+            Application_Date=data["Application_Date"]
+        )
+        db.session.add(new_application)
+        db.session.commit()
+        return jsonify({"code": 201, "message": "Application created successfully"})
+    except Exception as e:
+        return jsonify({"code": 500, "message": str(e)})
+
 
 @app.route("/staff")
-def get_staff():
+def Get_Staff():
     stafflist = Staff.query.all()
     return jsonify(
         {"code": 200, "data": {"staffs": [staff.json() for staff in stafflist]}}
@@ -112,14 +128,14 @@ def get_staff():
 
 
 @app.route("/staff/<string:Email>")
-def get_staff_by_email(Email):
+def GetStaffByEmail(Email):
     staff = Staff.query.filter_by(Email=Email).first()
     if staff:
         return jsonify({"code": 200, "data": staff.json()})
     return jsonify({"code": 404, "message": "No user found"})
 
 @app.route("/rolelistings")
-def get_rolelisting():
+def GetRolelisting():
     rolelistings = RoleListing.query.all()
     return jsonify(
             {
@@ -131,7 +147,7 @@ def get_rolelisting():
         )
 
 @app.route("/create", methods=["POST"])
-def create_rolelisting():
+def CreateRolelisting():
     try:
         data = request.get_json()
 
@@ -150,10 +166,9 @@ def create_rolelisting():
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
 
-cors = CORS(app, resources={'/*':{'origins': 'http://localhost:3000'}})
 
 @app.route("/rolelistingwithskills")
-def get_rolelistingwithskills():
+def GetRolelistingWithSkills():
     rolelistings = RoleListing.query.all()
     rolelistingswithskills = []
     for rolelisting in rolelistings:

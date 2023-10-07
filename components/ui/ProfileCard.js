@@ -32,7 +32,7 @@ export default function ProfileCard(){
         />
       </div>
       
-      <Button type="submit">
+      <Button type="submit" gradientDuoTone="tealToLime">
         Submit
       </Button>
     </form>
