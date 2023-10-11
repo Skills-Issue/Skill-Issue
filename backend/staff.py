@@ -170,13 +170,16 @@ def CreateRolelisting():
 @app.route("/rolelistingwithskills")
 def GetRolelistingWithSkills():
     rolelistings = RoleListing.query.all()
+    roleskills = RoleSkill.query.all()
+    roleskill_dict = {}
+    for roleskill in roleskills:
+        roleskill_dict[roleskill.Role_Name] = roleskill_dict.get(roleskill.Role_Name, []) + [roleskill.Skill_Name]
     rolelistingswithskills = []
     for rolelisting in rolelistings:
-        skills = []
-        #rolename in rolelisting join the rolename in the roleskill table
-        for roleskill in RoleSkill.query.filter_by(Role_Name=rolelisting.Role_Name).all():
-            skills.append(roleskill.Skill_Name)
-        rolelistingswithskills.append(RoleListingWithSkills(rolelisting.Role_Listing_ID, rolelisting.Role_Name, rolelisting.Role_Details, rolelisting.Creation_Date, rolelisting.Expiry_Date, rolelisting.Role_AuthorID, skills).json())
+        if rolelisting.Role_Name in roleskill_dict:
+            rolelistingswithskills.append(RoleListingWithSkills(rolelisting.Role_Listing_ID, rolelisting.Role_Name, rolelisting.Role_Details, rolelisting.Creation_Date, rolelisting.Expiry_Date, rolelisting.Role_AuthorID, roleskill_dict[rolelisting.Role_Name]).json())
+        else:
+            rolelistingswithskills.append(RoleListingWithSkills(rolelisting.Role_Listing_ID, rolelisting.Role_Name, rolelisting.Role_Details, rolelisting.Creation_Date, rolelisting.Expiry_Date, rolelisting.Role_AuthorID, []).json())
     return jsonify(
             {
                 "code": 200,
