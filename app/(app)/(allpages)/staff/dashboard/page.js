@@ -14,7 +14,7 @@ export default function Jobs() {
   const [listings, setListings] = useState([]);
   const [waiting, setWaiting] = useState(false);
   const [searchField, setSearchField] = useState("");
-  const [activeListing, setActiveListing] = useState(null); // set id to this var
+  const [activeListing, setActiveListing] = useState(); // set id to this var
   //console.log(activeTab);
   const searchListings = listings.filter((listing) => {
     return listing.Role_Name.toLowerCase().includes(searchField);
@@ -35,6 +35,15 @@ export default function Jobs() {
     };
     fetchListingData();
   }, []);
+  const handleSelect = (roleId) => {
+    let selectedListing = listings.find(
+      (listing) => listing.Role_Listing_ID === roleId
+    );
+    // alert(selectedListi);
+    console.log(selectedListing);
+    setActiveListing(selectedListing);
+    console.log(activeListing);
+  };
 
   return (
     <div className="mt-4">
@@ -43,18 +52,22 @@ export default function Jobs() {
         onActiveTabChange={(tab) => props.setActiveTab(tab)}
       >
         <Tabs.Item active icon={HiUserCircle} title="Best Matches">
-          {waiting ? <h1>Fetching...</h1> : null}
-          
-          <div className="mr-4 h-screen overflow-y-auto">
-          <SearchInput setData={setSearchField}></SearchInput>
-            {searchListings?.map((listing) => (
-              <div key={listing.Role_Listing_ID} className="mb-4">
-                <DefaultCard rolelisting={listing} />
-              </div>
-            ))}
-          </div>
-          <div>
-            <ActiveCard />
+          <div className="flex flex-row">
+            <div className="mr-4 h-screen overflow-y-auto flex-grow-1">
+              {waiting ? <h1>Fetching...</h1> : null}
+              <SearchInput setData={setSearchField} />
+              {searchListings?.map((listing) => (
+                <div key={listing.Role_Listing_ID} className="mb-4">
+                  <DefaultCard
+                    rolelisting={listing}
+                    handleSelect={handleSelect}
+                  />
+                </div>
+              ))}
+            </div>
+            <div>
+              <ActiveCard activeListing={activeListing} />
+            </div>
           </div>
         </Tabs.Item>
 
@@ -67,7 +80,7 @@ export default function Jobs() {
               </div>
             ))}
           </div>
-          <div></div>
+          <div>hi</div>
         </Tabs.Item>
       </Tabs.Group>
     </div>

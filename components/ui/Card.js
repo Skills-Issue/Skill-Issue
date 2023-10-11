@@ -1,7 +1,7 @@
 "use client";
 import { Card } from "flowbite-react";
 
-export default function DefaultCard({keyProp, rolelisting }) {
+export default function DefaultCard({keyProp, rolelisting,handleSelect }) {
   return (
     <Card className="m-2 max-w-md" href="#">
       <div className="flex flex-col">
@@ -13,7 +13,7 @@ export default function DefaultCard({keyProp, rolelisting }) {
             />
           </div>
           <div className="">
-            <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white" onClick={()=>{handleSelect(rolelisting.Role_Listing_ID)}}>
               {rolelisting?.Role_Name}
             </h5>
             <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
