@@ -14,7 +14,8 @@ export default function Jobs() {
   const [listings, setListings] = useState([]);
   const [waiting, setWaiting] = useState(false);
   const [searchField, setSearchField] = useState("");
-  const [activeListing, setActiveListing] = useState(); // set id to this var
+  const [activeListing, setActiveListing] = useState({}); // set id to this var
+  const [selected,setSelected] = useState(false);
   //console.log(activeTab);
   const searchListings = listings.filter((listing) => {
     return listing.Role_Name.toLowerCase().includes(searchField);
@@ -39,10 +40,9 @@ export default function Jobs() {
     let selectedListing = listings.find(
       (listing) => listing.Role_Listing_ID === roleId
     );
-    // alert(selectedListi);
-    console.log(selectedListing);
     setActiveListing(selectedListing);
     console.log(activeListing);
+    setSelected(true);
   };
 
   return (
@@ -66,7 +66,8 @@ export default function Jobs() {
               ))}
             </div>
             <div>
-              <ActiveCard activeListing={activeListing} />
+              hi
+              {selected?<ActiveCard activeListing={activeListing} />:null}
             </div>
           </div>
         </Tabs.Item>
