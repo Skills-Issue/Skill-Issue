@@ -43,6 +43,7 @@ export default function Jobs() {
     setActiveListing(selectedListing);
     console.log(activeListing);
     setSelected(true);
+    console.log(selected)
   };
 
   return (
@@ -65,9 +66,8 @@ export default function Jobs() {
                 </div>
               ))}
             </div>
-            <div>
-              hi
-              {selected?<ActiveCard activeListing={activeListing} />:null}
+            <div className="flex-grow-1">
+              {selected?<ActiveCard activeListing={activeListing} />:"nocard"}
             </div>
           </div>
         </Tabs.Item>
