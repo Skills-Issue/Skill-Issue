@@ -1,20 +1,24 @@
-'use client';
+"use client";
 
-import { Dropdown,Navbar } from 'flowbite-react';
-import InlineDropdown from '../ui/Dropdown';
-import DefaultAvatar from './Avatar';
-import Item from './Item';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useEffect,useState } from 'react';
-import { useRoleContext } from '../authentication/RoleContext';
+import { Dropdown, Navbar } from "flowbite-react";
+import InlineDropdown from "../ui/Dropdown";
+import DefaultAvatar from "./Avatar";
+import Item from "./Item";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRoleContext } from "../authentication/RoleContext";
+import { DEFAULT_REDIRECTS } from "@/lib/hooks/constants";
 
 export default function NavbarWithDropdown() {
-  const router=useRouter()
+  // const device = useMediaQuery();
+  // console.log(device);
+
+  const router = useRouter();
   const [AccType, setAccType] = useState("");
   const { selectedRole, setSelectedRole } = useRoleContext();
 
-  function SignOut(){
+  function SignOut() {
     localStorage.clear();
   }
   function CheckType() {
@@ -29,15 +33,14 @@ export default function NavbarWithDropdown() {
       console.error(error);
     }
   }
-  
-  function GetCredentials(){
+
+  function GetCredentials() {
     const [full_name, setFullName] = useState("");
     const [Email, setEmail] = useState("");
 
-
     useEffect(() => {
-      const user = localStorage.getItem('user');
-      if(user){
+      const user = localStorage.getItem("user");
+      if (user) {
         const Userdata = JSON.parse(user);
         const FullName = `${Userdata.Staff_FName} ${Userdata.Staff_LName}`;
         const userEmail = Userdata.Email;
@@ -52,7 +55,6 @@ export default function NavbarWithDropdown() {
 
     return { full_name, Email };
   }
-  
 
   useEffect(() => {
     CheckType();
@@ -65,74 +67,57 @@ export default function NavbarWithDropdown() {
   // }, [AccType]);
 
   return (
-    <Navbar
-      fluid
-      rounded
-      className='min-h-16'
-    >
-  
+    <Navbar fluid rounded className="min-h-16">
       <Navbar.Brand href="/">
-        <img
-          className="mr-3 h-6 sm:h-9"
-          src="/SBRP.png"
-        />
-    
+        <img className="mr-3 h-6 sm:h-9" src="/SBRP.png" />
       </Navbar.Brand>
       <div className="flex md:order-2">
         <Dropdown
           arrowIcon={false}
           inline
-          label={<DefaultAvatar alt="User settings" rounded/>}
-          
+          label={<DefaultAvatar alt="User settings" rounded />}
         >
           <Dropdown.Header>
-            <span className="block text-sm">
-            {GetCredentials().full_name}
-            </span>
+            <span className="block text-sm">{GetCredentials().full_name}</span>
             <span className="block truncate text-sm font-medium">
-            {GetCredentials().Email}
+              {GetCredentials().Email}
             </span>
           </Dropdown.Header>
           <Link href="/profile">
-          <Item direct="Profile">
-          </Item>
+            <Item direct="Profile"></Item>
           </Link>
           <Dropdown.Divider />
           <Link href="/login" onClick={SignOut}>
-            <Item className="text-red-500" direct="Sign Out" >
-            Sign out
-          </Item>
+            <Item className="text-red-500" direct="Sign Out">
+              Sign out
+            </Item>
           </Link>
-          
         </Dropdown>
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        {selectedRole=="Human Resources" && (
-        <Navbar.Link 
-        href={`/hr/dashboard`}>
-          Home
-        </Navbar.Link>
+        {selectedRole == "Human Resources" && (
+          <Navbar.Link href={DEFAULT_REDIRECTS.hrdashboard}>Home</Navbar.Link>
         )}
-        {selectedRole=="Staff" && (
-        <Navbar.Link 
-        href={`/staff/dashboard`}>
-          Home
-        </Navbar.Link>
+        {selectedRole == "Staff" && (
+          <Navbar.Link href={DEFAULT_REDIRECTS.staffdashboard}>Home</Navbar.Link>
         )}
+        <Navbar.Link href={DEFAULT_REDIRECTS.profile} className="md:hidden">
+          Profile
+        </Navbar.Link>
         {AccType === "hr" && (
-        <Navbar.Link>
-          <InlineDropdown CurrentState={AccType} />
-        </Navbar.Link>
-      )}
-        
-        
-        <Navbar.Link href="login" onClick={SignOut} className='md:hidden text-red-500'>
+          <Navbar.Link>
+            <InlineDropdown CurrentState={AccType} />
+          </Navbar.Link>
+        )}
+        <Navbar.Link
+          href="login"
+          onClick={SignOut}
+          className="md:hidden text-red-500"
+        >
           Sign Out
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
-  )
+  );
 }
-
-

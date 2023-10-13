@@ -50,6 +50,16 @@ class Staff(db.Model):
             "Role": self.Role,
         }
 
+class StaffSkill(db.Model):
+    _tablename_ ='staff_skill'
+    Staff_ID = db.Column(db.Integer, primary_key=True)
+    Skill_Name=db.Column(db.String(50),primary_key=True)
+
+    def json(self):
+        return{
+            "Staff_ID": self.Staff_ID,
+            "Skill_Name":self.Skill_Name
+        }
 
 class RoleListing(db.Model):
     _tablename_ = 'role_listing'
@@ -126,12 +136,25 @@ def Get_Staff():
         {"code": 200, "data": {"staffs": [staff.json() for staff in stafflist]}}
     )
 
-
 @app.route("/staff/<string:Email>")
 def GetStaffByEmail(Email):
     staff = Staff.query.filter_by(Email=Email).first()
     if staff:
         return jsonify({"code": 200, "data": staff.json()})
+    return jsonify({"code": 404, "message": "No user found"})
+
+@app.route("/staffskill/<string:Staff_ID>")
+def GetStaffSkillById(Staff_ID):
+    staffskills = StaffSkill.query.filter_by(Staff_ID=Staff_ID).all()
+    if staffskills:
+        return jsonify(
+            {
+                "code":200, 
+                "data":{
+                    "staffskills": [staffskill.json() for staffskill in staffskills]
+                }
+                }
+            )
     return jsonify({"code": 404, "message": "No user found"})
 
 @app.route("/rolelistings")
@@ -170,16 +193,13 @@ def CreateRolelisting():
 @app.route("/rolelistingwithskills")
 def GetRolelistingWithSkills():
     rolelistings = RoleListing.query.all()
-    roleskills = RoleSkill.query.all()
-    roleskill_dict = {}
-    for roleskill in roleskills:
-        roleskill_dict[roleskill.Role_Name] = roleskill_dict.get(roleskill.Role_Name, []) + [roleskill.Skill_Name]
     rolelistingswithskills = []
     for rolelisting in rolelistings:
-        if rolelisting.Role_Name in roleskill_dict:
-            rolelistingswithskills.append(RoleListingWithSkills(rolelisting.Role_Listing_ID, rolelisting.Role_Name, rolelisting.Role_Details, rolelisting.Creation_Date, rolelisting.Expiry_Date, rolelisting.Role_AuthorID, roleskill_dict[rolelisting.Role_Name]).json())
-        else:
-            rolelistingswithskills.append(RoleListingWithSkills(rolelisting.Role_Listing_ID, rolelisting.Role_Name, rolelisting.Role_Details, rolelisting.Creation_Date, rolelisting.Expiry_Date, rolelisting.Role_AuthorID, []).json())
+        skills = []
+        #rolename in rolelisting join the rolename in the roleskill table
+        for roleskill in RoleSkill.query.filter_by(Role_Name=rolelisting.Role_Name).all():
+            skills.append(roleskill.Skill_Name)
+        rolelistingswithskills.append(RoleListingWithSkills(rolelisting.Role_Listing_ID, rolelisting.Role_Name, rolelisting.Role_Details, rolelisting.Creation_Date, rolelisting.Expiry_Date, rolelisting.Role_AuthorID, skills).json())
     return jsonify(
             {
                 "code": 200,

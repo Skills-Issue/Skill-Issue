@@ -1,15 +1,14 @@
 "use client"
-import Dropdown from "../ui/Dropdown"
+
 import { useRouter } from "next/navigation";
 import React, { useState } from 'react';
 import { useRoleContext } from "./RoleContext";
 import axios from 'axios';
-
+import { DEFAULT_REDIRECTS } from "@/lib/hooks/constants";
 
 export default function SignIn(){
   const router = useRouter()
   const { selectedRole, setSelectedRole } = useRoleContext();
-  
   const [email, setEmail] = useState('')
   const [childData, setChildData] = useState(null);
 
@@ -24,10 +23,10 @@ export default function SignIn(){
         localStorage.setItem("user",JSON.stringify(response.data.data))
         if(response.data.data.Role==1){
           setSelectedRole("Human Resources")
-          router.push("/hr/dashboard")
+          router.push(DEFAULT_REDIRECTS.hrdashboard)
         }else{
           setSelectedRole("Staff")
-          router.push("/staff/dashboard")
+          router.push(DEFAULT_REDIRECTS.staffdashboard)
         }
       } else {
         console.log("wrong acc")

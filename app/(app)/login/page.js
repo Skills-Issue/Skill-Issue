@@ -1,16 +1,11 @@
 // pages/withoutNavbar.js
-import SignIn from "@/components/authentication/SignIn"
-import React from 'react';
-
+import SignIn from "@/components/authentication/SignIn";
 
 function Login() {
   return (
-    
-      
-      <div className="min-h-screen ">
-            <SignIn/>
-        </div>
-    
+    <div className="min-h-screen ">
+      <SignIn />
+    </div>
   );
 }
 
