@@ -7,10 +7,10 @@ export default function ProfileCard(){
   const User = JSON.parse(localStorage.getItem("user")) 
   
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/staffskill/${User.Staff_ID}`)
+    fetch(`http://127.0.0.1:5000/staffskill/${User.staff_id}`)
       .then((res) => res.json())
       .then((data) => {
-        setData(data.data.staffskills);
+        setData(data.data.staff_skills);
       })
   }, []);
     var skillsArray = null;
@@ -24,7 +24,7 @@ export default function ProfileCard(){
       <h1 className="text-2xl font-semibold">Profile</h1>
       <div>
         <div className="mb-2 block text-xl"> 
-          {User.Staff_FName + " " + User.Staff_LName}
+          {User.staff_fname + " " + User.staff_lname}
         </div>
         
       </div>

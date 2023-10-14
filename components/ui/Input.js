@@ -10,11 +10,11 @@ import dayjs from "dayjs";
 function CustomInput({ onSubmit }) {
   const [formData, setFormData] = useState({
     // Role_Listing_ID: 0,
-    Role_Name: "",
-    Role_Details: "",
-    Expiry_Date: "",
-    Creation_Date: "",
-    Role_AuthorID: null,
+    role_name: "",
+    role_details: "",
+    expiry_date: "",
+    creation_date: "",
+    role_author_id: null,
   });
 
   const handleInputChange = (e) => {
@@ -40,8 +40,8 @@ function CustomInput({ onSubmit }) {
     // Add the current date to the formData before submitting
     const updatedFormData = {
       ...formData,
-      Creation_Date: getCurrentDate(),
-      Expiry_Date: Cdate.format("YYYY-MM-DD"),
+      creation_date: getCurrentDate(),
+      expiry_date: Cdate.format("YYYY-MM-DD"),
     };
 
     // Call the onSubmit callback with the updated form data
@@ -59,8 +59,8 @@ function CustomInput({ onSubmit }) {
         </label>
         <input
           type="text"
-          id="Role_Name"
-          value={formData.Role_Name}
+          id="role_name"
+          value={formData.role_name}
           onChange={handleInputChange}
           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
           placeholder="e.g. Janitor"
@@ -69,14 +69,14 @@ function CustomInput({ onSubmit }) {
       </div>
       <div className="mb-6">
         <label
-          htmlFor="Role_Details"
+          htmlFor="role_details"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Role Description
         </label>
         <textarea
-          id="Role_Details"
-          value={formData.Role_Details}
+          id="role_details"
+          value={formData.role_details}
           onChange={handleInputChange}
           rows="4"
           className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -86,7 +86,7 @@ function CustomInput({ onSubmit }) {
       </div>
       <div className="mb-6">
         <label
-          htmlFor="Expiry_Date"
+          htmlFor="expiry_date"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Expiry Date

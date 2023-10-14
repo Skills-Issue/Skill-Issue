@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 export default function create(){
     const getLoggedInStaffId = () => {
-        return JSON.parse(localStorage.getItem("user")).Staff_ID
+        return JSON.parse(localStorage.getItem("user")).staff_id
     };
 
     const handleSubmit = async (formData) => {
@@ -14,7 +14,7 @@ export default function create(){
             const loggedInStaffId = getLoggedInStaffId();
             
             // Add the staff ID to the formData
-            formData.Role_AuthorID = loggedInStaffId;
+            formData.role_author_id = loggedInStaffId;
             console.log(formData)
           const response = await fetch('http://127.0.0.1:5000/create', {
             method: 'POST',

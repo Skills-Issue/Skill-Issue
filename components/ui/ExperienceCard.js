@@ -6,10 +6,10 @@ export default function ExperienceCard(){
     const User = JSON.parse(localStorage.getItem("user"))
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5000/staffskill/${User.Staff_ID}`)
+        fetch(`http://127.0.0.1:5000/staffskill/${User.staff_id}`)
           .then((res) => res.json())
           .then((data) => {
-            setData(data.data.staffskills);
+            setData(data.data.staff_skills);
           })
       }, []);
         var skillsArray = null;
@@ -25,7 +25,7 @@ export default function ExperienceCard(){
       {skillsArray?.map((skill, index) => (
         <span key={index} className="mb-2 text-2xl">
           <span className="bg-blue-100 my-1 text-blue-800 text-sm font-medium mr-2 px-2.5  py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-              {skill.Skill_Name}
+              {skill.skill_name}
             </span>
           
         </span>

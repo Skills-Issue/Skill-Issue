@@ -24,7 +24,7 @@ export default function NavbarWithDropdown() {
   function CheckType() {
     try {
       const account = localStorage.getItem("Account");
-      if (account === "1") {
+      if (account === "4") {
         setAccType("hr");
       } else {
         setAccType("staff");
@@ -42,8 +42,8 @@ export default function NavbarWithDropdown() {
       const user = localStorage.getItem("user");
       if (user) {
         const Userdata = JSON.parse(user);
-        const FullName = `${Userdata.Staff_FName} ${Userdata.Staff_LName}`;
-        const userEmail = Userdata.Email;
+        const FullName = `${Userdata.staff_fname} ${Userdata.staff_lname}`;
+        const userEmail = Userdata.email;
         if (FullName) {
           setFullName(FullName);
         }

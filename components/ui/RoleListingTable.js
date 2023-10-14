@@ -17,7 +17,7 @@ export default function RoleListingTable({}) {
       setWaiting(true);
       const res = await fetch("http://127.0.0.1:5000/rolelistings");
       const data = await res.json();
-      setListings(data.data.rolelistings);
+      setListings(data.data.role_listings);
       setWaiting(false);
     };
     fetchListingData();
@@ -38,21 +38,21 @@ export default function RoleListingTable({}) {
       <Table.Body className="divide-y">
         {listings?.map((listing) => (
           <Table.Row
-            key={listing.Role_Listing_ID}
+            key={listing.role_listing_id}
             className="bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              <Link href={`/jobs/${listing.Role_Listing_ID}`}>
-                {listing.Role_Name}
+              <Link href={`/jobs/${listing.role_listing_id}`}>
+                {listing.role_name}
               </Link>
             </Table.Cell>
-            <Table.Cell>{listing.Role_Details}</Table.Cell>
-            <Table.Cell>{listing.Expiry_Date}</Table.Cell>
+            <Table.Cell>{listing.role_details}</Table.Cell>
+            <Table.Cell>{listing.expiry_date}</Table.Cell>
             <Table.Cell><p className="text-center">Active</p></Table.Cell>
             <Table.Cell>
               <a 
                 className="text-cyan-600 hover:underline dark:text-cyan-500" 
-                href={`/jobs/${listing.Role_Listing_ID}`}
+                href={`/jobs/${listing.role_listing_id}`}
               >
                 <p>14</p>
               </a></Table.Cell>
