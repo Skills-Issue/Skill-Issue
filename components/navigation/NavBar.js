@@ -24,7 +24,7 @@ export default function NavbarWithDropdown() {
   function CheckType() {
     try {
       const account = localStorage.getItem("Account");
-      if (account === "4") {
+      if (account === "4"|| "1") {
         setAccType("hr");
       } else {
         setAccType("staff");

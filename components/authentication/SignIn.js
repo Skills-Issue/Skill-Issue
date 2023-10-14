@@ -17,14 +17,15 @@ export default function SignIn(){
     axios.get(url, {
   })
   .then(response=>{
-      console.log(response.data);
+    console.log(response.data.data.access_role_id)
       if(response.data.code=="200"){
         localStorage.setItem("Account",response.data.data.access_role_id)
         localStorage.setItem("user",JSON.stringify(response.data.data))
-        if(response.data.data.access_role_id==4){
+        if(response.data.data.access_role_id==4 || 1){
           setSelectedRole("Human Resources")
           router.push(DEFAULT_REDIRECTS.hrdashboard)
         }else{
+          
           setSelectedRole("Staff")
           router.push(DEFAULT_REDIRECTS.staffdashboard)
         }
