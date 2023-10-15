@@ -8,15 +8,9 @@ export const useRoleContext = () => useContext(RoleContext);
 
 
 export const RoleProvider = ({ children }) => {
-  let initialRole = "";
-  const [selectedRole, setSelectedRole] = useState("");
-  useEffect(()=>{
-    const initialRole = localStorage.getItem('selectedRole');    
-  },[])
-  useEffect(()=>{
-    setSelectedRole(localStorage.getItem('selectedRole'));
-  },[initialRole])
+  const initialRole = localStorage.getItem('selectedRole');
 
+  const [selectedRole, setSelectedRole] = useState(initialRole || null);
 
   // Use useEffect to save the selected role to localStorage whenever it changes
   useEffect(() => {
