@@ -21,16 +21,16 @@ export default function ApplicantListingTable({ applicant_listings }) {
         <Table.Body className="divide-y">
             {applicant_listings?.map((app_listing) => (
             <Table.Row
-                key={app_listing.Applicant_ID}
+                key={app_listing.applicant_id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
             >
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                <Link href={`/jobs/${app_listing.Role_Listing_ID}`}>
-                    {app_listing.Application_ID}
+                <Link href={`/jobs/${app_listing.role_listing_id}`}>
+                    {app_listing.application_id}
                 </Link>
                 </Table.Cell>
-                <Table.Cell>{app_listing.Application_Details}</Table.Cell>
-                <Table.Cell>{app_listing.Application_Date}</Table.Cell>
+                <Table.Cell>{app_listing.application_details}</Table.Cell>
+                <Table.Cell>{app_listing.application_date}</Table.Cell>
             </Table.Row>
             ))}
             
