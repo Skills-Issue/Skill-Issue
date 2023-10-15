@@ -21,11 +21,10 @@ export default function SignIn(){
       if(response.data.code=="200"){
         localStorage.setItem("Account",response.data.data.access_role_id)
         localStorage.setItem("user",JSON.stringify(response.data.data))
-        if(response.data.data.access_role_id==4 || 1){
+        if(response.data.data.access_role_id==4 || response.data.data.access_role_id==1){
           setSelectedRole("Human Resources")
           router.push(DEFAULT_REDIRECTS.hrdashboard)
         }else{
-          
           setSelectedRole("Staff")
           router.push(DEFAULT_REDIRECTS.staffdashboard)
         }
