@@ -7,9 +7,9 @@ import logging
 
 
 app = Flask(__name__)
+CORS(app)
 password = config("DB_PASSWORD")
 username = config("DB_USERNAME")
-
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -28,7 +28,6 @@ else:
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-CORS(app)
 
 class Role(db.Model):
     __tablename__ = "role"
@@ -249,15 +248,20 @@ def create_role_listing():
     try:
         data = request.get_json()
 
+        # Find the largest role_listing_id in the database
+        largest_role_listing_id = db.session.query(db.func.max(RoleListing.role_listing_id)).scalar()
+
+        # Increment the largest role_listing_id by 1
+        new_role_listing_id = largest_role_listing_id + 1 if largest_role_listing_id is not None else 1
+
         new_role_listing = RoleListing(
+            role_listing_id=new_role_listing_id,
             role_name=data["role_name"],
             role_details=data["role_details"],
             creation_date=data["creation_date"],
             expiry_date=data["expiry_date"],
             role_author_id=data["role_author_id"],
         )
-        
-        #logging.debug(f"New RoleListing: {new_rolelisting}")
 
         db.session.add(new_role_listing)
         db.session.commit()
@@ -265,6 +269,45 @@ def create_role_listing():
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
 
+@app.route('/edit/<int:role_listing_id>', methods=['GET'])
+def get_role_listing_by_id(role_listing_id):
+    try:
+        role_listing = RoleListing.query.get(role_listing_id)
+
+        if not role_listing:
+            return jsonify({"code": 404, "message": "Role Listing not found"})
+
+        role_data = {
+            "role_name": role_listing.role_name,
+            "role_details": role_listing.role_details,
+            "expiry_date": role_listing.expiry_date.strftime("%Y-%m-%d"),
+            "creation_date": role_listing.creation_date.strftime("%Y-%m-%d"),
+            "role_author_id": role_listing.role_author_id
+        }
+
+        return jsonify({"code": 200, "data": role_data})
+    except Exception as e:
+        return jsonify({"code": 500, "message": str(e)})
+
+@app.route("/edit/<int:role_listing_id>", methods=["PUT"])
+def edit_role_listing(role_listing_id):
+    try:
+        data = request.get_json()
+        role_listing = RoleListing.query.get(role_listing_id)
+
+        if not role_listing:
+            return jsonify({"code": 404, "message": "RoleListing not found"})
+
+        role_listing.role_name = data.get("role_name", role_listing.role_name)
+        role_listing.role_details = data.get("role_details", role_listing.role_details)
+        role_listing.creation_date = data.get("creation_date", role_listing.creation_date)
+        role_listing.expiry_date = data.get("expiry_date", role_listing.expiry_date)
+        role_listing.role_author_id = data.get("role_author_id", role_listing.role_author_id)
+
+        db.session.commit()
+        return jsonify({"code": 200, "message": "RoleListing edited successfully"})
+    except Exception as e:
+        return jsonify({"code": 500, "message": str(e)})
 
 @app.route("/rolelistingwithskills")
 def get_role_listings_with_skills():

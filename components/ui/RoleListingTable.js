@@ -60,7 +60,7 @@ export default function RoleListingTable({}) {
               {selectedRole=="Human Resources" &&(
               <Link
                 className="font-medium text-cyan-600 dark:text-cyan-500"
-                href="/jobs/edit"
+                href={`/jobs/edit/${listing.role_listing_id}`}
               >
                 <Outline caption={"Edit"}></Outline>
               </Link>

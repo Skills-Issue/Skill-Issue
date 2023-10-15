@@ -1,21 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 
-function CustomInput({ onSubmit }) {
+function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
+
+  // Initialize formData with initialData
+  // Define formData state
   const [formData, setFormData] = useState({
-    // Role_Listing_ID: 0,
     role_name: "",
     role_details: "",
     expiry_date: "",
     creation_date: "",
     role_author_id: null,
   });
+
+  // Use useEffect to set formData when initialData is available
+  useEffect(() => {
+    setFormData(initialData);
+  }, [initialData]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -26,6 +33,10 @@ function CustomInput({ onSubmit }) {
   };
 
   const [Cdate, setDate] = useState(dayjs()); //for expiry date
+
+  useEffect(() => {
+    setDate(dayjs(initialData.expiry_date, "YYYY-MM-DD"));
+  }, [initialData]);
 
   const getCurrentDate = () => {
     const currentDate = new Date();
@@ -65,6 +76,7 @@ function CustomInput({ onSubmit }) {
           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
           placeholder="e.g. Janitor"
           required
+          disabled= {isRoleNameDisabled}
         />
       </div>
       <div className="mb-6">
@@ -106,7 +118,7 @@ function CustomInput({ onSubmit }) {
         className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
       >
         <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-          Create Role Listing
+         {caption}
         </span>
       </button>
     </form>

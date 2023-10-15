@@ -8,6 +8,14 @@ export default function create(){
         return JSON.parse(localStorage.getItem("user")).staff_id
     };
 
+    const [initialData, setInitialData] = useState({
+      role_name: "",
+      role_details: "",
+      expiry_date: "",
+      creation_date: "",
+      role_author_id: null,
+    });
+
     const handleSubmit = async (formData) => {
         try {
             // Get the logged-in staff ID
@@ -42,7 +50,8 @@ export default function create(){
 
     return(
         <div>
-            <CustomInput onSubmit={handleSubmit}/>
+            <CustomInput onSubmit={handleSubmit} caption="Create Role Listing" 
+            initialData={initialData} isRoleNameDisabled={false}/>
         </div>
         
     )
