@@ -9,18 +9,23 @@ export default function ProfileCard(){
   
     
     return (
-    <div className="flex max-w-md flex-col gap-4 ">
-      <h1 className="text-2xl font-semibold">Profile</h1>
+    <div className="flex max-w-md flex-col gap-2 ">
+      
       <div>
-        <div className="mb-1 block text-xl"> 
+        <div className="mb-1 block text-xl font-semibold text-gray-700"> 
           {User.staff_fname + " " + User.staff_lname}
         </div>
         
       </div>
       <div>
-      <div className="mb-1 block text-xl "> 
-          {User.email}
+      <div className="mb-1 block text-sm "> 
+          Email: <span className='text-blue-800'>{User.email}</span>
         </div>
+      </div>
+      <div>
+        <div className="mb-1 block text-sm "> 
+          Department: <span className='text-blue-800'>{User.dept}</span>
+          </div>
       </div>
        </div> 
       

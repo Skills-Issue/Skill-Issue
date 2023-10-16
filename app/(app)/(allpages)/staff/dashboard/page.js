@@ -6,7 +6,7 @@ import { Tabs } from "flowbite-react";
 import DefaultCard from "@/components/ui/Card";
 import ActiveCard from "@/components/ui/ActiveCard";
 import { list } from "postcss";
-import { select } from "@nextui-org/react";
+
 
 export default function Jobs() {
   const [activeTab, setActiveTab] = useState(0);
