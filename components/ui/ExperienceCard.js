@@ -26,8 +26,8 @@ export default function ExperienceCard(){
     return (
         <div>
             
-      <span>Skills </span>
-      <hr></hr>
+      <span >Skills </span>
+      <hr className="mb-2"></hr>
       {skillsArray?.length ? (
   skillsArray.map((skill, index) => (
     <span key={index} className="mb-2 text-2xl">
@@ -37,7 +37,7 @@ export default function ExperienceCard(){
     </span>
   ))
 ) : (
-  <span className="text-xl">None</span>
+  <span className="text-sm">No skills available</span>
 )}
 
       </div>
