@@ -1,40 +1,34 @@
 "use client"
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
+import { useState, useEffect } from 'react'
 
 export default function ProfileCard(){
+  const [data, setData] = useState(null)
+  const User = JSON.parse(localStorage.getItem("user")) 
+  
+  
+    
     return (
-    <form className="flex max-w-md flex-col gap-4 my-4 mx-auto">
-      <div>
-        <div className="mb-2 block">
-          <Label
-            htmlFor="email1"
-            value="Your email"
-          />
-        </div>
-        <TextInput
-          id="email1"
-          placeholder="name@flowbite.com"
-          required
-          type="email"
-        />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label
-            htmlFor="password1"
-            value="Your password"
-          />
-        </div>
-        <TextInput
-          id="password1"
-          required
-          type="password"
-        />
-      </div>
+    <div className="flex max-w-md flex-col gap-2 ">
       
-      <Button type="submit" gradientDuoTone="tealToLime">
-        Submit
-      </Button>
-    </form>
+      <div>
+        <div className="mb-1 block text-xl font-semibold text-gray-700"> 
+          {User.staff_fname + " " + User.staff_lname}
+        </div>
+        
+      </div>
+      <div>
+      <div className="mb-1 block text-sm "> 
+          Email: <span className='text-blue-800'>{User.email}</span>
+        </div>
+      </div>
+      <div>
+        <div className="mb-1 block text-sm "> 
+          Department: <span className='text-blue-800'>{User.dept}</span>
+          </div>
+      </div>
+       </div> 
+      
+    
     )
 }

@@ -7,6 +7,7 @@ import DefaultCard from "@/components/ui/Card";
 import ActiveCard from "@/components/ui/ActiveCard";
 import { list } from "postcss";
 
+
 export default function Jobs() {
   const [activeTab, setActiveTab] = useState(0);
   const tabsRef = useRef(null);
@@ -18,7 +19,7 @@ export default function Jobs() {
   const [selected,setSelected] = useState(false);
   //console.log(activeTab);
   const searchListings = listings.filter((listing) => {
-    return listing.Role_Name.toLowerCase().includes(searchField);
+    return listing.role_name.toLowerCase().includes(searchField);
   });
 
   useEffect(() => {
@@ -26,25 +27,28 @@ export default function Jobs() {
       setWaiting(true);
       const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
       const data = await res.json();
-      let newList = data.data.rolelistings;
+      let newList = data.data.role_listings_with_skills;
       if (activeTab == 0) {
         // newList = newList.filter()
       } else {
       }
       setListings(newList);
+      console.log(newList);
       setWaiting(false);
     };
     fetchListingData();
   }, []);
-  const handleSelect = (roleId) => {
+  function handleSelect(roleId) {
     let selectedListing = listings.find(
-      (listing) => listing.Role_Listing_ID === roleId
+      (listing) => listing.role_listing_id === roleId
     );
+    console.log(selectedListing);
     setActiveListing(selectedListing);
-    console.log(activeListing);
     setSelected(true);
     console.log(selected)
   };
+
+
 
   return (
     <div className="mt-4">
@@ -58,10 +62,9 @@ export default function Jobs() {
               {waiting ? <h1>Fetching...</h1> : null}
               <SearchInput setData={setSearchField} />
               {searchListings?.map((listing) => (
-                <div key={listing.Role_Listing_ID} className="mb-4">
+                <div key={listing.role_listing_id} className="mb-4" onClick={() => handleSelect(listing.role_listing_id)}>
                   <DefaultCard
                     rolelisting={listing}
-                    handleSelect={handleSelect}
                   />
                 </div>
               ))}
@@ -78,6 +81,7 @@ export default function Jobs() {
             {listings?.map((listing) => (
               <div key={listing.Role_Listing_ID} className="mb-4">
                 <DefaultCard rolelisting={listing} />
+                1
               </div>
             ))}
           </div>

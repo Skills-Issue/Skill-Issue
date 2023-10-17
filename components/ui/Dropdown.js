@@ -7,20 +7,21 @@ import { useRoleContext } from '../authentication/RoleContext';
 export default function InlineDropdown() {
   
   const { selectedRole, setSelectedRole } = useRoleContext();
-
-
-  function toggleRole() {
-    setSelectedRole((prevRole) =>
-      prevRole === 'Human Resources' ? 'Staff' : 'Human Resources'
-    );
+  
+  function ChangeToStaff(){
+    setSelectedRole("Staff")
   }
+  function ChangeToHumanResources(){
+    setSelectedRole("Human Resources")
+  }
+
 
   return (
     <Dropdown inline label={selectedRole || 'Human Resources'} className='{}'>
-      <Link href='/hr/dashboard' onClick={toggleRole}>
+      <Link href='/hr/dashboard' onClick={ChangeToHumanResources}>
         <Dropdown.Item>Human Resources</Dropdown.Item>
       </Link>
-      <Link href='/staff/dashboard' onClick={toggleRole}>
+      <Link href='/staff/dashboard' onClick={ChangeToStaff}>
         <Dropdown.Item>Staff</Dropdown.Item>
       </Link>
     </Dropdown>
