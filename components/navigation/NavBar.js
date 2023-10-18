@@ -67,8 +67,9 @@ export default function NavbarWithDropdown() {
   // }, [AccType]);
 
   return (
-    <Navbar fluid rounded className="min-h-16">
-      <Navbar.Brand href="/">
+    
+    <Navbar fluid rounded >
+      <Navbar.Brand >
         <img className="mr-3 h-6 sm:h-9" src="/SBRP.png" />
       </Navbar.Brand>
       <div className="flex md:order-2">
@@ -119,5 +120,6 @@ export default function NavbarWithDropdown() {
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
+    
   );
 }

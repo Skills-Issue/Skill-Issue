@@ -3,7 +3,7 @@ import { Card } from "flowbite-react";
 
 export default function DefaultCard({keyProp, rolelisting }) {
   return (
-    <Card className="m-2 max-w-md" href="#">
+    <Card className="m-2 max-w-sm" href="#">
       <div className="flex flex-col">
         <div className="flex flex-row mb-3">
           <div className="flex-shrink-0 mr-3">
@@ -22,11 +22,12 @@ export default function DefaultCard({keyProp, rolelisting }) {
           </div>
         </div>
         <div className="flex flex-row justify-start flex-wrap">
-          {rolelisting?.skills.map((skill) => (
-            <span key={skill} className="bg-blue-100 my-1 text-blue-800 text-sm font-medium mr-2 px-2.5  py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-              {skill}
-            </span>
-          ))}
+        {rolelisting?.skills.slice(0, 4).map((skill, index) => (
+  <span key={index} className="bg-blue-100 my-1 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+    {skill}
+  </span>
+))}
+
         </div>
         
       </div>

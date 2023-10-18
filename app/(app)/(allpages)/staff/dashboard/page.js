@@ -5,8 +5,10 @@ import { useState, useEffect, useRef } from "react";
 import { Tabs } from "flowbite-react";
 import DefaultCard from "@/components/ui/Card";
 import ActiveCard from "@/components/ui/ActiveCard";
+import Outline from "@/components/ui/Button";
 import { list } from "postcss";
-
+import Filter from "@/components/ui/Filter/FilterButton";
+import DismissableModal from "@/components/ui/Filter/Modal";
 
 export default function Jobs() {
   const [activeTab, setActiveTab] = useState(0);
@@ -21,6 +23,10 @@ export default function Jobs() {
   const searchListings = listings.filter((listing) => {
     return listing.role_name.toLowerCase().includes(searchField);
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  
+
 
   useEffect(() => {
     const fetchListingData = async () => {
@@ -47,20 +53,34 @@ export default function Jobs() {
     setSelected(true);
     console.log(selected)
   };
+  function openModal(){
+    setIsModalOpen(true);
+  }
+  function closeModal(){
+    setIsModalOpen(false);
+  }
 
+  
 
 
   return (
-    <div className="mt-4">
-      <Tabs.Group
-        ref={props.tabsRef}
-        onActiveTabChange={(tab) => props.setActiveTab(tab)}
-      >
-        <Tabs.Item active icon={HiUserCircle} title="Best Matches">
+    <div>
+      
+          <div className="flex-row bg-white rounded-t-md flex justify-between items-center m-2 border-b-[1px] sticky top-0">
+              <div className="text-xl m-2 font-bold">Role Listings</div>
+              <div className="w-1/2 ">
+              <SearchInput setData={setSearchField} />
+              </div>
+            <div className="my-auto">
+              <Filter openModal={openModal}></Filter>
+              {isModalOpen && <DismissableModal show={isModalOpen} onClose={closeModal}/>}
+            </div>
+          </div>
+          
           <div className="flex flex-row">
             <div className="mr-4 h-screen overflow-y-auto flex-grow-1">
               {waiting ? <h1>Fetching...</h1> : null}
-              <SearchInput setData={setSearchField} />
+              
               {searchListings?.map((listing) => (
                 <div key={listing.role_listing_id} className="mb-4" onClick={() => handleSelect(listing.role_listing_id)}>
                   <DefaultCard
@@ -73,21 +93,9 @@ export default function Jobs() {
               {selected?<ActiveCard activeListing={activeListing} />:"nocard"}
             </div>
           </div>
-        </Tabs.Item>
+        
 
-        <Tabs.Item icon={HiClipboardList} title="Most Recent">
-          {waiting ? <h1>Fetching...</h1> : null}
-          <div className="mr-4">
-            {listings?.map((listing) => (
-              <div key={listing.Role_Listing_ID} className="mb-4">
-                <DefaultCard rolelisting={listing} />
-                1
-              </div>
-            ))}
-          </div>
-          <div>hi</div>
-        </Tabs.Item>
-      </Tabs.Group>
+        
     </div>
   );
 }
