@@ -15,7 +15,7 @@ export default function Jobs() {
   const [listings, setListings] = useState([]);
   const [waiting, setWaiting] = useState(false);
   const [searchField, setSearchField] = useState("");
-  const [activeListing, setActiveListing] = useState({}); // set id to this var
+  const [activeListing, setActiveListing] = useState({skills:[]}); // set id to this var
   const [selected,setSelected] = useState(false);
   //console.log(activeTab);
   const searchListings = listings.filter((listing) => {
@@ -33,7 +33,8 @@ export default function Jobs() {
       } else {
       }
       setListings(newList);
-      console.log(newList);
+      setActiveListing(newList[0]);
+      // console.log(newList[0]);
       setWaiting(false);
     };
     fetchListingData();
@@ -70,7 +71,7 @@ export default function Jobs() {
               ))}
             </div>
             <div className="flex-grow-1">
-              {selected?<ActiveCard activeListing={activeListing} />:"nocard"}
+              <ActiveCard activeListing={activeListing} />
             </div>
           </div>
         </Tabs.Item>

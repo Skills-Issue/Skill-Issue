@@ -4,7 +4,7 @@ import { Card } from "flowbite-react";
 
 export default function ActiveCard({activeListing}){
 return(
-    <Card className="m-2 max-w-md" href="#">
+    <Card className="m-2 max-w-lg" href="#">
       <div className="flex flex-col">
         <div className="flex flex-row mb-3">
           <div className="flex-shrink-0 mr-3">
