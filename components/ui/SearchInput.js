@@ -7,8 +7,8 @@ export default function SearchInput({ setData }) {
   };
 
   return (
-    <form>
-      <div className="m-2 mb-6 max-w-md relative">
+    <form className="w-full">
+      <div className="m-2 my-auto max-w-sm relative">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <svg
             className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -30,7 +30,7 @@ export default function SearchInput({ setData }) {
           type="search"
           id="default-search"
           onChange={handleInputChange}
-          className="w-full block p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="w-full block p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search Role Listings"
           required=""
         />
