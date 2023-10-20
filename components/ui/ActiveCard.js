@@ -1,9 +1,16 @@
-"use client"
-import { Card } from "flowbite-react";
+"use client";
+import { Card, Progress } from "flowbite-react";
+import Chart from "chart.js/auto";
+import { useEffect, useState } from "react";
 
+export default function ActiveCard({ activeListing, userSkills }) {
 
-export default function ActiveCard({activeListing}){
-return(
+  const userSkillNames = userSkills.map((skillObj) => skillObj.skill_name);
+  const matchingSkills = activeListing.skills.filter((skill) =>
+    userSkillNames.includes(skill)
+  );
+
+  return (
     <Card className="m-2 max-w-lg" href="#">
       <div className="flex flex-col">
         <div className="flex flex-row mb-3">
@@ -22,6 +29,12 @@ return(
             </p>
           </div>
         </div>
+        <div id="charting">
+          These are the skills you have {matchingSkills}
+        </div>
+        {/* <div>
+          <Progress />
+        </div> */}
         <div className="flex flex-row justify-start flex-wrap">
           {activeListing?.skills.map((skill) => (
             <span
@@ -34,5 +47,5 @@ return(
         </div>
       </div>
     </Card>
-);
+  );
 }

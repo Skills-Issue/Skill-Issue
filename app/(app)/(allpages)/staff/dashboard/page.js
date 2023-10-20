@@ -24,9 +24,9 @@ export default function Jobs() {
     return listing.role_name.toLowerCase().includes(searchField);
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userdata, setUserData] = useState([]);
 
-  
-
+  const User = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchListingData = async () => {
@@ -43,8 +43,20 @@ export default function Jobs() {
       // console.log(newList[0]);
       setWaiting(false);
     };
+    console.log(User);
+    fetch(`http://127.0.0.1:5000/staffskill/${User.staff_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.code == 404) {
+          setUserData([]); // Set to an empty array instead of null
+        } else {
+          setUserData(data.data.staff_skills);
+        }
+      })
+      .catch((err) => console.log(err));
     fetchListingData();
   }, []);
+// console.log(userdata); 
   function handleSelect(roleId) {
     let selectedListing = listings.find(
       (listing) => listing.role_listing_id === roleId
@@ -66,37 +78,40 @@ export default function Jobs() {
 
   return (
     <div>
-      
-          <div className="flex-row bg-white rounded-t-md flex justify-between items-center m-2 border-b-[1px] sticky top-0">
-              <div className="text-xl m-2 font-bold">Role Listings</div>
-              <div className="w-1/2 ">
-              <SearchInput setData={setSearchField} />
-              </div>
-            <div className="my-auto">
-              <Filter openModal={openModal}></Filter>
-              {isModalOpen && <DismissableModal show={isModalOpen} onClose={closeModal}/>}
-            </div>
-          </div>
-          
-          <div className="flex flex-row">
-            <div className="mr-4 h-screen overflow-y-auto flex-grow-1">
-              {waiting ? <h1>Fetching...</h1> : null}
-              
-              {searchListings?.map((listing) => (
-                <div key={listing.role_listing_id} className="mb-4" onClick={() => handleSelect(listing.role_listing_id)}>
-                  <DefaultCard
-                    rolelisting={listing}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="flex-grow-1">
-              <ActiveCard activeListing={activeListing} />
-            </div>
-          </div>
-        
+      <div className="flex-row bg-white rounded-t-md flex justify-between items-center m-2 border-b-[1px] sticky top-0">
+        <div className="text-xl m-2 font-bold">Role Listings</div>
+        <div className="w-1/2 ">
+          <SearchInput setData={setSearchField} />
+        </div>
+        <div className="my-auto">
+          <Filter openModal={openModal}></Filter>
+          {isModalOpen && (
+            <DismissableModal show={isModalOpen} onClose={closeModal} />
+          )}
+        </div>
+      </div>
 
-        
+      <div className="flex flex-row">
+        <div className="mr-4 h-screen overflow-y-auto flex-grow-1">
+          {waiting ? <h1>Fetching...</h1> : null}
+
+          {searchListings?.map((listing) => (
+            <div
+              key={listing.role_listing_id}
+              className="mb-4"
+              onClick={() => handleSelect(listing.role_listing_id)}
+            >
+              <DefaultCard rolelisting={listing} />
+            </div>
+          ))}
+        </div>
+        <div className="flex-grow-1">
+          <ActiveCard
+            activeListing={activeListing}
+            userSkills={userdata}
+          />
+        </div>
+      </div>
     </div>
   );
 }

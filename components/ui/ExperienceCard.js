@@ -9,15 +9,17 @@ export default function ExperienceCard(){
         fetch(`http://127.0.0.1:5000/staffskill/${User.staff_id}`)
           .then((res) => res.json())
           .then((data) => {
+            console.log(data);
             if(data.code==404){
               setData(null)
             }else{
               setData(data.data.staff_skills);
             }
+
           })
       }, []);
 
-      
+
         var skillsArray = null;
         if(data!= null){
           var skillsArray = Object.values(data);
