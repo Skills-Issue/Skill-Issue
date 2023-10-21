@@ -11,7 +11,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
   );
 
   return (
-    <Card className="m-2 max-w-lg" href="#">
+    <Card className="m-2 max-w-lg" href={`dashboard/application/${activeListing?.role_listing_id}`}>
       <div className="flex flex-col">
         <div className="flex flex-row mb-3">
           <div className="flex-shrink-0 mr-3">
@@ -30,7 +30,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
           </div>
         </div>
         <div id="charting">
-          These are the skills you have {matchingSkills}
+          These are the skills you have {matchingSkills}  
         </div>
         {/* <div>
           <Progress />

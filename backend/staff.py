@@ -125,9 +125,9 @@ class RoleSkill(db.Model):
 
 class RoleApplication(db.Model):
     __tablename__ = "role_application"
-    application_id = db.Column(db.Integer, primary_key=True)
+    application_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     role_listing_id = db.Column(db.Integer, nullable=False)
-    applicant_id = db.Column(db.Integer, autoincrement=True)
+    applicant_id = db.Column(db.Integer, nullable=False)
     application_details = db.Column(db.Text(), nullable=False)
     application_date = db.Column(db.Date, nullable=False)
 

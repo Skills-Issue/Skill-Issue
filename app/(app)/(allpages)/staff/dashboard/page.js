@@ -101,7 +101,9 @@ export default function Jobs() {
               className="mb-4"
               onClick={() => handleSelect(listing.role_listing_id)}
             >
+
               <DefaultCard rolelisting={listing} />
+              
             </div>
           ))}
         </div>
