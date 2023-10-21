@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { Table } from "flowbite-react";
 import Link from "next/link";
-import { useRoleContext } from '../authentication/RoleContext';
+import { useRoleContext } from "../authentication/RoleContext";
 import Outline from "./Button";
 
 export default function RoleListingTable({}) {
-  
   const [listings, setListings] = useState([]);
+  const [applicantCounts, setApplicantCounts] = useState({});
   const [waiting, setWaiting] = useState(false);
   const { selectedRole, setSelectedRole } = useRoleContext();
 
@@ -17,11 +17,32 @@ export default function RoleListingTable({}) {
       setWaiting(true);
       const res = await fetch("http://127.0.0.1:5000/rolelistings");
       const data = await res.json();
+      // res.json().data.role_listings
       setListings(data.data.role_listings);
       setWaiting(false);
     };
     fetchListingData();
   }, []);
+
+  useEffect(() => {
+    // Fetch applicant counts when listings change
+    const fetchApplicantCounts = async () => {
+      const counts = {};
+      for (const listing of listings) {
+        const count = await GetApplicantCount(listing.role_listing_id);
+        counts[listing.role_listing_id] = count;
+      }
+      console.log(counts)
+      setApplicantCounts(counts);
+    };
+    fetchApplicantCounts();
+  }, [listings]);
+
+  async function GetApplicantCount(role_listing_id) {
+    const res = await fetch(`http://127.0.0.1:5000/countrolelistings/${role_listing_id}`);
+    const data = await res.json();
+    return data.data;
+  }
 
   return (
     <Table>
@@ -48,31 +69,35 @@ export default function RoleListingTable({}) {
             </Table.Cell>
             <Table.Cell>{listing.role_details}</Table.Cell>
             <Table.Cell>{listing.expiry_date}</Table.Cell>
-            <Table.Cell><p className="text-center">Active</p></Table.Cell>
             <Table.Cell>
-              <a 
-                className="text-cyan-600 hover:underline dark:text-cyan-500" 
+              <p className="text-center">Active</p>
+            </Table.Cell>
+            <Table.Cell>
+              <a
+                className="text-cyan-600 hover:underline dark:text-cyan-500"
                 href={`/jobs/${listing.role_listing_id}`}
               >
-                <p>14</p>
-              </a></Table.Cell>
+                <p>{applicantCounts[listing.role_listing_id]}
+                </p>
+              </a>
+            </Table.Cell>
             <Table.Cell>
-              {selectedRole=="Human Resources" &&(
-              <Link
-                className="font-medium text-cyan-600 dark:text-cyan-500"
-                href={`/jobs/edit/${listing.role_listing_id}`}
-              >
-                <Outline caption={"Edit"}></Outline>
-              </Link>
-        )}
-        {selectedRole=="Staff" &&(
-              <Link
-                className="font-medium text-cyan-600 dark:text-cyan-500"
-                href="/jobs/"
-              >
-                <Outline caption={"Apply"}></Outline>
-              </Link>
-        )}
+              {selectedRole == "Human Resources" && (
+                <Link
+                  className="font-medium text-cyan-600 dark:text-cyan-500"
+                  href={`/jobs/edit/${listing.role_listing_id}`}
+                >
+                  <Outline caption={"Edit"}></Outline>
+                </Link>
+              )}
+              {selectedRole == "Staff" && (
+                <Link
+                  className="font-medium text-cyan-600 dark:text-cyan-500"
+                  href="/jobs/"
+                >
+                  <Outline caption={"Apply"}></Outline>
+                </Link>
+              )}
             </Table.Cell>
           </Table.Row>
         ))}
