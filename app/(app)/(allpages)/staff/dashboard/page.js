@@ -43,7 +43,7 @@ export default function Jobs() {
       // console.log(newList[0]);
       setWaiting(false);
     };
-    console.log(User);
+    // console.log(User);
     fetch(`http://127.0.0.1:5000/staffskill/${User.staff_id}`)
       .then((res) => res.json())
       .then((data) => {
