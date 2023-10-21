@@ -21,7 +21,8 @@ if __name__ == "__main__":
         + password
         + "@skills-issue-sg.ccbebjzsuilf.ap-southeast-1.rds.amazonaws.com:3306/sbrp"
     )
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 100, "pool_recycle": 280}
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_size": 100, "pool_recycle": 280}
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite://"
 
@@ -29,37 +30,42 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
+
 class Role(db.Model):
     __tablename__ = "role"
     role_name = db.Column(db.String(20), primary_key=True)
     role_desc = db.Column(db.Text(), nullable=False)
-    
+
     def json(self):
         return {
             "role_name": self.role_name,
             "role_desc": self.role_desc,
         }
 
+
 class AccessControl(db.Model):
     __tablename__ = "access_control"
     access_id = db.Column(db.Integer, primary_key=True)
     access_control_name = db.Column(db.String(20), nullable=False)
-    
+
     def json(self):
         return {
             "access_id": self.access_id,
             "access_control_name": self.access_control_name,
         }
 
+
 class Skill(db.Model):
     __tablename__ = "skill"
     skill_name = db.Column(db.String(50), primary_key=True)
     skill_desc = db.Column(db.Text(), nullable=False)
+
     def json(self):
         return {
             "skill_name": self.skill_name,
             "skill_desc": self.skill_desc,
         }
+
 
 class Staff(db.Model):
     __tablename__ = "staff"
@@ -82,11 +88,12 @@ class Staff(db.Model):
             "access_role_id": self.access_role_id,
         }
 
+
 class StaffSkill(db.Model):
     __tablename__ = "staff_skill"
     staff_id = db.Column(db.Integer, primary_key=True)
     skill_name = db.Column(db.String(50), primary_key=True)
-    
+
     def json(self):
         return {
             "staff_id": self.staff_id,
@@ -96,7 +103,8 @@ class StaffSkill(db.Model):
 
 class RoleListing(db.Model):
     __tablename__ = "role_listing"
-    role_listing_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    role_listing_id = db.Column(
+        db.Integer, primary_key=True, autoincrement=True)
     role_name = db.Column(db.String(20), nullable=False)
     role_details = db.Column(db.Text, nullable=True)
     creation_date = db.Column(db.Date, nullable=False)
@@ -112,7 +120,6 @@ class RoleListing(db.Model):
             "expiry_date": self.expiry_date,
             "role_author_id": self.role_author_id,
         }
-    
 
 
 class RoleSkill(db.Model):
@@ -123,11 +130,13 @@ class RoleSkill(db.Model):
     def json(self):
         return {"role_name": self.role_name, "skill_name": self.skill_name}
 
+
 class RoleApplication(db.Model):
     __tablename__ = "role_application"
-    application_id = db.Column(db.Integer, primary_key=True)
+    application_id = db.Column(
+        db.Integer, primary_key=True, autoincrement=True)
     role_listing_id = db.Column(db.Integer, nullable=False)
-    applicant_id = db.Column(db.Integer, autoincrement=True)
+    applicant_id = db.Column(db.Integer, nullable=False)
     application_details = db.Column(db.Text(), nullable=False)
     application_date = db.Column(db.Date, nullable=False)
 
@@ -176,10 +185,12 @@ class RoleListingWithSkills:
 
 @app.route("/jobs/<int:role_listing_id>")
 def get_applicant_by_role_listing_id(role_listing_id):
-    applicant = RoleApplication.query.filter_by(role_listing_id=role_listing_id).all()
+    applicant = RoleApplication.query.filter_by(
+        role_listing_id=role_listing_id).all()
     if applicant:
         return jsonify(
-            {"code": 200, "data": [applicant.json() for applicant in applicant]}
+            {"code": 200, "data": [applicant.json()
+                                   for applicant in applicant]}
         )
     return jsonify({"code": 404, "message": "No user found"})
 
@@ -205,7 +216,8 @@ def apply_for_role(role_listing_id):
 def get_all_staff():
     staff_list = Staff.query.all()
     return jsonify(
-        {"code": 200, "data": {"staffs": [staff.json() for staff in staff_list]}}
+        {"code": 200, "data": {"staffs": [
+            staff.json() for staff in staff_list]}}
     )
 
 
@@ -216,19 +228,21 @@ def get_staff_by_email(email):
         return jsonify({"code": 200, "data": staff.json()})
     return jsonify({"code": 404, "message": "No user found"})
 
+
 @app.route("/staffskill/<string:staff_id>")
 def get_staff_skill_by_id(staff_id):
     staffskills = StaffSkill.query.filter_by(staff_id=staff_id).all()
     if staffskills:
         return jsonify(
             {
-                "code":200, 
-                "data":{
+                "code": 200,
+                "data": {
                     "staff_skills": [staffskill.json() for staffskill in staffskills]
                 }
-                }
-            )
+            }
+        )
     return jsonify({"code": 404, "message": "No user found"})
+
 
 @app.route("/rolelistings")
 def get_all_rolelistings():
@@ -243,16 +257,28 @@ def get_all_rolelistings():
     )
 
 
+@app.route("/countrolelistings/<int:role_id>")
+def get_count(role_id):
+    count = RoleApplication.query.filter_by(role_listing_id=role_id).count()
+    return jsonify(
+        {"code": 200,
+         "data": count
+         }
+    )
+
+
 @app.route("/create", methods=["POST"])
 def create_role_listing():
     try:
         data = request.get_json()
 
         # Find the largest role_listing_id in the database
-        largest_role_listing_id = db.session.query(db.func.max(RoleListing.role_listing_id)).scalar()
+        largest_role_listing_id = db.session.query(
+            db.func.max(RoleListing.role_listing_id)).scalar()
 
         # Increment the largest role_listing_id by 1
-        new_role_listing_id = largest_role_listing_id + 1 if largest_role_listing_id is not None else 1
+        new_role_listing_id = largest_role_listing_id + \
+            1 if largest_role_listing_id is not None else 1
 
         new_role_listing = RoleListing(
             role_listing_id=new_role_listing_id,
@@ -268,6 +294,7 @@ def create_role_listing():
         return jsonify({"code": 201, "message": "RoleListing created successfully"})
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
+
 
 @app.route('/edit/<int:role_listing_id>', methods=['GET'])
 def get_role_listing_by_id(role_listing_id):
@@ -289,6 +316,7 @@ def get_role_listing_by_id(role_listing_id):
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
 
+
 @app.route("/edit/<int:role_listing_id>", methods=["PUT"])
 def edit_role_listing(role_listing_id):
     try:
@@ -299,15 +327,20 @@ def edit_role_listing(role_listing_id):
             return jsonify({"code": 404, "message": "RoleListing not found"})
 
         role_listing.role_name = data.get("role_name", role_listing.role_name)
-        role_listing.role_details = data.get("role_details", role_listing.role_details)
-        role_listing.creation_date = data.get("creation_date", role_listing.creation_date)
-        role_listing.expiry_date = data.get("expiry_date", role_listing.expiry_date)
-        role_listing.role_author_id = data.get("role_author_id", role_listing.role_author_id)
+        role_listing.role_details = data.get(
+            "role_details", role_listing.role_details)
+        role_listing.creation_date = data.get(
+            "creation_date", role_listing.creation_date)
+        role_listing.expiry_date = data.get(
+            "expiry_date", role_listing.expiry_date)
+        role_listing.role_author_id = data.get(
+            "role_author_id", role_listing.role_author_id)
 
         db.session.commit()
         return jsonify({"code": 200, "message": "RoleListing edited successfully"})
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
+
 
 @app.route("/rolelistingwithskills")
 def get_role_listings_with_skills():
@@ -315,9 +348,10 @@ def get_role_listings_with_skills():
     role_skills = RoleSkill.query.all()
     role_skills_dict = {}
     role_listings_with_skills = []
-    
+
     for role_skill in role_skills:
-      role_skills_dict[role_skill.role_name] = role_skills_dict.get(role_skill.role_name, []) + [role_skill.skill_name]
+        role_skills_dict[role_skill.role_name] = role_skills_dict.get(
+            role_skill.role_name, []) + [role_skill.skill_name]
 
     for role_listing in role_listings:
         if role_listing.role_name in role_skills_dict:

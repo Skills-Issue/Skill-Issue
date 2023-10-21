@@ -12,7 +12,7 @@ export default function ApplyCard(props) {
     e.preventDefault();
     console.log("submitted");
     const Userdata = JSON.parse(localStorage.getItem("user"));
-    const User_ID = Userdata.Staff_ID;
+    const User_ID = Userdata.staff_id;
     console.log(User_ID);
     const today = new Date();
     const year = today.getFullYear();
@@ -20,11 +20,11 @@ export default function ApplyCard(props) {
     const day = today.getDay();
     const formattedDate = year + "-" + month + "-" + day;
 
-    const Application = { "User_ID": 0, "Application_Details": msg, "Applicant_ID": User_ID, "Application_Date": formattedDate};
+    const Application = {"role_listing_id":props.props[1],"application_details": msg, "applicant_id": User_ID, "application_date": formattedDate};
     console.log(Application);
     setIsPending(true);
 
-    await fetch("http://127.0.0.1:5000/jobs/apply/1", {
+    await fetch("http://127.0.0.1:5000/jobs/apply/" + props.props[1], {
         method: "POST",
         headers: { "Content-Type": "application/json", },
         body: JSON.stringify(Application),
@@ -54,7 +54,7 @@ export default function ApplyCard(props) {
               </>
             }
             id="email1"
-            placeholder={props.email}
+            placeholder={props.props[0]}
             required
             type="email"
           />

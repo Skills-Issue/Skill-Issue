@@ -15,7 +15,9 @@ export default function ActiveCard({ activeListing, userSkills }) {
   );
 
   return (
-    <Card className="m-2  max-w-lg" href="#">
+
+    <Card className="m-2 max-w-lg" href={`dashboard/application/${activeListing?.role_listing_id}`}>
+
       <div className="flex flex-col">
         <div className="flex flex-row mb-3">
           <div className="flex-shrink-0 mr-3">
@@ -33,6 +35,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
             </p>
           </div>
         </div>
+
         <div className="mb-3">
           <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
             Project Overview:
