@@ -107,7 +107,7 @@ export default function Jobs() {
             </div>
           ))}
         </div>
-        <div className="flex-grow-1">
+        <div className="flex-grow-1  w-1/2">
           <ActiveCard
             activeListing={activeListing}
             userSkills={userdata}

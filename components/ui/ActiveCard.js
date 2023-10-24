@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import DoughnutChart from "./DoughnutChart";
 
 export default function ActiveCard({ activeListing, userSkills }) {
-
   const userSkillNames = userSkills.map((skillObj) => skillObj.skill_name);
   const matchingSkills = activeListing.skills.filter((skill) =>
     userSkillNames.includes(skill)
@@ -13,11 +12,14 @@ export default function ActiveCard({ activeListing, userSkills }) {
   const nonMatchingSkills = activeListing.skills.filter(
     (skill) => !userSkillNames.includes(skill)
   );
-
+    const percentage = Math.round((matchingSkills.length /
+                (matchingSkills.length + nonMatchingSkills.length)) *
+                100);
   return (
-
-    <Card className="m-2 max-w-lg" href={`dashboard/application/${activeListing?.role_listing_id}`}>
-
+    <Card
+      className="m-2 max-w-lg"
+      href={`dashboard/application/${activeListing?.role_listing_id}`}
+    >
       <div className="flex flex-col">
         <div className="flex flex-row mb-3">
           <div className="flex-shrink-0 mr-3">
@@ -79,11 +81,20 @@ export default function ActiveCard({ activeListing, userSkills }) {
           </div>
 
           <div className="mb-3">
-              <h5 className="text-base font-bold tracking-tight mb-5 text-gray-900 dark:text-white">
-                Missing Skills:
-              </h5>
-              <div><DoughnutChart userSkills={userSkillNames} jobSkills={activeListing.skills}/></div>
+            <h5 className="text-base font-bold tracking-tight mb-5 text-gray-900 dark:text-white">
+              Missing Skills:
+            </h5>
+            <div>
+              <DoughnutChart
+                userSkills={userSkillNames}
+                jobSkills={activeListing.skills}
+              />
             </div>
+            <p className={percentage>70?"text-green-500":"text-red-500"}>
+              Match percentage:{" "}
+              {percentage}%
+            </p>
+          </div>
         </div>
       </div>
     </Card>
