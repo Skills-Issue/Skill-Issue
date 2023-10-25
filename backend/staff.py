@@ -195,6 +195,7 @@ def get_applicant_by_role_listing_id(role_listing_id):
     return jsonify({"code": 404, "message": "No user found"})
 
 
+# Need to check the jobs/apply/<int:role_listing_id> route... the unittest got issues
 @app.route("/jobs/apply/<int:role_listing_id>", methods=["POST"])
 def apply_for_role(role_listing_id):
     try:
@@ -207,7 +208,7 @@ def apply_for_role(role_listing_id):
         )
         db.session.add(new_application)
         db.session.commit()
-        return jsonify({"code": 201, "message": "Application created successfully"})
+        return jsonify({"code": 200, "message": "Application created successfully"})
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
 
@@ -229,7 +230,7 @@ def get_staff_by_email(email):
     return jsonify({"code": 404, "message": "No user found"})
 
 
-@app.route("/staffskill/<string:staff_id>")
+@app.route("/staffskill/<int:staff_id>")
 def get_staff_skill_by_id(staff_id):
     staffskills = StaffSkill.query.filter_by(staff_id=staff_id).all()
     if staffskills:
@@ -291,7 +292,7 @@ def create_role_listing():
 
         db.session.add(new_role_listing)
         db.session.commit()
-        return jsonify({"code": 201, "message": "RoleListing created successfully"})
+        return jsonify({"code": 200, "message": "RoleListing created successfully"})
     except Exception as e:
         return jsonify({"code": 500, "message": str(e)})
 
