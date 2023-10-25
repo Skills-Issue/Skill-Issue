@@ -2,7 +2,7 @@ import unittest
 import json
 from datetime import datetime,date
 # Import your Flask app and SQLAlchemy db object
-from staff import app, db, RoleApplication,Staff, StaffSkill
+from staff import app, db, RoleApplication,Staff, StaffSkill, RoleListing,RoleSkill
 
 
 class staff(unittest.TestCase):
@@ -148,7 +148,22 @@ class staff(unittest.TestCase):
             staff_id=2,
             skill_name="Data Analysis"
         )
-        db.session.add_all([staff1, staff2])
+
+        role_listing1 = RoleListing(
+            role_name="Software Engineer",
+            role_details="Develop software applications",
+            creation_date=date(2023,10,25),
+            expiry_date=date(2023,11,25),
+            role_author_id=1
+        )
+        role_listing2 = RoleListing(
+            role_name="Data Analyst",
+            role_details="Analyze data for insights",
+            creation_date=date(2023,10,26),
+            expiry_date= date(2023,11,26),
+            role_author_id=2
+        )
+        db.session.add_all([staff1, staff2,staff_skill1,staff_skill2,role_listing1,role_listing2])
         db.session.commit()
 
     def test_get_all_staff(self):
@@ -189,18 +204,112 @@ class staff(unittest.TestCase):
         self.assertEqual(data["message"], "No user found")
 
 
-    # def test_get_staff_skill_by_id(self):
-    #     # Test the get_staff_skill_by_id route with an existing staff_id
-    #     response = self.app.get('/staffskill/1')
+    def test_get_staff_skill_by_id(self):
+        # Test the get_staff_skill_by_id route with an existing staff_id
+        response = self.app.get('/staffskill/1')
 
-    #     self.assertEqual(response.status_code, 200)  # Check for a successful response
+        self.assertEqual(response.status_code, 200)  # Check for a successful response
 
-    #     data = response.get_json()
-    #     print(data)
-    #     self.assertTrue("data" in data)
-    #     staff_skills = data["data"]["staff_skills"]
-    #     self.assertTrue(isinstance(staff_skills, list))
-    #     self.assertEqual(len(staff_skills), 1)  # Assuming we have added 1 staff skill in populate_test_data
+        data = response.get_json()
+        self.assertTrue("data" in data)
+        staff_skills = data["data"]["staff_skills"]
+        self.assertTrue(isinstance(staff_skills, list))
+        self.assertEqual(len(staff_skills), 1)  # Assuming we have added 1 staff skill in populate_test_data
+
+    def test_get_staff_skill_by_nonexistent_id(self):
+        # Test the get_staff_skill_by_id route with a nonexistent staff_id
+        response = self.app.get('/staffskill/999')
+
+        self.assertEqual(response.get_json()["code"], 404)  # Check for a 404 response
+
+        data = response.get_json()
+        self.assertTrue("message" in data)
+        self.assertEqual(data["message"], "No user found")
+
+
+    def test_get_all_role_listings(self):
+        # Test the get_all_rolelistings route
+        response = self.app.get('/rolelistings')
+
+        self.assertEqual(response.status_code, 200)  # Check for a successful response
+
+        data = response.get_json()
+        self.assertTrue("data" in data)
+        role_listings = data["data"]["role_listings"]
+        self.assertTrue(isinstance(role_listings, list))
+
+        # Check that the expected role listing data is returned
+        self.assertEqual(len(role_listings), 2)  # Assuming we have added 2 role listings in populate_test_data
+
+    def test_get_count_role_listings(self):
+        # Test the get_count_rolelistings route with an existing role_id
+        response = self.app.get('/countrolelistings/1')
+
+        self.assertEqual(response.status_code, 200)  # Check for a successful response
+
+        data = response.get_json()
+        self.assertTrue("data" in data)
+        count = data["data"]
+        self.assertEqual(count, 0)  # Assuming we have added 2 role applications for role_listing_id=1
+
+
+    def test_get_count_role_listings_with_nonexistent_id(self):
+        # Test the get_count_rolelistings route with a nonexistent role_id
+        response = self.app.get('/countrolelistings/999')
+
+        self.assertEqual(response.status_code, 200)  # Check for a successful response
+
+        data = response.get_json()
+        self.assertTrue("data" in data)
+        count = data["data"]
+        self.assertEqual(count, 0) 
+
+    def test_get_role_listings_with_skills(self):
+        # Create sample role listings and role skills in the test database
+        role_listing1 = RoleListing(
+            role_name="Role A",
+            role_details="Role A Details",
+            creation_date=date(2023,10,25),
+            expiry_date=date(2023,11,25),
+            role_author_id=1,
+        )
+        role_listing2 = RoleListing(
+            role_name="Role B",
+            role_details="Role B Details",
+            creation_date=date(2023,11,1),
+            expiry_date=date(2023,11,30),
+            role_author_id=2,
+        )
+
+        role_skill1 = RoleSkill(role_name="Role A", skill_name="Skill 1")
+        role_skill2 = RoleSkill(role_name="Role A", skill_name="Skill 2")
+
+        db.session.add_all([role_listing1, role_listing2, role_skill1, role_skill2])
+        db.session.commit()
+
+        response = self.app.get('/rolelistingwithskills')
+
+        self.assertEqual(response.status_code, 200)  # Check for a successful response
+
+        data = response.get_json()
+        self.assertTrue("data" in data)
+        role_listings_with_skills = data["data"]["role_listings_with_skills"]
+        self.assertEqual(len(role_listings_with_skills), 4)  # Check the number of role listings
+
+        # Verify the details of the role listings with skills
+        role_a_with_skills = next(
+            (item for item in role_listings_with_skills if item["role_name"] == "Role A"), None)
+        role_b_with_skills = next(
+            (item for item in role_listings_with_skills if item["role_name"] == "Role B"), None)
+
+        self.assertIsNotNone(role_a_with_skills)
+        self.assertEqual(role_a_with_skills["role_details"], "Role A Details")
+        self.assertEqual(len(role_a_with_skills["skills"]), 2)  # Role A has 2 skills
+
+        self.assertIsNotNone(role_b_with_skills)
+        self.assertEqual(role_b_with_skills["role_details"], "Role B Details")
+        self.assertEqual(len(role_b_with_skills["skills"]), 0)  # Role B has no skills
+   
 
 if __name__ == '__main__':
     unittest.main()
