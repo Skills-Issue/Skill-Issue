@@ -17,7 +17,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
                 100);
   return (
     <Card
-      className="m-2 max-w-lg"
+      className="m-2 max-w-full"
       href={`dashboard/application/${activeListing?.role_listing_id}`}
     >
       <div className="flex flex-col">

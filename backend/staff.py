@@ -380,6 +380,12 @@ def get_role_listings_with_skills():
             )
     return jsonify({"code": 200, "data": {"role_listings_with_skills": role_listings_with_skills}})
 
+@app.route("/skills")
+def get_role():
+    skill_list=Skill.query.all()
+    return jsonify(
+        {"code": 200, "data": {"staffs": [skill.json() for skill in skill_list]}}
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

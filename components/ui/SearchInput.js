@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function SearchInput({ setData }) {
   const handleInputChange = (event) => {
+    event.preventDefault()
     const newValue = event.target.value;
     setData(newValue);
   };

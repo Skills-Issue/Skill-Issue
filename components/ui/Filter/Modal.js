@@ -1,34 +1,68 @@
-'use client';
+import React, { useState } from "react";
+import { Button, Modal } from "flowbite-react";
+import InputSearch from "./InputSearch";
+import CloseButton from "./Close";
 
-import { Button, Modal } from 'flowbite-react';
+export default function DismissableModal({ show, onClose, defaultSkills,SendToPage }) {
+  const [parentState, setParentState] = useState([]);
 
-export default function DismissableModal({show, onClose}) {
-  
+  const data = defaultSkills.map((item, index) => {
+    return item.skill_name;
+  });
+
+  const updateData = (newSkill) => {
+    console.log(newSkill)
+    if (!parentState.includes(newSkill)) {
+      setParentState([...parentState, newSkill]);
+    }
+    
+  };
+
+  const removeSkill = (skillToRemove) => {
+    const updatedState = parentState.filter((item) => item !== skillToRemove);
+    setParentState(updatedState);
+    
+  };
+
+  const handleSubmit = () => {
+    SendToPage(parentState)
+  };
 
   return (
-      <Modal dismissible show={show} onClose={onClose} size={"lg"}>
-        <Modal.Header>Terms of Service</Modal.Header>
-        <Modal.Body>
-          <div className="space-y-6">
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
-              companies around the world are updating their terms of service agreements to comply.
-            </p>
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to
-              ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as
-              possible of high-risk data breaches that could personally affect them.
-            </p>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => props.setOpenModal(undefined)}>I accept</Button>
-          <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-            Decline
-          </Button>
-        </Modal.Footer>
-      </Modal>
-  )
+    <Modal dismissible show={show} onClose={onClose} size="lg">
+      <Modal.Header>Filter</Modal.Header>
+      <Modal.Body>
+        <div className="h-40">
+          <InputSearch data={data} updateParentState={updateData} />
+        </div>
+      </Modal.Body>
+      <Modal.Body>
+        <div className="max-h-32 flex flex-wrap flex-row">
+          {parentState.map((item, index) => (
+            <div key={item} className="bg-gray-100 text-sm font-medium focus:outline-none rounded-lg p-2 m-1 flex flex-row">
+              <div>{item}</div>
+              <button className="my-auto mx-1" onClick={() => removeSkill(item)}>
+                <CloseButton />
+              </button>
+            </div>
+          ))}
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button color="gray" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          color="gray"
+          onClick={() => {
+            onClose();
+            handleSubmit();
+          }}
+        >
+          Apply
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
 }
-
 

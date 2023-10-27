@@ -2,13 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import React, { useState } from 'react';
-import { useRoleContext } from "./RoleContext";
+
 import axios from 'axios';
 import { DEFAULT_REDIRECTS } from "@/lib/hooks/constants";
 
 export default function SignIn(){
   const router = useRouter()
-  const { selectedRole, setSelectedRole } = useRoleContext();
+  const [selectedRole, setSelectedRole] = useState(null);
   const [email, setEmail] = useState('')
   const [childData, setChildData] = useState(null);
 
@@ -22,10 +22,11 @@ export default function SignIn(){
         localStorage.setItem("Account",response.data.data.access_role_id)
         localStorage.setItem("user",JSON.stringify(response.data.data))
         if(response.data.data.access_role_id==4 || response.data.data.access_role_id==1){
-          setSelectedRole("Human Resources")
+          localStorage.setItem("selectedRole","Human Resources")
           router.push(DEFAULT_REDIRECTS.hrdashboard)
         }else{
-          setSelectedRole("Staff")
+          
+          localStorage.setItem("selectedRole","Staff")
           router.push(DEFAULT_REDIRECTS.staffdashboard)
         }
       } else {

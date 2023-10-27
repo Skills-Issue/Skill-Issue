@@ -1,6 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { RoleProvider } from '@/components/authentication/RoleContext'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,9 +19,9 @@ export default function RootLayout({ children }) {
      </head>
 
       <body className={inter.className}>
-        <RoleProvider>
+        
         <main className='container mx-auto'>{children}</main>
-        </RoleProvider>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
         </body>
     </html>

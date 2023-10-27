@@ -23,6 +23,7 @@ export default function ExperienceCard(){
         var skillsArray = null;
         if(data!= null){
           var skillsArray = Object.values(data);
+          console.log(skillsArray)
         }
     
     return (
