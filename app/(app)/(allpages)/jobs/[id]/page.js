@@ -22,7 +22,7 @@ export default function applicantListing( params) {
 
     return (
         <div>
-            {loading && applicant_listings && applicant_listings.length === 0 ? (
+            {loading && applicant_listings && applicant_listings.length === 0`` ? (
             <h1>Loading Applicants....</h1>
             ) : (
             <div>
