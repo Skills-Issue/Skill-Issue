@@ -15,34 +15,13 @@ export default function RoleListingTable({}) {
   useEffect(() => {
     const fetchListingData = async () => {
       setWaiting(true);
-      const res = await fetch("http://127.0.0.1:5000/rolelistings");
+      const res = await fetch("http://127.0.0.1:5000/rolelistingsappcount");
       const data = await res.json();
-      // res.json().data.role_listings
-      setListings(data.data.role_listings);
+      setListings(data.data.role_listings_app_count);
       setWaiting(false);
     };
     fetchListingData();
   }, []);
-
-  useEffect(() => {
-    // Fetch applicant counts when listings change
-    const fetchApplicantCounts = async () => {
-      const counts = {};
-      for (const listing of listings) {
-        const count = await GetApplicantCount(listing.role_listing_id);
-        counts[listing.role_listing_id] = count;
-      }
-      // console.log(counts)
-      setApplicantCounts(counts);
-    };
-    fetchApplicantCounts();
-  }, [listings]);
-
-  async function GetApplicantCount(role_listing_id) {
-    const res = await fetch(`http://127.0.0.1:5000/countrolelistings/${role_listing_id}`);
-    const data = await res.json();
-    return data.data;
-  }
 
   return (
     <Table>
@@ -77,7 +56,7 @@ export default function RoleListingTable({}) {
                 className="text-cyan-600 hover:underline dark:text-cyan-500"
                 href={`/jobs/${listing.role_listing_id}`}
               >
-                <p class="text-center">{applicantCounts[listing.role_listing_id]}
+                <p class="text-center">{listing.app_count}
                 </p>
               </a>
             </Table.Cell>
