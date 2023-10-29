@@ -221,6 +221,14 @@ def get_all_staff():
             staff.json() for staff in staff_list]}}
     )
 
+@app.route("/staff/<int:staff_id>")
+def get_staff_by_id(staff_id):
+    staff = Staff.query.filter_by(staff_id=staff_id).first()
+    if staff:
+        return jsonify({"code": 200, "data": staff.json()})
+    return jsonify({"code": 404, "message": "No user found"}
+    )
+
 
 @app.route("/staff/<string:email>")
 def get_staff_by_email(email):
@@ -379,6 +387,45 @@ def get_role_listings_with_skills():
                     [],
                 ).json()
             )
+    return jsonify({"code": 200, "data": {"role_listings_with_skills": role_listings_with_skills}})
+
+@app.route("/rolelistingwithskills/<int:role_listing_id>")
+def get_role_listing_with_skills_by_id(role_listing_id):
+    role_listing = RoleListing.query.filter_by(
+        role_listing_id=role_listing_id).first()
+    role_skills = RoleSkill.query.filter_by(
+        role_name=role_listing.role_name).all()
+    role_skills_dict = {}
+    role_listings_with_skills = []
+
+    for role_skill in role_skills:
+        role_skills_dict[role_skill.role_name] = role_skills_dict.get(
+            role_skill.role_name, []) + [role_skill.skill_name]
+
+    if role_listing.role_name in role_skills_dict:
+        role_listings_with_skills.append(
+            RoleListingWithSkills(
+                role_listing.role_listing_id,
+                role_listing.role_name,
+                role_listing.role_details,
+                role_listing.creation_date,
+                role_listing.expiry_date,
+                role_listing.role_author_id,
+                role_skills_dict[role_listing.role_name],
+            ).json()
+        )
+    else:
+        role_listings_with_skills.append(
+            RoleListingWithSkills(
+                role_listing.role_listing_id,
+                role_listing.role_name,
+                role_listing.role_details,
+                role_listing.creation_date,
+                role_listing.expiry_date,
+                role_listing.role_author_id,
+                [],
+            ).json()
+        )
     return jsonify({"code": 200, "data": {"role_listings_with_skills": role_listings_with_skills}})
 
 @app.route("/skills")

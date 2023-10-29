@@ -32,7 +32,7 @@ export default function RoleListingTable({}) {
         const count = await GetApplicantCount(listing.role_listing_id);
         counts[listing.role_listing_id] = count;
       }
-      console.log(counts)
+      // console.log(counts)
       setApplicantCounts(counts);
     };
     fetchApplicantCounts();
