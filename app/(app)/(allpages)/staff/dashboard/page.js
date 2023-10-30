@@ -1,12 +1,8 @@
 "use client";
 import SearchInput from "@/components/ui/SearchInput";
-import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { useState, useEffect, useRef } from "react";
-import { Tabs } from "flowbite-react";
 import DefaultCard from "@/components/ui/Card";
 import ActiveCard from "@/components/ui/ActiveCard";
-import Outline from "@/components/ui/Button";
-import { list } from "postcss";
 import Filter from "@/components/ui/Filter/FilterButton";
 import DismissableModal from "@/components/ui/Filter/Modal";
 import SortButton from "@/components/ui/SortButton";
@@ -114,11 +110,11 @@ export default function Jobs() {
   return (
     <div>
       <div className="flex-row bg-white rounded-t-md flex justify-between items-center m-2 border-b-[1px] sticky top-0">
-        <div className="text-xl m-2 font-bold">Role Listings</div>
-        <div className="w-1/2 ">
+        <div className="w-1/4 text-xl m-2 font-bold">Role Listings</div>
+        <div className="w-1/2 flex justify-center">
           <SearchInput setData={setSearchField} />
         </div>
-        <div className="my-auto">
+        <div className="w-1/4 flex justify-end my-auto">
         <SortButton myPropFunction= {sortListing} sortingDirection={ascending}></SortButton>
           <Filter openModal={openModal}></Filter>
           {isModalOpen && (

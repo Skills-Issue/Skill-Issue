@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function SearchInput({ setData }) {
   const handleInputChange = (event) => {
     event.preventDefault()
@@ -9,7 +7,7 @@ export default function SearchInput({ setData }) {
 
   return (
     <form className="w-full">
-      <div className="m-2 my-auto max-w-sm relative">
+      <div className="m-2 my-auto max-w-lg relative">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <svg
             className="w-4 h-4 text-gray-500 dark:text-gray-400"
