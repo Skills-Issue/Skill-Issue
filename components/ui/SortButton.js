@@ -25,7 +25,7 @@ export default function SortButton(props) {
           </svg>
         </div>
         <div className="flex items-center">
-          {props.sortingDirection ? (
+          {!props.sortingDirection ? (
             <svg
               className="w-4 h-4 text-white"
               aria-hidden="true"

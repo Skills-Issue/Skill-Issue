@@ -1,47 +1,81 @@
 import React, { useState } from "react";
-import { Button, Modal } from "flowbite-react";
+import { Button, Modal, Label, Radio } from "flowbite-react";
 import InputSearch from "./InputSearch";
 import CloseButton from "./Close";
 
-export default function DismissableModal({ show, onClose, defaultSkills, updateSkillsFunction, chosenSkills}) {
+export default function DismissableModal({
+  show,
+  onClose,
+  defaultSkills,
+  updateSkillsFunction,
+  chosenSkills,
+  ascending,
+}) {
   const [parentState, setParentState] = useState(chosenSkills);
-
+  let childAscending = ascending
   const data = defaultSkills.map((item, index) => {
     return item.skill_name;
   });
 
   const updateData = (newSkill) => {
-    console.log(newSkill)
     if (!parentState.includes(newSkill)) {
       setParentState([...parentState, newSkill]);
     }
-
   };
 
   const removeSkill = (skillToRemove) => {
     const updatedState = parentState.filter((item) => item !== skillToRemove);
     setParentState(updatedState);
-    
   };
 
   const handleSubmit = () => {
-    updateSkillsFunction(parentState)
+    let tempData = {skillsData: parentState, ascending: childAscending}
+    updateSkillsFunction(tempData);
   };
+
+  const onChange = (e) => {childAscending=(e.target.value==="false"); console.log(childAscending)};
 
   return (
     <Modal dismissible show={show} onClose={onClose} size="lg">
-      <Modal.Header>Filter</Modal.Header>
+      <Modal.Header>
+        <p className="pl-1 font-semibold">Filter and sort listings</p>
+      </Modal.Header>
+      <Modal.Body className="border-b">
+        <p className="text-lg font-semibold">Sort By</p>
+        <fieldset onChange={onChange} className="pt-4 flex flex-row" id="radio">
+          <div className="flex w-1/2 items-center gap-2">
+            <Radio
+              defaultChecked={ascending===true} 
+              id="ascending"
+              name="sortDirection"
+              value="false"
+            />
+            <Label className="text-md" htmlFor="ascending">Ascending</Label>
+          </div>
+          <div className="flex w-1/2 items-center gap-2">
+            <Radio defaultChecked={ascending===false} id="descending" name="sortDirection" value="true" />
+            <Label   className="text-md" htmlFor="descending">Descending</Label>
+          </div>
+        </fieldset>
+      </Modal.Body>
       <Modal.Body>
-        <div className="h-40">
+      <p className="text-lg pb-2 font-semibold">Filter By</p>
+        <div className="h-40 pb-2">
           <InputSearch data={data} updateParentState={updateData} />
         </div>
       </Modal.Body>
       <Modal.Body>
         <div className="max-h-32 flex flex-wrap flex-row">
           {parentState?.map((item, index) => (
-            <div key={item} className="bg-gray-100 text-sm font-medium focus:outline-none rounded-lg p-2 m-1 flex flex-row">
+            <div
+              key={item}
+              className="bg-gray-100 text-sm font-medium focus:outline-none rounded-lg p-2 m-1 flex flex-row"
+            >
               <div>{item}</div>
-              <button className="my-auto mx-1" onClick={() => removeSkill(item)}>
+              <button
+                className="my-auto mx-1"
+                onClick={() => removeSkill(item)}
+              >
                 <CloseButton />
               </button>
             </div>
@@ -49,8 +83,13 @@ export default function DismissableModal({ show, onClose, defaultSkills, updateS
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button color="gray" onClick={()=>{setParentState([])}}>
-          Clear
+        <Button
+          color="gray"
+          onClick={() => {
+            setParentState([]);
+          }}
+        >
+          Reset
         </Button>
         <Button
           color="gray"
@@ -65,4 +104,3 @@ export default function DismissableModal({ show, onClose, defaultSkills, updateS
     </Modal>
   );
 }
-

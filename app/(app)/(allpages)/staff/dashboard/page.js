@@ -9,18 +9,18 @@ import SortButton from "@/components/ui/SortButton";
 import { sortSkills } from "@/lib/utils";
 
 export default function Jobs() {
+  const User = JSON.parse(localStorage.getItem("user"));
   const [listings, setListings] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [activeListing, setActiveListing] = useState({ skills: [] });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
-  const [ascending, setAscending] = useState(true);
+  const [ascending, setAscending] = useState(false);
   const [skillItems, setSkillItems] = useState(null);
   const [chosenSkills, setChosenSkills] = useState([]);
   const [displayListings, setDisplayListings] = useState([]); // This is the list that is displayed on the page
 
-  const User = JSON.parse(localStorage.getItem("user"));
-
+  //USEEFFECTS
   useEffect(() => {
     const fetchListingData = async () => {
       const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
@@ -30,36 +30,36 @@ export default function Jobs() {
       setDisplayListings(newList);
       setActiveListing(newList[0]);
     };
-    fetch(`http://127.0.0.1:5000/staffskill/${User.staff_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.code == 404) {
-          setUserData([]); // Set to an empty array instead of null
-        } else {
-          setUserData(data.data.staff_skills);
-        }
-      })
-      .catch((err) => console.log(err));
-    fetchListingData();
-  }, []);
 
-  useEffect(() => {
     const fetchSkillData = async () => {
       const res = await fetch("http://127.0.0.1:5000/skills");
       const data = await res.json();
       let skillList = data.data.staffs;
       setSkillItems(skillList);
     };
+
+    const fetchUserData = async () => {
+      const res = await fetch(
+        `http://127.0.0.1:5000/staffskill/${User.staff_id}`
+      );
+      const data = await res.json();
+      if (data.code == 404) {
+        setUserData([]);
+      } else {
+        setUserData(data.data.staff_skills);
+      }
+    };
+
     fetchSkillData();
+    fetchListingData();
+    fetchUserData();
   }, []);
 
   useEffect(() => {
     filterSortSearch();
   }, [chosenSkills, ascending, searchField]);
 
-  //###########################################################################
-  // HERE ARE THE FUNCTIONS
-  //###########################################################################
+  //FUNCTIONS
 
   function handleSelect(roleId) {
     let selectedListing = listings.find(
@@ -97,12 +97,9 @@ export default function Jobs() {
     setIsModalOpen(false);
   }
 
-  function updateSkills(testData) {
-    setChosenSkills(testData);
-  }
-
-  function sortListing() {
-    setAscending(!ascending);
+  function updateSkills({skillsData, ascending}) {
+    setAscending(ascending);
+    setChosenSkills(skillsData);
   }
 
   return (
@@ -114,7 +111,7 @@ export default function Jobs() {
         </div>
         <div className="w-1/4 flex justify-end my-auto">
           <SortButton
-            myPropFunction={sortListing}
+            
             sortingDirection={ascending}
           ></SortButton>
           <Filter openModal={openModal}></Filter>
@@ -125,6 +122,7 @@ export default function Jobs() {
               defaultSkills={skillItems}
               updateSkillsFunction={updateSkills}
               chosenSkills={chosenSkills}
+              ascending = {ascending}
             />
           )}
         </div>

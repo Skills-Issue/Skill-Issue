@@ -51,7 +51,7 @@ export default function InputSearch({
 
       <div
         aria-label="result"
-        className="bg-white border border-gray-300 rounded-b-lg absolute z-10 mt-1 w-full"
+        className="bg-white border border-gray-300 rounded-lg absolute z-10 mt-1 w-full"
       >
         <div className="max-h-32 overflow-scroll">
           {filteredResults.length > 0 ? (
