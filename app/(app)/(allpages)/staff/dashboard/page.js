@@ -9,12 +9,9 @@ import SortButton from "@/components/ui/SortButton";
 import { sortSkills } from "@/lib/utils";
 
 export default function Jobs() {
-  const [activeTab, setActiveTab] = useState(0);
   const [listings, setListings] = useState([]);
-  const [waiting, setWaiting] = useState(false);
   const [searchField, setSearchField] = useState("");
-  const [selected, setSelected] = useState(false);
-  const [activeListing, setActiveListing] = useState({ skills: [] }); // set id to this var
+  const [activeListing, setActiveListing] = useState({ skills: [] });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
   const [ascending, setAscending] = useState(true);
@@ -68,10 +65,7 @@ export default function Jobs() {
     let selectedListing = listings.find(
       (listing) => listing.role_listing_id === roleId
     );
-    //console.log(selectedListing);
     setActiveListing(selectedListing);
-    setSelected(true);
-    //console.log(selected);
   }
 
   function filterSortSearch() {
@@ -89,6 +83,11 @@ export default function Jobs() {
     //sorting
     temp = sortSkills(temp, userdata, ascending);
     setDisplayListings(temp);
+    if (temp.length != 0) {
+      setActiveListing(temp[0]);
+    } else if (listings.length != 0) {
+      setActiveListing(listings[0]);
+    }
   }
 
   function openModal() {

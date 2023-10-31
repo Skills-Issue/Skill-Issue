@@ -27,7 +27,7 @@ export default function SortButton(props) {
         <div className="flex items-center">
           {props.sortingDirection ? (
             <svg
-              class="w-4 h-4 text-white"
+              className="w-4 h-4 text-white"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -35,15 +35,15 @@ export default function SortButton(props) {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M5 1v12m0 0 4-4m-4 4L1 9"
               />
             </svg>
           ) : (
             <svg
-              class="w-4 h-4 text-white"
+              className="w-4 h-4 text-white"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -51,9 +51,9 @@ export default function SortButton(props) {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M5 13V1m0 0L1 5m4-4 4 4"
               />
             </svg>
