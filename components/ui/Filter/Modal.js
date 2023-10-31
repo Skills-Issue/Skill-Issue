@@ -3,8 +3,8 @@ import { Button, Modal } from "flowbite-react";
 import InputSearch from "./InputSearch";
 import CloseButton from "./Close";
 
-export default function DismissableModal({ show, onClose, defaultSkills,SendToPage }) {
-  const [parentState, setParentState] = useState([]);
+export default function DismissableModal({ show, onClose, defaultSkills, updateSkillsFunction, chosenSkills}) {
+  const [parentState, setParentState] = useState(chosenSkills);
 
   const data = defaultSkills.map((item, index) => {
     return item.skill_name;
@@ -15,7 +15,7 @@ export default function DismissableModal({ show, onClose, defaultSkills,SendToPa
     if (!parentState.includes(newSkill)) {
       setParentState([...parentState, newSkill]);
     }
-    
+
   };
 
   const removeSkill = (skillToRemove) => {
@@ -25,7 +25,7 @@ export default function DismissableModal({ show, onClose, defaultSkills,SendToPa
   };
 
   const handleSubmit = () => {
-    SendToPage(parentState)
+    updateSkillsFunction(parentState)
   };
 
   return (
@@ -38,7 +38,7 @@ export default function DismissableModal({ show, onClose, defaultSkills,SendToPa
       </Modal.Body>
       <Modal.Body>
         <div className="max-h-32 flex flex-wrap flex-row">
-          {parentState.map((item, index) => (
+          {parentState?.map((item, index) => (
             <div key={item} className="bg-gray-100 text-sm font-medium focus:outline-none rounded-lg p-2 m-1 flex flex-row">
               <div>{item}</div>
               <button className="my-auto mx-1" onClick={() => removeSkill(item)}>
@@ -49,8 +49,8 @@ export default function DismissableModal({ show, onClose, defaultSkills,SendToPa
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button color="gray" onClick={onClose}>
-          Cancel
+        <Button color="gray" onClick={()=>{setParentState([])}}>
+          Clear
         </Button>
         <Button
           color="gray"

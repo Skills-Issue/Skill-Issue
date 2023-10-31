@@ -10,7 +10,6 @@ import { sortSkills } from "@/lib/utils";
 
 export default function Jobs() {
   const [activeTab, setActiveTab] = useState(0);
-  const tabsRef = useRef(null);
   const [listings, setListings] = useState([]);
   const [waiting, setWaiting] = useState(false);
   const [searchField, setSearchField] = useState("");
@@ -20,31 +19,20 @@ export default function Jobs() {
   const [userdata, setUserData] = useState([]);
   const [ascending, setAscending] = useState(true);
   const [skillItems, setSkillItems] = useState(null);
+  const [chosenSkills, setChosenSkills] = useState([]);
+  const [displayListings, setDisplayListings] = useState([]); // This is the list that is displayed on the page
 
   const User = JSON.parse(localStorage.getItem("user"));
 
-  let searchListings = listings.filter((listing) => {
-    return listing.role_name.toLowerCase().includes(searchField);
-  });
-
-  searchListings = sortSkills(searchListings, userdata, ascending);
-
   useEffect(() => {
     const fetchListingData = async () => {
-      setWaiting(true);
       const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
       const data = await res.json();
       let newList = data.data.role_listings_with_skills;
-      if (activeTab == 0) {
-        // newList = newList.filter()
-      } else {
-      }
       setListings(newList);
+      setDisplayListings(newList);
       setActiveListing(newList[0]);
-      // console.log(newList[0]);
-      setWaiting(false);
     };
-    // console.log(User);
     fetch(`http://127.0.0.1:5000/staffskill/${User.staff_id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -60,7 +48,6 @@ export default function Jobs() {
 
   useEffect(() => {
     const fetchSkillData = async () => {
-      setWaiting(true);
       const res = await fetch("http://127.0.0.1:5000/skills");
       const data = await res.json();
       let skillList = data.data.staffs;
@@ -68,6 +55,14 @@ export default function Jobs() {
     };
     fetchSkillData();
   }, []);
+
+  useEffect(() => {
+    filterSortSearch();
+  }, [chosenSkills, ascending, searchField]);
+
+  //###########################################################################
+  // HERE ARE THE FUNCTIONS
+  //###########################################################################
 
   function handleSelect(roleId) {
     let selectedListing = listings.find(
@@ -78,6 +73,24 @@ export default function Jobs() {
     setSelected(true);
     //console.log(selected);
   }
+
+  function filterSortSearch() {
+    let temp = listings;
+    //filtering
+    if (chosenSkills.length != 0) {
+      temp = temp.filter((listing) =>
+        chosenSkills.every((skill) => listing.skills.includes(skill))
+      );
+    }
+    //searching
+    temp = temp.filter((listing) => {
+      return listing.role_name.toLowerCase().includes(searchField);
+    });
+    //sorting
+    temp = sortSkills(temp, userdata, ascending);
+    setDisplayListings(temp);
+  }
+
   function openModal() {
     setIsModalOpen(true);
   }
@@ -85,24 +98,13 @@ export default function Jobs() {
     setIsModalOpen(false);
   }
 
-  function sortListing() {
-    setAscending(!ascending);
-    searchListings = sortSkills(searchListings, userdata, ascending);
-    setActiveListing(searchListings[0]);
+  function updateSkills(testData) {
+    setChosenSkills(testData);
   }
 
-  const changeSkills = (skillList) => {
-    filterListingsBySkills(skillList);
-  };
-
-  const filterListingsBySkills = (selectedSkills) => {
-    //console.log(selectedSkills);
-    setListings(
-      listings.filter((listing) =>
-        selectedSkills.every((skill) => listing.skills.includes(skill))
-      )
-    );
-  };
+  function sortListing() {
+    setAscending(!ascending);
+  }
 
   return (
     <div>
@@ -122,7 +124,8 @@ export default function Jobs() {
               show={isModalOpen}
               onClose={closeModal}
               defaultSkills={skillItems}
-              SendToPage={changeSkills}
+              updateSkillsFunction={updateSkills}
+              chosenSkills={chosenSkills}
             />
           )}
         </div>
@@ -130,15 +133,14 @@ export default function Jobs() {
 
       <div className="flex flex-row justify-center">
         <div className="flex-col w-2/5 pr-3  h-screen overflow-y-auto ">
-          {waiting ? <h1>Fetching...</h1> : null}
-          {searchListings.length == 0 ? (
+          {displayListings.length == 0 ? (
             <div className="flex flex-row justify-center">
               <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Sorry, no results found.
               </p>
             </div>
           ) : null}
-          {searchListings?.map((listing) => (
+          {displayListings?.map((listing) => (
             <div
               key={listing.role_listing_id}
               className="mb-1 flex flex-row justify-center"
