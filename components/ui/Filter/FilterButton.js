@@ -5,7 +5,7 @@ export default function Filter({ openModal }) {
       className="bg-gray-900 text-white text-sm font-medium focus:outline-none rounded-lg px-4 py-2.5 m-2"
     >
       <div className="flex flex-row gap-x-2 mx-auto">
-        <div className="my-auto text-md">Filter</div>
+        <div className="my-auto text-md">Filter and Sort</div>
         <div>
           <svg
             className="w-4 h-4 text-white"

@@ -90,16 +90,16 @@ export default function Jobs() {
     }
   }
 
+  function updateSkills({ skillsData, ascending }) {
+    setAscending(ascending);
+    setChosenSkills(skillsData);
+  }
+
   function openModal() {
     setIsModalOpen(true);
   }
   function closeModal() {
     setIsModalOpen(false);
-  }
-
-  function updateSkills({skillsData, ascending}) {
-    setAscending(ascending);
-    setChosenSkills(skillsData);
   }
 
   return (
@@ -110,10 +110,6 @@ export default function Jobs() {
           <SearchInput setData={setSearchField} />
         </div>
         <div className="w-1/4 flex justify-end my-auto">
-          <SortButton
-            
-            sortingDirection={ascending}
-          ></SortButton>
           <Filter openModal={openModal}></Filter>
           {isModalOpen && (
             <DismissableModal
@@ -122,7 +118,7 @@ export default function Jobs() {
               defaultSkills={skillItems}
               updateSkillsFunction={updateSkills}
               chosenSkills={chosenSkills}
-              ascending = {ascending}
+              ascending={ascending}
             />
           )}
         </div>
@@ -131,9 +127,9 @@ export default function Jobs() {
       <div className="flex flex-row justify-center">
         <div className="flex-col w-2/5 pr-3  h-screen overflow-y-auto ">
           {displayListings.length == 0 ? (
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-row item-center justify-center">
               <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Sorry, no results found.
+                Sorry, No Results Found
               </p>
             </div>
           ) : null}

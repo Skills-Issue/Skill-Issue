@@ -12,7 +12,7 @@ export default function DismissableModal({
   ascending,
 }) {
   const [parentState, setParentState] = useState(chosenSkills);
-  let childAscending = ascending
+  let childAscending = ascending;
   const data = defaultSkills.map((item, index) => {
     return item.skill_name;
   });
@@ -29,37 +29,48 @@ export default function DismissableModal({
   };
 
   const handleSubmit = () => {
-    let tempData = {skillsData: parentState, ascending: childAscending}
+    let tempData = { skillsData: parentState, ascending: childAscending };
     updateSkillsFunction(tempData);
   };
 
-  const onChange = (e) => {childAscending=(e.target.value==="false"); console.log(childAscending)};
+  const onChange = (e) => {
+    childAscending = e.target.value === "false";
+  };
 
   return (
     <Modal dismissible show={show} onClose={onClose} size="lg">
       <Modal.Header>
-        <p className="pl-1 font-semibold">Filter and sort listings</p>
+        <p className="pl-1 font-semibold">Filter and Sort Listings</p>
       </Modal.Header>
       <Modal.Body className="border-b">
-        <p className="text-lg font-semibold">Sort By</p>
+        <p className="text-lg font-semibold">Sort By Skills Matched %</p>
         <fieldset onChange={onChange} className="pt-4 flex flex-row" id="radio">
           <div className="flex w-1/2 items-center gap-2">
             <Radio
-              defaultChecked={ascending===true} 
+              defaultChecked={ascending === false}
+              id="descending"
+              name="sortDirection"
+              value="true"
+            />
+            <Label className="text-md" htmlFor="descending">
+              Highest to Lowest
+            </Label>
+          </div>
+          <div className="flex w-1/2 items-center gap-2">
+            <Radio
+              defaultChecked={ascending === true}
               id="ascending"
               name="sortDirection"
               value="false"
             />
-            <Label className="text-md" htmlFor="ascending">Ascending</Label>
-          </div>
-          <div className="flex w-1/2 items-center gap-2">
-            <Radio defaultChecked={ascending===false} id="descending" name="sortDirection" value="true" />
-            <Label   className="text-md" htmlFor="descending">Descending</Label>
+            <Label className="text-md" htmlFor="ascending">
+              Lowest to Highest
+            </Label>
           </div>
         </fieldset>
       </Modal.Body>
       <Modal.Body>
-      <p className="text-lg pb-2 font-semibold">Filter By</p>
+        <p className="text-lg pb-2 font-semibold">Filter By</p>
         <div className="h-40 pb-2">
           <InputSearch data={data} updateParentState={updateData} />
         </div>
@@ -87,9 +98,10 @@ export default function DismissableModal({
           color="gray"
           onClick={() => {
             setParentState([]);
+            childAscending = false;
           }}
         >
-          Reset
+          Reset Filters
         </Button>
         <Button
           color="gray"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 export default function InputSearch({
-  placeholderText = "Select Skill",
+  placeholderText = "Search Skill to Add",
   data = [],
   updateParentState,
   dataToSend,
