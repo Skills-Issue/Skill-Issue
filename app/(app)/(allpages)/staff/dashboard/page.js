@@ -15,7 +15,7 @@ export default function Jobs() {
   const [activeListing, setActiveListing] = useState({ skills: [] });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
-  const [ascending, setAscending] = useState(false);
+  const [ascending, setAscending] = useState(null);
   const [skillItems, setSkillItems] = useState(null);
   const [chosenSkills, setChosenSkills] = useState([]);
   const [displayListings, setDisplayListings] = useState([]); // This is the list that is displayed on the page
