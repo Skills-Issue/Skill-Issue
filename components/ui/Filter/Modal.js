@@ -43,7 +43,7 @@ export default function DismissableModal({
         <p className="pl-1 font-semibold">Filter and Sort Listings</p>
       </Modal.Header>
       <Modal.Body className="border-b">
-        <p className="text-lg font-semibold">Sort By Skills Matched %</p>
+        <p className="text-lg font-semibold">Sort by No. of Skills Matched</p>
         <fieldset onChange={onChange} className="pt-4 flex flex-row" id="radio">
           <div className="flex w-1/2 items-center gap-2">
             <Radio
