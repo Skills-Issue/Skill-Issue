@@ -15,6 +15,13 @@ export default function ActiveCard({ activeListing, userSkills }) {
     const percentage = Math.round((matchingSkills.length /
                 (matchingSkills.length + nonMatchingSkills.length)) *
                 100);
+  const dateObj = new Date(activeListing.expiry_date);
+  
+  const month = dateObj.getMonth() + 1;
+const day = dateObj.getDate();
+const year = dateObj.getFullYear();
+
+const formattedDate = `${day}/${month}/${year}`;
   return (
     <Card
       className="m-2 max-w-full"
@@ -29,7 +36,10 @@ export default function ActiveCard({ activeListing, userSkills }) {
             <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
               Role Name: {activeListing?.role_name}
             </h5>
-            <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
+            <h5 className="text-xs text-gray-700">
+              Expiry Date: {formattedDate}
+            </h5>
+            <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3 mt-2">
               {activeListing?.role_details}
             </p>
           </div>
@@ -39,12 +49,38 @@ export default function ActiveCard({ activeListing, userSkills }) {
           <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
             Project Overview:
           </h5>
-          <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
-            Project overview stuff (to be added)
+          <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-4">
+            Handling our project on sale, lease, repair and maintenance of copying and printing solutions for businesses. We are supporting the
+major copying and printing products and solutions offered by IBM, HP, Xerox and Canon
           </p>
         </div>
         <div className="flex flex-row">
-          <div className="flex flex-col">
+          
+
+          
+        </div>
+      </div>
+            </div>
+            <div className="col-span-1 mx-auto">
+            <div className="mb-3">
+            <h5 className="text-base font-semibold tracking-tight mb-5 text-gray-900 dark:text-white">
+            <p className={percentage>70?"text-green-500":"text-red-500"}>
+              Match percentage:{" "}
+              {percentage}%
+            </p>
+            </h5>
+            <div className="w-28 h-28" style={{width:'150px', height:'150px'}}>
+              <DoughnutChart
+                userSkills={userSkillNames}
+                jobSkills={activeListing.skills}
+              />
+            </div>
+            
+          </div>
+          
+            </div>
+      </div>
+      <div className="flex flex-col">
             <div className="mb-3">
               <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
                 Matching Skills:
@@ -76,36 +112,6 @@ export default function ActiveCard({ activeListing, userSkills }) {
               </div>
             </div>
           </div>
-
-          
-        </div>
-      </div>
-            </div>
-            <div className="col-span-1 p-8">
-            <div className="mb-3 mx-8">
-            <h5 className="text-base font-semibold tracking-tight mb-5 text-gray-900 dark:text-white">
-              Missing Skills:
-            </h5>
-            <div className="w-28 h-28" style={{width:'150px', height:'150px'}}>
-              <DoughnutChart
-                userSkills={userSkillNames}
-                jobSkills={activeListing.skills}
-              />
-            </div>
-            <p className={percentage>70?"text-green-500":"text-red-500"}>
-              Match percentage:{" "}
-              {percentage}%
-            </p>
-          </div>
-            </div>
-      </div>
-
-
-
-
-
-
-      
     </Card>
   );
 }

@@ -4,10 +4,14 @@ import Chart from "chart.js/auto";
 import { useEffect, useState } from "react";
 import DoughnutChart from "./DoughnutChart";
 
-export default function ApplicantDetails({ activeListing, userSkills, staffDetails }) {
-    // console.log(activeListing)
-    // console.log(userSkills)
-    // console.log(staffDetails)
+export default function ApplicantDetails({
+  activeListing,
+  userSkills,
+  staffDetails,
+}) {
+  // console.log(activeListing)
+  // console.log(userSkills)
+  // console.log(staffDetails)
   const userSkillNames = userSkills.map((skillObj) => skillObj.skill_name);
   // console.log(userSkillNames)
   const matchingSkills = activeListing.skills.filter((skill) =>
@@ -16,62 +20,76 @@ export default function ApplicantDetails({ activeListing, userSkills, staffDetai
   const nonMatchingSkills = activeListing.skills.filter(
     (skill) => !userSkillNames.includes(skill)
   );
-    const percentage = Math.round((matchingSkills.length /
-                (matchingSkills.length + nonMatchingSkills.length)) *
-                100);
+  const percentage = Math.round(
+    (matchingSkills.length /
+      (matchingSkills.length + nonMatchingSkills.length)) *
+      100
+  );
   return (
-    <Card
-      className="m-2 max-w-full"
-    >
-      <div className="flex flex-col">
-        <div className="flex flex-row mb-3">
-          <div className="flex-shrink-0 mr-3">
-            <img
-              className="w-20 h-20"
-              src={"https://via.placeholder.com/200"}
-            />
-          </div>
-          <div className="">
-            <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
-              Staff Name: {staffDetails.staff_fname} {staffDetails.staff_lname}
+    <Card className="max-w-full m-8 p-6"> 
+      <div>
+        <h1 className="text-xl font-bold">Applicant Details</h1>
+      </div>
+      <div className="grid md:grid-cols-3 grid-cols-2">
+        <div className="col-span-2">
+          <div className="mb-3">
+            <h5 className="text-base font-semibold tracking-tight text-gray-900 dark:text-white">
+              Staff Name: 
+                {" "+staffDetails.staff_fname} {staffDetails.staff_lname}
             </h5>
             <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
-              Role Name: {activeListing.role_name} 
+              Role Name: {activeListing.role_name}
             </p>
             <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
-            Staff ID: {staffDetails?.staff_id}
+              Staff ID: {staffDetails?.staff_id}
             </p>
           </div>
-        </div>
-
-        <div className="mb-3">
-          <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
-            Email:
-          </h5>
-          <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
-            {staffDetails?.email}
-          </p>
-        </div>
-        <div className="mb-3">
-          <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
-            Department:
-          </h5>
-          <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
-            {staffDetails?.dept}
-          </p>
-        </div>
-        <div className="mb-3">
-          <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
+          <div className="mb-3">
+            <h5 className="text-base font-semibold tracking-tight text-gray-900 dark:text-white">
+              Email:
+            </h5>
+            <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
+              {staffDetails?.email}
+            </p>
+          </div>
+          <div className="mb-3">
+            <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
+              Department:
+            </h5>
+            <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
+              {staffDetails?.dept}
+            </p>
+          </div>
+          <div className="mb-3">
+          <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
             Country:
           </h5>
           <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
             {staffDetails?.country}
           </p>
         </div>
-        <div className="flex flex-row">
-          <div className="flex flex-col">
+        </div>
+        <div className="col-span-1 mx-auto">
             <div className="mb-3">
-              <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
+            <h5 className="text-base font-semibold tracking-tight mb-5 text-gray-900 dark:text-white">
+            <p className={percentage>70?"text-green-500":"text-red-500"}>
+              Match percentage:{" "}
+              {percentage}%
+            </p>
+            </h5>
+            <div className="w-28 h-28" style={{width:'150px', height:'150px'}}>
+              <DoughnutChart
+                userSkills={userSkillNames}
+                jobSkills={activeListing.skills}
+              />
+            </div>
+            
+          </div>
+            </div>
+      </div>
+      <div>
+      <div className="mb-3">
+              <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
                 Matching Skills:
               </h5>
               <div className="flex flex-row justify-start flex-wrap">
@@ -86,7 +104,7 @@ export default function ApplicantDetails({ activeListing, userSkills, staffDetai
               </div>
             </div>
             <div className="mb-3">
-              <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
+              <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
                 Missing Skills:
               </h5>
               <div className="flex flex-row justify-start flex-wrap">
@@ -100,25 +118,8 @@ export default function ApplicantDetails({ activeListing, userSkills, staffDetai
                 ))}
               </div>
             </div>
-          </div>
-
-          <div className="mb-3">
-            <h5 className="text-base font-bold tracking-tight mb-5 text-gray-900 dark:text-white">
-              Missing Skills:
-            </h5>
-            <div>
-              <DoughnutChart
-                userSkills={userSkillNames}
-                jobSkills={activeListing.skills}
-              />
-            </div>
-            <p className={percentage>70?"text-green-500":"text-red-500"}>
-              Match percentage:{" "}
-              {percentage}%
-            </p>
-          </div>
-        </div>
       </div>
+      
     </Card>
   );
 }
