@@ -20,14 +20,11 @@ export default function ActiveCard({ activeListing, userSkills }) {
       className="m-2 max-w-full"
       href={`dashboard/application/${activeListing?.role_listing_id}`}
     >
-      <div className="flex flex-col">
+      <div className="grid grid-cols-2 lg:grid-cols-3">
+            <div className="col-span-2">
+            <div className="flex flex-col">
         <div className="flex flex-row mb-3">
-          <div className="flex-shrink-0 mr-3">
-            <img
-              className="w-20 h-20"
-              src={"https://via.placeholder.com/200"}
-            />
-          </div>
+          
           <div className="">
             <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
               Role Name: {activeListing?.role_name}
@@ -39,7 +36,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
         </div>
 
         <div className="mb-3">
-          <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
+          <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
             Project Overview:
           </h5>
           <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3">
@@ -49,7 +46,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
         <div className="flex flex-row">
           <div className="flex flex-col">
             <div className="mb-3">
-              <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
+              <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
                 Matching Skills:
               </h5>
               <div className="flex flex-row justify-start flex-wrap">
@@ -64,7 +61,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
               </div>
             </div>
             <div className="mb-3">
-              <h5 className="text-base font-bold tracking-tight mb-2 text-gray-900 dark:text-white">
+              <h5 className="text-base font-semibold tracking-tight mb-2 text-gray-900 dark:text-white">
                 Missing Skills:
               </h5>
               <div className="flex flex-row justify-start flex-wrap">
@@ -80,11 +77,16 @@ export default function ActiveCard({ activeListing, userSkills }) {
             </div>
           </div>
 
-          <div className="mb-3">
-            <h5 className="text-base font-bold tracking-tight mb-5 text-gray-900 dark:text-white">
+          
+        </div>
+      </div>
+            </div>
+            <div className="col-span-1 p-8">
+            <div className="mb-3 mx-8">
+            <h5 className="text-base font-semibold tracking-tight mb-5 text-gray-900 dark:text-white">
               Missing Skills:
             </h5>
-            <div>
+            <div className="w-28 h-28" style={{width:'150px', height:'150px'}}>
               <DoughnutChart
                 userSkills={userSkillNames}
                 jobSkills={activeListing.skills}
@@ -95,8 +97,15 @@ export default function ActiveCard({ activeListing, userSkills }) {
               {percentage}%
             </p>
           </div>
-        </div>
+            </div>
       </div>
+
+
+
+
+
+
+      
     </Card>
   );
 }

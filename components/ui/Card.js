@@ -3,16 +3,11 @@ import { Card } from "flowbite-react";
 
 export default function DefaultCard({keyProp, rolelisting }) {
   return (
-    <Card className="mx-1 mt-2 w-max" href="#">
+    <Card className="mx-1 mt-2 " href="#">
       <div className="flex flex-col">
         <div className="flex flex-row mb-3">
-          <div className="flex-shrink-0 mr-3">
-            <img
-              className="w-20 h-20"
-              src={"https://via.placeholder.com/200"}
-            />
-          </div>
-          <div className="">
+          
+          <div className="mb-3">
             <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
               {rolelisting?.role_name}
             </h5>

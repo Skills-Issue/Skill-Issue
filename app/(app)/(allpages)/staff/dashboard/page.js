@@ -124,8 +124,8 @@ export default function Jobs() {
         </div>
       </div>
 
-      <div className="flex flex-row justify-center">
-        <div className="flex-col w-2/5 pr-3  h-screen overflow-y-auto ">
+      <div className="grid grid-cols-6 mx-6">
+        <div className="col-span-2  h-screen overflow-y-auto ">
           {displayListings.length == 0 ? (
             <div className="flex flex-row item-center justify-center">
               <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -143,7 +143,7 @@ export default function Jobs() {
             </div>
           ))}
         </div>
-        <div className="flex w-3/5 ">
+        <div className="col-span-4">
           <ActiveCard activeListing={activeListing} userSkills={userdata} />
         </div>
       </div>

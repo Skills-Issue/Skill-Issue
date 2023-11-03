@@ -26,7 +26,7 @@ function DoughnutChart({ userSkills, jobSkills }) {
 
     const backgroundColor = [
       ...commonElements.map(() => "#90EE90"),
-      ...uniqueJobSkills.map(() => "#93C5FD"),
+      ...uniqueJobSkills.map(() => "#D8D8D8"),
     ];
 
     chartRef.current = new Chart(ctx, {

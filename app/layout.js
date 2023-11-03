@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
 
       <body className={inter.className}>
         
-        <main className='container mx-auto'>{children}</main>
+        <main className='container mx-auto max-w-7xl'>{children}</main>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
         </body>
