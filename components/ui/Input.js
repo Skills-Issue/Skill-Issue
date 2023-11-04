@@ -59,26 +59,42 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
     onSubmit(updatedFormData);
   };
 
+  const [roles, setRoles] = useState([]); 
+
+  const getRoles = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/roles')
+      const data = await response.json();
+      console.log(data.data.staffs);
+      setRoles(data.data.staffs);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    getRoles();
+  }, []);
+
+  useEffect(() => {
+    console.log("Updated roles:", roles);
+  }, [roles]);
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-6 pt-14">
-        <label
-          htmlFor="Role_Name"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Role Name
-        </label>
-        <input
-          type="text"
-          id="role_name"
-          value={formData.role_name}
-          onChange={handleInputChange}
-          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-          placeholder="e.g. Janitor"
-          required
-          disabled= {isRoleNameDisabled}
-        />
-      </div>
+        <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a role</label>
+        <select id="role" className="flex w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        value={formData.role_name}
+        onChange={(e) => setFormData({ ...formData, role_name: e.target.value })}>
+          <option disabled>Choose a role</option>
+          {roles.length > 0 && roles.map((role) => (
+            <option key={role.role_name} value={role.role_name}>
+              {role.role_name}
+            </option>
+          ))}
+        </select>
+        </div>
       <div className="mb-6">
         <label
           htmlFor="role_details"
@@ -109,6 +125,7 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
               label="Pick a date"
               value={Cdate}
               onChange={(date) => setDate(date)}
+              minDate={dayjs()}
             />
           </DemoContainer>
         </LocalizationProvider>

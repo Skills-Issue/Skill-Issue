@@ -495,6 +495,13 @@ def get_role():
         {"code": 200, "data": {"staffs": [skill.json() for skill in skill_list]}}
     )
 
+@app.route("/roles")
+def get_all_role():
+    role_list = Role.query.all()
+    return jsonify(
+        {"code": 200, "data": {"staffs": [role.json() for role in role_list]}}
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

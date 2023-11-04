@@ -8,7 +8,7 @@ export default function hrDashboard() {
   return (
     <div>
         <div>
-        <Link href="/hr/create" class="flex w-fit my-3">
+        <Link href="/hr/create" className="flex w-fit my-3">
         <Outline caption={"Create New Role"}/>
         </Link>
         <RoleListingTable />

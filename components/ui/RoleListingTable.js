@@ -56,7 +56,7 @@ export default function RoleListingTable({}) {
                 className="text-cyan-600 hover:underline dark:text-cyan-500"
                 href={`/jobs/${listing.role_listing_id}`}
               >
-                <p class="text-center">{listing.app_count}
+                <p className="text-center">{listing.app_count}
                 </p>
               </a>
             </Table.Cell>
