@@ -27,10 +27,17 @@ export default function create(){
         return JSON.parse(localStorage.getItem("user")).staff_id
     };
 
-    const initialData = useState({
+    const getCurrentDate = () => {
+      const currentDate = new Date();
+      // Format the current date as a string, e.g., "2023-09-28"
+      const formattedDate = currentDate.toISOString().split("T")[0];
+      return formattedDate;
+    };
+
+    const [initialData,setInitialData] = useState({
       role_name: "",
       role_details: "",
-      expiry_date: "",
+      expiry_date: getCurrentDate(),
       creation_date: "",
       role_author_id: null,
     });

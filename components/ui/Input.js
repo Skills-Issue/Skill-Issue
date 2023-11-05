@@ -32,18 +32,18 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
     });
   };
 
-  const [Cdate, setDate] = useState(dayjs()); //for expiry date
-
-  useEffect(() => {
-    setDate(dayjs(initialData.expiry_date, "YYYY-MM-DD"));
-  }, [initialData]);
-
   const getCurrentDate = () => {
     const currentDate = new Date();
     // Format the current date as a string, e.g., "2023-09-28"
     const formattedDate = currentDate.toISOString().split("T")[0];
     return formattedDate;
   };
+
+  const [Cdate, setDate] = useState(dayjs()); //for expiry date
+
+  useEffect(() => {
+    setDate(dayjs(initialData.expiry_date, "YYYY-MM-DD"));
+  }, [initialData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,8 +55,13 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
       expiry_date: Cdate.format("YYYY-MM-DD"),
     };
 
-    // Call the onSubmit callback with the updated form data
-    onSubmit(updatedFormData);
+    if (updatedFormData.expiry_date == "") {
+
+    }
+    else {
+      // Call the onSubmit callback with the updated form data
+      onSubmit(updatedFormData);
+    }
   };
 
   const [roles, setRoles] = useState([]); 
@@ -65,7 +70,6 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
     try {
       const response = await fetch('http://127.0.0.1:5000/roles')
       const data = await response.json();
-      console.log(data.data.staffs);
       setRoles(data.data.staffs);
     } catch (error) {
       console.error("Error:", error);
@@ -76,10 +80,6 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
     getRoles();
   }, []);
 
-  useEffect(() => {
-    console.log("Updated roles:", roles);
-  }, [roles]);
-
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
       <div className="mb-6 pt-12">
@@ -88,7 +88,7 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
         <select id="role" className="flex w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         value={formData.role_name}
         onChange={(e) => setFormData({ ...formData, role_name: e.target.value })}>
-          <option disabled>Choose a role</option>
+          <option value="">Choose a role</option>
           {roles.length > 0 && roles.map((role) => (
             <option key={role.role_name} value={role.role_name}>
               {role.role_name}
