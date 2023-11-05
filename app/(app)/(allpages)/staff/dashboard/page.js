@@ -45,6 +45,7 @@ export default function Jobs() {
   const fetchListingData = async () => {
     const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
     const data = await res.json();
+    console.log(data)
     return data;
   };
 
@@ -106,7 +107,9 @@ export default function Jobs() {
   return (
     <div>
       <div className="flex-row bg-white rounded-t-md flex justify-between items-center m-2 border-b-[1px] sticky top-0">
-        <div className="w-1/4 text-xl m-2 font-bold">Role Listings</div>
+        <div className="w-1/4 text-xl m-2 font-bold">
+          <h1>Role Listings</h1>
+          </div>
         <div className="w-1/2 flex justify-center">
           <SearchInput setData={setSearchField} />
         </div>
