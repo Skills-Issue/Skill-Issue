@@ -1,10 +1,7 @@
 "use client";
 import { Card, Progress } from "flowbite-react";
-import Chart from "chart.js/auto";
 import { useEffect, useState } from "react";
 import DoughnutChart from "./DoughnutChart";
-import { Button } from "flowbite-react";
-import { useRouter } from "next/navigation";
 
 export default function ActiveCard({ activeListing, userSkills }) {
   const User = JSON.parse(localStorage.getItem("user"));
@@ -28,15 +25,14 @@ export default function ActiveCard({ activeListing, userSkills }) {
 
   const formattedDate = `${day}/${month}/${year}`;
   const [buttonActive, setButtonActive] = useState(true);
+  const [applicantCount, setApplicantCount] = useState(0);
 
   useEffect(() => {
     // const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
     //applicant_id
-    console.log(activeListing.role_listing_id);
     fetch(`http://127.0.0.1:5000/jobs/${activeListing.role_listing_id}`)
       .then((res) => res.json())
       .then((d) => {
-        console.log(d);
         if (d.code == 200) {
           const applicantList = d.data;
           for (var applicant of applicantList) {
@@ -44,27 +40,17 @@ export default function ActiveCard({ activeListing, userSkills }) {
               setButtonActive(false);
             }
           }
-        }else{
+        } else {
           setButtonActive(true);
         }
       });
 
-    // {
-
-    //   if (res.status == 404) {
-    //     console.log("disabling")
-    //     setButtonActive(false);
-    //   } else {
-    //     const applicantList = res.json();
-    //     console.log(applicantList)
-    //     for (applicant in applicantList) {
-    //       if (applicant.applicant_id == User.staff_id) {
-    //         setButtonActive(false);
-    //       }
-    //     }
-    //   }
-    // }
-  },[activeListing]);
+    fetch(
+      `http://127.0.0.1:5000/rolelistingapplicantscount/${activeListing.role_listing_id}`
+    )
+      .then((res) => res.json())
+      .then((countData) => setApplicantCount(countData.count));
+  }, [activeListing]);
   return (
     <Card
       className="m-2 max-w-full"
@@ -78,12 +64,12 @@ export default function ActiveCard({ activeListing, userSkills }) {
                 <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
                   Role Name: {activeListing?.role_name}
                 </h5>
-                <h5 className="text-xs text-gray-700">
+                <h5 className=" text-xs text-gray-700">
                   Expiry Date: {formattedDate}
                 </h5>
-                <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-3 mt-2">
-                  {activeListing?.role_details}
-                </p>
+                <h5 className="mt-4 text-base font-semibold tracking-tight mb-2  text-green-600 dark:text-white">
+                  {applicantCount} applicant(s)
+                </h5>
               </div>
             </div>
 
@@ -92,10 +78,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
                 Project Overview:
               </h5>
               <p className="text-sm  text-gray-700 dark:text-gray-400 line-clamp-4">
-                Handling our project on sale, lease, repair and maintenance of
-                copying and printing solutions for businesses. We are supporting
-                the major copying and printing products and solutions offered by
-                IBM, HP, Xerox and Canon
+                {activeListing?.role_details}
               </p>
             </div>
             <div className="flex flex-row"></div>
@@ -154,17 +137,10 @@ export default function ActiveCard({ activeListing, userSkills }) {
           </div>
         </div>
         <div>
-          {/* <Button
-            href={`dashboard/application/${activeListing?.role_listing_id}`}
-            color="blue"
-            disabled={buttonActive}
-          >
-            Apply Now
-          </Button> */}
           <a
             href={`dashboard/application/${activeListing?.role_listing_id}`}
             style={buttonActive ? {} : { pointerEvents: "none" }}
-            class={
+            className={
               buttonActive
                 ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 : "text-white bg-blue-300 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"

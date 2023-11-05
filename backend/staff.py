@@ -322,6 +322,7 @@ def get_all_rolelistings_app_count():
         }
     )
 
+
 @app.route("/countrolelistings/<int:role_id>")
 def get_count(role_id):
     count = RoleApplication.query.filter_by(role_listing_id=role_id).count()
@@ -488,12 +489,19 @@ def get_role_listing_with_skills_by_id(role_listing_id):
     )
 
 
+@app.route("/rolelistingapplicantscount/<int:role_listing_id>")
+def get_role_listings_applicants_count(role_listing_id):
+    count = RoleApplication.query.filter_by(role_listing_id=role_listing_id).count()
+    return jsonify({"code": 200, "count": count})
+
+
 @app.route("/skills")
 def get_role():
     skill_list = Skill.query.all()
     return jsonify(
         {"code": 200, "data": {"staffs": [skill.json() for skill in skill_list]}}
     )
+
 
 @app.route("/roles")
 def get_all_role():

@@ -45,7 +45,6 @@ export default function Jobs() {
   const fetchListingData = async () => {
     const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
     const data = await res.json();
-    console.log(data)
     return data;
   };
 
