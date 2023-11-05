@@ -27,7 +27,7 @@ export default function create(){
         return JSON.parse(localStorage.getItem("user")).staff_id
     };
 
-    const initialData = useState({
+    const [initialData,setInitialData] = useState({
       role_name: "",
       role_details: "",
       expiry_date: "",

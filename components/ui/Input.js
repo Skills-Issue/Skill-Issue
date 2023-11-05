@@ -88,7 +88,7 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
         <select id="role" className="flex w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         value={formData.role_name}
         onChange={(e) => setFormData({ ...formData, role_name: e.target.value })}>
-          <option disabled>Choose a role</option>
+          <option value="">Choose a role</option>
           {roles.length > 0 && roles.map((role) => (
             <option key={role.role_name} value={role.role_name}>
               {role.role_name}
