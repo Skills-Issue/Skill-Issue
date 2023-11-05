@@ -18,9 +18,7 @@ export default function hrDashboard() {
       setWaiting(true);
       const res = await fetch("http://127.0.0.1:5000/rolelistingsappcount");
       const data = await res.json();
-      console.log(data.data.role_listings_app_count);
       setListings(data.data.role_listings_app_count);
-
       setWaiting(false);
     };
     fetchListingData();
@@ -38,16 +36,15 @@ export default function hrDashboard() {
     getCreatedByMe();
   }, [listings]);
 
-  console.log(myListing);
+ 
 
   return (
     <div>
-      <div>
-        <div className="ml-3"></div>
+      <div className="mx-2">
         <div className="flex flex-row justify-between">
           <div className="text-xl font-semibold my-auto">My listings</div>
-          <div className="my-6">
-            <Link href="/hr/create" className="flex w-fit mr-4">
+          <div className="my-3">
+            <Link href="/hr/create" className="flex w-fit">
               <Outline caption={"Create New Role"} />
             </Link>
           </div>
