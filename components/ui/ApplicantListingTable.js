@@ -17,7 +17,7 @@ export default function ApplicantListingTable({ applicant_listings }) {
                 Applicant ID
             </Table.HeadCell>
             <Table.HeadCell>
-                Application ID 
+                Application Details
             </Table.HeadCell>
             <Table.HeadCell>
                 Submission Date

@@ -81,9 +81,10 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
   }, [roles]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-6 pt-14">
-        <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a role</label>
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
+      <div className="mb-6 pt-12">
+        <div className="text-xl font-semibold mb-4">Role Creation</div>
+        <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-semibold">Select a role</label>
         <select id="role" className="flex w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         value={formData.role_name}
         onChange={(e) => setFormData({ ...formData, role_name: e.target.value })}>
@@ -98,7 +99,7 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
       <div className="mb-6">
         <label
           htmlFor="role_details"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-semibold"
         >
           Role Description
         </label>
@@ -115,7 +116,7 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
       <div className="mb-6">
         <label
           htmlFor="expiry_date"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-semibold"
         >
           Expiry Date
         </label>
@@ -132,9 +133,9 @@ function CustomInput({ onSubmit, caption, initialData, isRoleNameDisabled}) {
       </div>
       <button
         type="submit"
-        className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+        className="bg-gray-900 text-white text-sm font-medium focus:outline-none rounded-lg px-4 py-2.5 m-2"
       >
-        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
          {caption}
         </span>
       </button>

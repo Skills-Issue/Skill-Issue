@@ -6,22 +6,8 @@ import Link from "next/link";
 import { useRoleContext } from "../authentication/RoleContext";
 import Outline from "./Button";
 
-export default function RoleListingTable({}) {
-  const [listings, setListings] = useState([]);
-  const [applicantCounts, setApplicantCounts] = useState({});
-  const [waiting, setWaiting] = useState(false);
-  const { selectedRole, setSelectedRole } = useRoleContext();
-
-  useEffect(() => {
-    const fetchListingData = async () => {
-      setWaiting(true);
-      const res = await fetch("http://127.0.0.1:5000/rolelistingsappcount");
-      const data = await res.json();
-      setListings(data.data.role_listings_app_count);
-      setWaiting(false);
-    };
-    fetchListingData();
-  }, []);
+export default function RoleListingTable({listings}) {
+  
 
   return (
     <Table>
@@ -61,22 +47,15 @@ export default function RoleListingTable({}) {
               </a>
             </Table.Cell>
             <Table.Cell>
-              {selectedRole == "Human Resources" && (
+              
                 <Link
                   className="font-medium text-cyan-600 dark:text-cyan-500"
                   href={`/jobs/edit/${listing.role_listing_id}`}
                 >
                   <Outline caption={"Edit"}></Outline>
                 </Link>
-              )}
-              {selectedRole == "Staff" && (
-                <Link
-                  className="font-medium text-cyan-600 dark:text-cyan-500"
-                  href="/jobs/"
-                >
-                  <Outline caption={"Apply"}></Outline>
-                </Link>
-              )}
+              
+              
             </Table.Cell>
           </Table.Row>
         ))}
