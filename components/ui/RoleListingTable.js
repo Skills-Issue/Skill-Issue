@@ -15,7 +15,7 @@ export default function RoleListingTable({listings}) {
         <Table.HeadCell>Job Title</Table.HeadCell>
         <Table.HeadCell>Description</Table.HeadCell>
         <Table.HeadCell>Deadline</Table.HeadCell>
-        <Table.HeadCell>Status</Table.HeadCell>
+        
         <Table.HeadCell>No. of Applications</Table.HeadCell>
         <Table.HeadCell>
           <span className="sr-only">Edit</span>
@@ -34,9 +34,7 @@ export default function RoleListingTable({listings}) {
             </Table.Cell>
             <Table.Cell>{listing.role_details}</Table.Cell>
             <Table.Cell>{listing.expiry_date}</Table.Cell>
-            <Table.Cell>
-              <p className="text-center">Active</p>
-            </Table.Cell>
+            
             <Table.Cell>
               <a
                 className="text-cyan-600 hover:underline dark:text-cyan-500"

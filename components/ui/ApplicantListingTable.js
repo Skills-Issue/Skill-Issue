@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import Outline from "./Button";
 
 export default function ApplicantListingTable({ applicant_listings }) {
-    console.log(applicant_listings)
+    
     const { selectedRole, setSelectedRole } = useRoleContext();
     const [listing, setListings] = useState([]);
     return (

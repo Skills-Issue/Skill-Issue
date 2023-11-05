@@ -17,7 +17,7 @@ export default function SignIn(){
     axios.get(url, {
   })
   .then(response=>{
-    console.log(response.data.data.access_role_id)
+    
       if(response.data.code=="200"){
         localStorage.setItem("Account",response.data.data.access_role_id)
         localStorage.setItem("user",JSON.stringify(response.data.data))
