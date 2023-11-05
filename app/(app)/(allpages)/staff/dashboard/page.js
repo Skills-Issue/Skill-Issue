@@ -26,6 +26,7 @@ export default function Jobs() {
         setListings(result2.data.role_listings_with_skills);
         setSkillItems(result1.data.staffs);
         setUserData(result3.data.staff_skills);
+
         const temp = sortSkills(
           result2.data.role_listings_with_skills,
           result3.data.staff_skills,
@@ -45,6 +46,9 @@ export default function Jobs() {
   const fetchListingData = async () => {
     const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
     const data = await res.json();
+    console.log(data)
+    const data2 = data.data.role_listings_with_skills.filter((listing)=>{return new Date(listing.expiry_date)>Date.now()})
+    console.log(data2)
     return data;
   };
 

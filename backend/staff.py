@@ -4,6 +4,7 @@ from flask_cors import CORS
 from os import environ
 from decouple import config
 import logging
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -484,6 +485,50 @@ def get_role_listing_with_skills_by_id(role_listing_id):
                 [],
             ).json()
         )
+    return jsonify(
+        {"code": 200, "data": {"role_listings_with_skills": role_listings_with_skills}}
+    )
+
+
+@app.route("/activerolelistingwithskills", methods=["GET"])
+def get_active_role_listings_with_skills():
+    today = datetime.now()
+    role_listings = RoleListing.query.filter(
+        RoleListing.expiry_date > today).all()
+    role_skills = RoleSkill.query.all()
+    role_skills_dict = {}
+    role_listings_with_skills = []
+
+    for role_skill in role_skills:
+        role_skills_dict[role_skill.role_name] = role_skills_dict.get(
+            role_skill.role_name, []
+        ) + [role_skill.skill_name]
+
+    for role_listing in role_listings:
+        if role_listing.role_name in role_skills_dict:
+            role_listings_with_skills.append(
+                RoleListingWithSkills(
+                    role_listing.role_listing_id,
+                    role_listing.role_name,
+                    role_listing.role_details,
+                    role_listing.creation_date,
+                    role_listing.expiry_date,
+                    role_listing.role_author_id,
+                    role_skills_dict[role_listing.role_name],
+                ).json()
+            )
+        else:
+            role_listings_with_skills.append(
+                RoleListingWithSkills(
+                    role_listing.role_listing_id,
+                    role_listing.role_name,
+                    role_listing.role_details,
+                    role_listing.creation_date,
+                    role_listing.expiry_date,
+                    role_listing.role_author_id,
+                    [],
+                ).json()
+            )
     return jsonify(
         {"code": 200, "data": {"role_listings_with_skills": role_listings_with_skills}}
     )
