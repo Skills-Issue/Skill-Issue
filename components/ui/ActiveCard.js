@@ -30,9 +30,11 @@ export default function ActiveCard({ activeListing, userSkills }) {
   useEffect(() => {
     // const res = await fetch("http://127.0.0.1:5000/rolelistingwithskills");
     //applicant_id
+    setButtonActive(true);
     fetch(`http://127.0.0.1:5000/jobs/${activeListing.role_listing_id}`)
       .then((res) => res.json())
       .then((d) => {
+        
         if (d.code == 200) {
           const applicantList = d.data;
           for (var applicant of applicantList) {
@@ -40,9 +42,7 @@ export default function ActiveCard({ activeListing, userSkills }) {
               setButtonActive(false);
             }
           }
-        } else {
-          setButtonActive(true);
-        }
+        } 
       });
 
     fetch(
