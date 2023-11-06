@@ -37,7 +37,7 @@ jobs:
     - name: Create .env file
       run: |
         echo "DB_HOST=${{secrets.DB_HOST}}" > .env
-        echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" > .env
+        echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env
         echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env
       working-directory: backend
     - name: Run unit tests
