@@ -1,3 +1,6 @@
+<img src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/093832e0-c473-42ba-95bc-cbe42bbe792d" alt="SBRP Logo" width="100" />
+
+
 # Skill-based-Role-Portal (SBRP)
 ```
    .-'''-.  _______   .-------.    .-------.  
@@ -10,12 +13,25 @@
  \       / |  (_,_)  /|  |  \    / /   )      
   `-...-'  /_______.' ''-'   `'-'  `---'      
                                                 
-```                          
+```
 ## Disclaimer: 
 **This project is a module under SMU School of Computing and Information Systems - IS212 (Software Project Management).** 
+## Table of Contents
+- [Introduction](#sbrp)
+- [Disclaimer](#disclaimer)
+- [Project Requirements](#project-requirements)
+- [Excerpt from Course Description](#excerpt-taken-from-course-description)
+- [Problem Statement](#problem-statement)
+- [Application Preview](#application-preview)
+- [Team Members](#team-members)
+- [Requirements](#requirements)
+- [Getting Started](#getting-started)
+- [Postman Collections](#postman-collections)
+- [Context Diagram](#context-diagram)
+- [Application Screenshots](#application-screenshots)
 
-Project Requirements: 
-- Complete the following 5 Core Functions
+## Project Requirements: 
+- Complete the following **5 Core Functions**
 
 
 | Role                 | Function               | Description                                            |
@@ -39,8 +55,9 @@ The solution proposed should be able to cater for the growth of the organisation
 
 
 
-Excerpt taking from Course Description <br>
+## Excerpt taken from Course Description
 >"In IS212 (Software Project Management), students will learn about modern frameworks and tools for software project management. In particular, students will gain hands-on experience with ‘scrum’ and several other agile techniques (e.g. test-driven development, AI-based pair programming, continuous integration) as they design and build the first release of a software system. Students will gain an appreciation for how these methods help to manage the inherent uncertainty of software projects, as well as how they ensure that developers work towards a common goal at a sustainable pace."
+
 
 ## SBRP
 The Skill-Based Role Portal (SBRP) is a user-friendly web application that simplifies internal hiring at All-In-One by allowing staff to apply for roles, assessing their skill compatibility, and aiding HR and managers in candidate selection, while ensuring security, performance, and scalability for the company's future growth.
@@ -63,11 +80,14 @@ Develop a user-friendly web application for All-In-One, enabling staff to effici
 - Node
 
 ## Getting Started
+First, open a terminal at the root folder 
 
-First, install the necessary packages:
+Next, install the necessary packages:
 
 ```sh
 npm i
+cd backend
+pip install -r requirements.txt
 ```
 Then run the frontend server:
 ```sh
@@ -80,10 +100,11 @@ Next, open another terminal and proceed to run the backend server:
 cd backend
 python3 staff.py
 ```
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Frontend will be running on port 3000
-Backend will be running on port 5000
+Lastly, open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+Frontend will be running on port _3000_
+Backend will be running on port _5000_
 
 ## Postman Collections
 - [Skill-Issue Collection](https://github.com/Skills-Issue/Skill-Issue/files/13264795/SPM.API.Calls.postman_collection.json)
@@ -105,9 +126,5 @@ Backend will be running on port 5000
 <img width="1512" alt="Screenshot 2023-11-06 at 3 30 20 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/88203e4b-d76c-4553-84a4-466f84522d6c">
 **HR Dashboard**
 <img width="1511" alt="Screenshot 2023-11-06 at 3 29 59 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/ebe5ab16-6a4c-4291-a68a-d96af23be4a3">
-
-
-## Team Learnings
-<img width="1117" alt="Screenshot 2023-11-06 at 5 34 11 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/8acbc5c3-060e-4ec1-83e2-04ca19dc4a3e">
 
 
