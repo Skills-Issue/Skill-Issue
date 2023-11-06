@@ -1,12 +1,25 @@
 "use client";
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from "react";
 import { Button, Label, Textarea, TextInput, Alert } from "flowbite-react";
 import { useRouter } from "next/navigation";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 export default function ApplyCard(props) {
-  const [msg,setMsg] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const openSnackbarHandler = (severity, message) => {
+    setSnackbarSeverity(severity);
+    setSnackbarMessage(message);
+    setOpenSnackbar(true);
+  };
+  const closeSnackbarHandler = () => {
+    setOpenSnackbar(false);
+  };
+  const [msg, setMsg] = useState("");
   const [isPending, setIsPending] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,22 +33,26 @@ export default function ApplyCard(props) {
     const day = today.getDay();
     const formattedDate = year + "-" + month + "-" + day;
 
-    const Application = {"role_listing_id":props.props[1],"application_details": msg, "applicant_id": User_ID, "application_date": formattedDate};
+    const Application = {
+      role_listing_id: props.props[1],
+      application_details: msg,
+      applicant_id: User_ID,
+      application_date: formattedDate,
+    };
     console.log(Application);
     setIsPending(true);
 
     await fetch("http://127.0.0.1:5000/jobs/apply/" + props.props[1], {
-        method: "POST",
-        headers: { "Content-Type": "application/json", },
-        body: JSON.stringify(Application),
-  }).then(() => {
-    console.log("New application added");
-    setIsPending(false);
-    router.push("/staff/dashboard");
-
-  })
-  }
-
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Application),
+    }).then(() => {
+      console.log("New application added");
+      openSnackbarHandler("success", "Role listing created successfully")
+      setIsPending(false);
+      setTimeout(()=>{router.push("/staff/dashboard")},2000)      
+    });
+  };
 
   return (
     <div className="flex justify-center items-center py-5">
@@ -70,12 +87,25 @@ export default function ApplyCard(props) {
           rows={4}
           onChange={(e) => setMsg(e.target.value)}
         />
-        { !isPending && <Button type="submit" gradientDuoTone="tealToLime">
-          Submit Application
-        </Button>}
-        { isPending && <Button type="submit" gradientDuoTone="tealToLime">
-          Submitting Application...
-          </Button>}
+        {!isPending && (
+          <Button type="submit" gradientDuoTone="tealToLime">
+            Submit Application
+          </Button>
+        )}
+        {isPending && (
+          <Button type="submit" gradientDuoTone="tealToLime">
+            Submitting Application...
+          </Button>
+        )}
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={10000}
+          onClose={closeSnackbarHandler}
+        >
+          <MuiAlert severity={snackbarSeverity} elevation={10} variant="filled">
+            {snackbarMessage}
+          </MuiAlert>
+        </Snackbar>
       </form>
     </div>
   );
