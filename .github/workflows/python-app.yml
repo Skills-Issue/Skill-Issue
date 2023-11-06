@@ -36,10 +36,14 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Create .env file
       run: |
+        echo "DB_
         echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" > .env
         echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env
       working-directory: backend
     - name: Run unit tests
       run: |
-        python backend/pytest.py
+        python backend/unit_tests_pytest.py
+    - name: Run Integration Test
+      run: |
+        python backend/integration_test_pytest.py
       
