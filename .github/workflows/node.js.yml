@@ -19,10 +19,10 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 14  # You can change the Node.js version
+        node-version: 20  # You can change the Node.js version
 
     - name: Install dependencies
-      run: npm install  # Use yarn if your project uses yarn
+      run: npm install  
 
     - name: Run Jest tests
       run: npm run test  # Adjust the script if needed
