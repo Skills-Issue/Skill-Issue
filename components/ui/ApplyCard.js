@@ -51,7 +51,7 @@ export default function ApplyCard(props) {
       console.log("New application added");
       openSnackbarHandler("success", "Application submitted")
       setIsPending(false);
-      setTimeout(()=>{router.push("/staff/dashboard")},2000)      
+      setTimeout(()=>{router.push("/staff/dashboard")},700)      
     });
   };
 

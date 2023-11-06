@@ -2,7 +2,7 @@
 
 import CustomInput from "@/components/ui/Input";
 import React, { useState } from "react";
-
+import { useRouter } from "next/navigation";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -11,7 +11,7 @@ export default function create(){
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarSeverity, setSnackbarSeverity] = useState("success");
     const [snackbarMessage, setSnackbarMessage] = useState("");
-
+    const router = useRouter();
     const openSnackbarHandler = (severity, message) => {
       setSnackbarSeverity(severity);
       setSnackbarMessage(message);
@@ -66,15 +66,18 @@ export default function create(){
             // Data was successfully inserted
             console.log("Role listing created successfully");
             openSnackbarHandler("success", "Role listing created successfully");
+            setTimeout(()=>{router.push("/hr/dashboard")},1000)
           } else {
             // Handle error here
             console.error("Error creating role listing");
             console.log("Message:", responseData.message);
             openSnackbarHandler("error", "Error creating role listing");
+            setTimeout(()=>{router.push("/hr/dashboard")},1000)
           }
         } catch (error) {
           console.error("Error:", error);
           openSnackbarHandler("error", "Error creating role listing");
+          setTimeout(()=>{router.push("/hr/dashboard")},1000)
         }
       };
 

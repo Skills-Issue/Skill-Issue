@@ -2,9 +2,26 @@
 
 import CustomInput from "@/components/ui/Input";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 export default function edit(params){
     const RoleListingID = params.params.id
+
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const router = useRouter();
+    const openSnackbarHandler = (severity, message) => {
+      setSnackbarSeverity(severity);
+      setSnackbarMessage(message);
+      setOpenSnackbar(true);
+    };
+
+    const closeSnackbarHandler = () => {
+      setOpenSnackbar(false);
+    };
 
     // Define state to hold the initial data
     const [initialData, setInitialData] = useState({
@@ -69,6 +86,8 @@ export default function edit(params){
           if (responseData.code == 200) {
             // Data was successfully inserted
             console.log("Role listing updated successfully");
+            openSnackbarHandler("success", "Role listing updated successfully");
+            setTimeout(()=>{router.push("/hr/dashboard")},1000)
           } else {
             // Handle error here
             console.error("Error updating role listing");
@@ -85,6 +104,11 @@ export default function edit(params){
             caption="Update Role Listing"
             initialData={initialData}
             isRoleNameDisabled={true}/>
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={closeSnackbarHandler}>
+              <MuiAlert severity={snackbarSeverity} elevation={6} variant="filled">
+                {snackbarMessage}
+              </MuiAlert>
+            </Snackbar>
         </div>
         
     )
