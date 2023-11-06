@@ -44,11 +44,9 @@ export default function edit(params){
         });
         const responseData = await response.json();
 
-        console.log(responseData.data)
   
         if (responseData.code === 200) {
           // Update initialData with the fetched data
-          console.log("fetched")
           setInitialData(responseData.data);
         } else {
           console.error("Error fetching role listing details");
@@ -71,7 +69,6 @@ export default function edit(params){
             
             // Add the staff ID to the formData
             formData.role_author_id = loggedInStaffId;
-            console.log(formData)
           const response = await fetch(`http://127.0.0.1:5000/edit/${RoleListingID}`, {
             method: 'PUT',
             headers: {
@@ -81,17 +78,14 @@ export default function edit(params){
           });
 
           const responseData = await response.json(); // Parse JSON response
-          console.log("Code:", responseData.code);
 
           if (responseData.code == 200) {
             // Data was successfully inserted
-            console.log("Role listing updated successfully");
             openSnackbarHandler("success", "Role listing updated successfully");
             setTimeout(()=>{router.push("/hr/dashboard")},1000)
           } else {
             // Handle error here
             console.error("Error updating role listing");
-            console.log("Message:", responseData.message);
           }
         } catch (error) {
           console.error("Error:", error);

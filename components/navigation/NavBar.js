@@ -12,7 +12,6 @@ import { DEFAULT_REDIRECTS } from "@/lib/hooks/constants";
 
 export default function NavbarWithDropdown() {
   // const device = useMediaQuery();
-  // console.log(device);
 
   const router = useRouter();
   const [AccType, setAccType] = useState("");

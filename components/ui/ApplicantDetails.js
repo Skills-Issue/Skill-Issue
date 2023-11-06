@@ -9,11 +9,7 @@ export default function ApplicantDetails({
   userSkills,
   staffDetails,
 }) {
-  // console.log(activeListing)
-  // console.log(userSkills)
-  // console.log(staffDetails)
   const userSkillNames = userSkills.map((skillObj) => skillObj.skill_name);
-  // console.log(userSkillNames)
   const matchingSkills = activeListing.skills.filter((skill) =>
     userSkillNames.includes(skill)
   );

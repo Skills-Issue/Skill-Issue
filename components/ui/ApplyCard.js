@@ -24,10 +24,8 @@ export default function ApplyCard(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submitted");
     const Userdata = JSON.parse(localStorage.getItem("user"));
     const User_ID = Userdata.staff_id;
-    console.log(User_ID);
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
@@ -40,7 +38,6 @@ export default function ApplyCard(props) {
       applicant_id: User_ID,
       application_date: formattedDate,
     };
-    console.log(Application);
     setIsPending(true);
 
     await fetch("http://127.0.0.1:5000/jobs/apply/" + props.props[1], {
@@ -48,7 +45,6 @@ export default function ApplyCard(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Application),
     }).then(() => {
-      console.log("New application added");
       openSnackbarHandler("success", "Application submitted")
       setIsPending(false);
       setTimeout(()=>{router.push("/staff/dashboard")},700)      

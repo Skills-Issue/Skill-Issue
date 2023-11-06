@@ -50,7 +50,6 @@ export default function create(){
             
             // Add the staff ID to the formData
             formData.role_author_id = loggedInStaffId;
-            console.log(formData);
           const response = await fetch('http://127.0.0.1:5000/create', {
             method: 'POST',
             headers: {
@@ -60,17 +59,14 @@ export default function create(){
           });
 
           const responseData = await response.json(); // Parse JSON response
-          console.log("Code:", responseData.code);
 
           if (responseData.code == 200) {
             // Data was successfully inserted
-            console.log("Role listing created successfully");
             openSnackbarHandler("success", "Role listing created successfully");
             setTimeout(()=>{router.push("/hr/dashboard")},1000)
           } else {
             // Handle error here
             console.error("Error creating role listing");
-            console.log("Message:", responseData.message);
             openSnackbarHandler("error", "Error creating role listing");
             setTimeout(()=>{router.push("/hr/dashboard")},1000)
           }

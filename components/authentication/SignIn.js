@@ -30,7 +30,6 @@ export default function SignIn(){
           router.push(DEFAULT_REDIRECTS.staffdashboard)
         }
       } else {
-        console.log("wrong acc")
         alert("Invalid Account")
       }
       
