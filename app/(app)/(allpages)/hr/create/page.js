@@ -29,6 +29,7 @@ export default function create(){
 
     const getCurrentDate = () => {
       const currentDate = new Date();
+      // Create a formatted string (e.g., "YYYY-MM-DD")
       // Format the current date as a string, e.g., "2023-09-28"
       const formattedDate = currentDate.toISOString().split("T")[0];
       return formattedDate;
@@ -49,7 +50,7 @@ export default function create(){
             
             // Add the staff ID to the formData
             formData.role_author_id = loggedInStaffId;
-            console.log(formData)
+            console.log(formData);
           const response = await fetch('http://127.0.0.1:5000/create', {
             method: 'POST',
             headers: {

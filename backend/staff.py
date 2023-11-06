@@ -11,6 +11,7 @@ app = Flask(__name__)
 CORS(app)
 password = config("DB_PASSWORD")
 username = config("DB_USERNAME")
+host_name = config("DB_HOST")
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -20,7 +21,7 @@ if __name__ == "__main__":
         "mysql+mysqlconnector://"
         + username
         + password
-        + "@skills-issue-sg.ccbebjzsuilf.ap-southeast-1.rds.amazonaws.com:3306/sbrp"
+        + host_name
     )
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 100, "pool_recycle": 280}
 else:
@@ -228,11 +229,12 @@ def get_applicant_by_role_listing_id(role_listing_id):
 def apply_for_role(role_listing_id):
     try:
         data = request.get_json()
+        application_date = datetime.strptime(data["application_date"], '%Y-%m-%d')
         new_application = RoleApplication(
             role_listing_id=role_listing_id,
             applicant_id=data["applicant_id"],
             application_details=data["application_details"],
-            application_date=data["application_date"],
+            application_date=application_date,
         )
         db.session.add(new_application)
         db.session.commit()
@@ -332,6 +334,7 @@ def get_count(role_id):
 
 @app.route("/create", methods=["POST"])
 def create_role_listing():
+    print(request.get_json())
     try:
         data = request.get_json()
 
@@ -344,13 +347,15 @@ def create_role_listing():
         new_role_listing_id = (
             largest_role_listing_id + 1 if largest_role_listing_id is not None else 1
         )
-
+        creation_date_object = datetime.strptime(data["creation_date"], '%Y-%m-%d')
+        expiry_date_object = datetime.strptime(data["expiry_date"], '%Y-%m-%d')
+        print(expiry_date_object)
         new_role_listing = RoleListing(
             role_listing_id=new_role_listing_id,
             role_name=data["role_name"],
             role_details=data["role_details"],
-            creation_date=data["creation_date"],
-            expiry_date=data["expiry_date"],
+            creation_date=creation_date_object,
+            expiry_date=expiry_date_object,
             role_author_id=data["role_author_id"],
         )
 
