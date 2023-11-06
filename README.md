@@ -16,19 +16,23 @@
 ```
 ## Disclaimer: 
 **This project is a module under SMU School of Computing and Information Systems - IS212 (Software Project Management).** 
+### Excerpt taken from Course Description
+>"In IS212 (Software Project Management), students will learn about modern frameworks and tools for software project management. In particular, students will gain hands-on experience with ‘scrum’ and several other agile techniques (e.g. test-driven development, AI-based pair programming, continuous integration) as they design and build the first release of a software system. Students will gain an appreciation for how these methods help to manage the inherent uncertainty of software projects, as well as how they ensure that developers work towards a common goal at a sustainable pace."
 ## Table of Contents
-- [Introduction](#sbrp)
 - [Disclaimer](#disclaimer)
+- [Introduction](#sbrp)
 - [Project Requirements](#project-requirements)
 - [Excerpt from Course Description](#excerpt-taken-from-course-description)
 - [Problem Statement](#problem-statement)
-- [Application Preview](#application-preview)
 - [Team Members](#team-members)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
 - [Postman Collections](#postman-collections)
 - [Context Diagram](#context-diagram)
 - [Application Screenshots](#application-screenshots)
+
+## SBRP
+The Skill-Based Role Portal (SBRP) is a user-friendly web application that simplifies internal hiring at All-In-One by allowing staff to apply for roles, assessing their skill compatibility, and aiding HR and managers in candidate selection, while ensuring security, performance, and scalability for the company's future growth.
 
 ## Project Requirements: 
 - Complete the following **5 Core Functions**
@@ -51,22 +55,9 @@ The system should be secured and only allow staff and HR to access. Access to fe
 All groups of users should be able to complete their tasks without guidance.
 - **Scalability**<br>
 The solution proposed should be able to cater for the growth of the organisation in the next 3 years.
-  
-
-
-
-## Excerpt taken from Course Description
->"In IS212 (Software Project Management), students will learn about modern frameworks and tools for software project management. In particular, students will gain hands-on experience with ‘scrum’ and several other agile techniques (e.g. test-driven development, AI-based pair programming, continuous integration) as they design and build the first release of a software system. Students will gain an appreciation for how these methods help to manage the inherent uncertainty of software projects, as well as how they ensure that developers work towards a common goal at a sustainable pace."
-
-
-## SBRP
-The Skill-Based Role Portal (SBRP) is a user-friendly web application that simplifies internal hiring at All-In-One by allowing staff to apply for roles, assessing their skill compatibility, and aiding HR and managers in candidate selection, while ensuring security, performance, and scalability for the company's future growth.
 
 ## Problem Statement
 Develop a user-friendly web application for All-In-One, enabling staff to efficiently apply for internal job openings, assess their skill match with role requirements, and facilitate HR and managers in identifying suitable candidates, ensuring security, performance, and scalability to support the company's growth.
-
-## Application Preview
-
 ## Team Members
 - [Kyla Sim](https://www.linkedin.com/in/kyla-sim/)
 - [Tan Chi Yong](https://www.linkedin.com/in/chiyongtan/)
