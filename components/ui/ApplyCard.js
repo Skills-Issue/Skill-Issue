@@ -4,6 +4,7 @@ import { Button, Label, Textarea, TextInput, Alert } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import Outline from "./Button";
 
 export default function ApplyCard(props) {
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -48,7 +49,7 @@ export default function ApplyCard(props) {
       body: JSON.stringify(Application),
     }).then(() => {
       console.log("New application added");
-      openSnackbarHandler("success", "Role listing created successfully")
+      openSnackbarHandler("success", "Application submitted")
       setIsPending(false);
       setTimeout(()=>{router.push("/staff/dashboard")},2000)      
     });
@@ -88,14 +89,18 @@ export default function ApplyCard(props) {
           onChange={(e) => setMsg(e.target.value)}
         />
         {!isPending && (
-          <Button type="submit" gradientDuoTone="tealToLime">
-            Submit Application
-          </Button>
+          <Outline caption={"Submit Application"} type="submit">
+            
+          </Outline>
+          // <Button type="submit" gradientDuoTone="tealToLime">
+          //   Submit Application
+          // </Button>
         )}
         {isPending && (
-          <Button type="submit" gradientDuoTone="tealToLime">
-            Submitting Application...
-          </Button>
+          <Outline caption={"Submitting Application..."} type="submit">
+            
+          </Outline>
+          
         )}
         <Snackbar
           open={openSnackbar}

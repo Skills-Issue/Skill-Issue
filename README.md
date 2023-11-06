@@ -1,5 +1,16 @@
 # Skill-based-Role-Portal (SBRP)
- 
+```
+   .-'''-.  _______   .-------.    .-------.  
+  / _     \\  ____  \ |  _ _   \   \  _(`)_ \ 
+ (`' )/`--'| |    \ | | ( ' )  |   | (_ o._)| 
+(_ o _).   | |____/ / |(_ o _) /   |  (_,_) / 
+ (_,_). '. |   _ _ '. | (_,_).' __ |   '-.-'  
+.---.  \  :|  ( ' )  \|  |\ \  |  ||   |      
+\    `-'  || (_{;}_) ||  | \ `'   /|   |      
+ \       / |  (_,_)  /|  |  \    / /   )      
+  `-...-'  /_______.' ''-'   `'-'  `---'      
+                                                
+```                          
 ## Disclaimer: 
 **This project is a module under SMU School of Computing and Information Systems - IS212 (Software Project Management).** 
 
@@ -75,19 +86,28 @@ Frontend will be running on port 3000
 Backend will be running on port 5000
 
 ## Postman Collections
-- Skill-Issue Collection
+- [Skill-Issue Collection](https://github.com/Skills-Issue/Skill-Issue/files/13264795/SPM.API.Calls.postman_collection.json)
 
 ## Context Diagram
+### Container Diagram 
+![SPM Context Component Diagram](https://github.com/Skills-Issue/Skill-Issue/assets/73370403/de582a85-0b1a-4f05-b3eb-59a45c1e44da)
+<br>
+
+### Context Diagram
+![SPM Context Component Diagram (1)](https://github.com/Skills-Issue/Skill-Issue/assets/73370403/c120804b-3ab2-4ebe-b04d-f24609d86ea7)
+
 
 
 ## Application Screenshots
+**Login Screen**
+<img width="1347" alt="Screenshot 2023-11-06 at 1 17 18 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/085c944b-b313-45dd-adb4-559c1e44de62">
+**Staff Dashboard**
+<img width="1512" alt="Screenshot 2023-11-06 at 3 30 20 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/88203e4b-d76c-4553-84a4-466f84522d6c">
+**HR Dashboard**
+<img width="1511" alt="Screenshot 2023-11-06 at 3 29 59 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/ebe5ab16-6a4c-4291-a68a-d96af23be4a3">
 
 
 ## Team Learnings
-
-
-
-
-## Troubleshoot
+<img width="1117" alt="Screenshot 2023-11-06 at 5 34 11 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/8acbc5c3-060e-4ec1-83e2-04ca19dc4a3e">
 
 
