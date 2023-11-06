@@ -60,6 +60,13 @@ export default function Jobs() {
       `http://127.0.0.1:5000/staffskill/${User.staff_id}`
     );
     const data = await res.json();
+    if(data.code==404){
+      return {
+        data:{
+          staff_skills:[]
+        }
+      }
+    }
     return data;
   };
 
