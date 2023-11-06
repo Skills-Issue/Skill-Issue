@@ -23,8 +23,6 @@ export default function Jobs() {
   useEffect(() => {
     Promise.all([fetchSkillData(), fetchListingData(), fetchUserData()]).then(
       ([result1, result2, result3]) => {
-        console.log(result3)
-        console.log(User.staff_id)
         setListings(result2.data.role_listings_with_skills);
         setSkillItems(result1.data.staffs);
         setUserData(result3.data.staff_skills);
