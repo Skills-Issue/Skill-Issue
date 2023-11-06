@@ -25,4 +25,4 @@ jobs:
       run: npm install  # Use yarn if your project uses yarn
 
     - name: Run Jest tests
-      run: npm test  # Adjust the script if needed
+      run: npm run test  # Adjust the script if needed
