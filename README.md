@@ -1,4 +1,4 @@
-<img src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/093832e0-c473-42ba-95bc-cbe42bbe792d" alt="SBRP Logo" width="100" />
+![SBRP](https://github.com/Skills-Issue/Skill-Issue/assets/73370403/ad47dd76-2484-4539-b35f-64bd2f4dc91a)
 
 
 # Skill-based-Role-Portal (SBRP)
@@ -100,22 +100,26 @@ Backend will be running on port _5000_
 ## Postman Collections
 - [Skill-Issue Collection](https://github.com/Skills-Issue/Skill-Issue/files/13264795/SPM.API.Calls.postman_collection.json)
 
-## Context Diagram
+
+
 ### Container Diagram 
-![SPM Context Component Diagram](https://github.com/Skills-Issue/Skill-Issue/assets/73370403/de582a85-0b1a-4f05-b3eb-59a45c1e44da)
+![G3T1 Container Diagram](https://github.com/Skills-Issue/Skill-Issue/assets/73370403/23be62ca-9887-433f-829e-6f636fd36c01)
+
+
 <br>
 
 ### Context Diagram
-![SPM Context Component Diagram (1)](https://github.com/Skills-Issue/Skill-Issue/assets/73370403/c120804b-3ab2-4ebe-b04d-f24609d86ea7)
+![G3T1 Context Diagram](https://github.com/Skills-Issue/Skill-Issue/assets/73370403/d8b56ba9-262c-4398-83af-ac025d8f683b)
 
 
 
 ## Application Screenshots
 **Login Screen**
-<img width="1347" alt="Screenshot 2023-11-06 at 1 17 18 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/085c944b-b313-45dd-adb4-559c1e44de62">
-**Staff Dashboard**
-<img width="1512" alt="Screenshot 2023-11-06 at 3 30 20 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/88203e4b-d76c-4553-84a4-466f84522d6c">
-**HR Dashboard**
-<img width="1511" alt="Screenshot 2023-11-06 at 3 29 59 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/ebe5ab16-6a4c-4291-a68a-d96af23be4a3">
+<img width="1347" alt="Screenshot 2023-11-06 at 1 17 18 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/94d6acdd-d391-4567-8f4b-729a7786d930">
 
+**Staff Dashboard**
+<img width="1512" alt="Screenshot 2023-11-06 at 3 30 20 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/7c92adf2-704f-4094-bfa5-22d9253f74de">
+
+**HR Dashboard**
+<img width="1511" alt="Screenshot 2023-11-06 at 3 29 59 PM" src="https://github.com/Skills-Issue/Skill-Issue/assets/73370403/86499ccb-d95b-415e-82a7-bdf9d54d40cf">
 
